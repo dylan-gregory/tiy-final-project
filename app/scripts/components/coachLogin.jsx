@@ -4,7 +4,7 @@ var Backbone = require('backbone');
 var BaseLayout = require('./layouts/base.jsx').BaseLayout;
 var User = require('../models/user').User;
 
-class UserLoginContainer extends React.Component {
+class CoachLoginContainer extends React.Component {
   constructor(props){
     super(props);
 
@@ -19,7 +19,7 @@ class UserLoginContainer extends React.Component {
     var user = new User(creds);
     user.save().then(function(data){
       localStorage.setItem('user', JSON.stringify(data));
-      Backbone.history.navigate('home/', {trigger: true});
+      Backbone.history.navigate('workspace/', {trigger: true});
     });
   }
   render(){
@@ -28,12 +28,12 @@ class UserLoginContainer extends React.Component {
         <div className="container">
           <div className="row">
             <div className="col m6">
-              <h2>New to Momentum? Sign up</h2>
-              <UserSignupForm action={this.createAccount} submitBtn="Create Account"/>
+              <h2>New Coach? Sign up</h2>
+              <CoachSignupForm action={this.createAccount} submitBtn="Create Account"/>
             </div>
             <div className="col m6">
               <h2>Login</h2>
-              <UserLoginForm action={this.login} submitBtn="Login"/>
+              <CoachLoginForm action={this.login} submitBtn="Login"/>
             </div>
           </div>
         </div>
@@ -45,7 +45,7 @@ class UserLoginContainer extends React.Component {
 
 
 
-class UserLoginForm extends React.Component {
+class CoachLoginForm extends React.Component {
   constructor(props){
     super(props);
 
@@ -89,12 +89,12 @@ class UserLoginForm extends React.Component {
 }
 
 /////////////////////////////////////////////////////////////////////
-// Signup Form for a new CLIENT - has a property of isCoach set to false
-// which will be used for verifying that this is a Client, NOT a Coach
+// Signup Form for a new COACH - has a property of isCoach set to true
+// which will be used for verifying that this is a Coach, NOT a client
 ////////////////////////////////////////////////////////////////////
 
 
-class UserSignupForm extends React.Component {
+class CoachSignupForm extends React.Component {
   constructor(props){
     super(props);
 
@@ -107,7 +107,7 @@ class UserSignupForm extends React.Component {
       username: '',
       password: '',
       coachId: '',
-      isCoach: false
+      isCoach: true
     };
   }
   handleEmailChange(e){
@@ -128,7 +128,7 @@ class UserSignupForm extends React.Component {
     return (
       <form onSubmit={this.handleSubmit}>
         <div className="form-group">
-          <label htmlFor="your-coach-id">ID# of Your Coach</label>
+          <label htmlFor="your-coach-id">Your Coach ID</label>
           <input onChange={this.handleCoachChange} className="form-control" name="coach-id" id="your-coach-id" type="text" placeholder="ID#" />
         </div>
 
@@ -149,5 +149,5 @@ class UserSignupForm extends React.Component {
 }
 
 module.exports = {
-  UserLoginContainer
+  CoachLoginContainer
 }

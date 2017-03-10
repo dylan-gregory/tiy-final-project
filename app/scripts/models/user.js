@@ -10,8 +10,8 @@ var User = Backbone.Model.extend({
     return parse.BASE_API_URL + '/users';
   }
 }, {
-  login: function(cridentials, callback){
-    var url = parse.BASE_API_URL + '/login?' + $.param(cridentials);
+  login: function(credentials, callback){
+    var url = parse.BASE_API_URL + '/login?' + $.param(credentials);
     $.get(url).then(data => {
       var newUser = new User(data);
       User.store(newUser);
