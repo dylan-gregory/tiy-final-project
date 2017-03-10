@@ -66,6 +66,56 @@ var ParseCollection = Backbone.Collection.extend({
   }
 });
 
+var Coach = ParseModel.extend({
+  defaults: function(){
+    name: '',
+    avatar: '',
+    clients: new ClientCollection(),
+    coachId: '',
+    isCoach: true
+  }
+});
+
+var CoachCollection = ParseCollection.extend({
+  model: Coach,
+  baseUrl: 'https://metal-slug.herokuapp.com/User'
+});
+
+var Client = ParseModel.extend({
+  defaults: function(){
+    return {
+      name: '',
+      avatar: '',
+      todos: new TodoCollection(),
+      coachId: '',
+      isCoach: false
+    }
+  }
+});
+
+var ClientCollection = ParseCollection.extend({
+  model: Client,
+  baseUrl: 'https://metal-slug.herokuapp.com/User'
+});
+
+var Todo = Backbone.Model.extend({
+  defaults: {
+    title: '',
+    dueDate: '',
+    notes: '',
+    isComplete: false
+  }
+});
+
+var TodoCollection = Backbone.Collection.extend({
+  model: Todo
+});
+
 module.exports = {
-  
-}
+  Coach,
+  CoachCollection,
+  Client,
+  ClientCollection,
+  Todo,
+  TodoCollection
+};

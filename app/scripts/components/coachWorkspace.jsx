@@ -1,9 +1,11 @@
 var React = require('react');
 var Backbone = require('backbone');
 var $ = window.$ = window.jQuery = require('jquery');
-require('materialize-sass-origin/js/collapsible.js');
-// require('jquery-ui/ui/effects');
 
+// These are the specific Materialize things needed to work the collapsibles
+
+require('materialize-sass-origin/js/collapsible.js');
+require('materialize-sass-origin/js/jquery.easing.1.3.js');
 
 
 
@@ -12,10 +14,6 @@ var BaseLayout = require('./layouts/base.jsx').BaseLayout;
 class CoachWorkspaceContainer extends React.Component{
   constructor(props){
     super(props);
-
-    // $(document).ready(function(){
-    //
-    // });
 
 
   }
@@ -84,4 +82,4 @@ class CoachWorkspaceContainer extends React.Component{
 
 module.exports = {
   CoachWorkspaceContainer
-}
+};

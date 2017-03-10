@@ -17,7 +17,8 @@ var AppRouter = Backbone.Router.extend({
     '': 'login',
     'accountHome/': 'clientHome',
     'coachPortal/': 'coachPortal',
-    'workspace/': 'coachWorkspace'
+    'workspace/': 'coachWorkspace',
+    'workspace/:clientId': 'viewClientDetails'
   },
   initialize: function(){
 
@@ -72,6 +73,14 @@ var AppRouter = Backbone.Router.extend({
   clientHome: function(){
     ReactDOM.render(
       React.createElement(ClientHomeContainer),
+      document.getElementById('app')
+    )
+  },
+  viewClientDetails: function(clientId){
+
+    // no client specific form created yet, but will need to pass it this prop
+    ReactDOM.render(
+      React.createElement(ClientHomeContainer, {clientId: clientId}),
       document.getElementById('app')
     )
   }
