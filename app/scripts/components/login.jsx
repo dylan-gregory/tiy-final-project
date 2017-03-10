@@ -1,5 +1,6 @@
 var React = require('react');
 var Backbone = require('backbone');
+var $ = require('jquery');
 
 var BaseLayout = require('./layouts/base.jsx').BaseLayout;
 var User = require('../models/user').User;
@@ -7,6 +8,7 @@ var User = require('../models/user').User;
 class UserLoginContainer extends React.Component {
   constructor(props){
     super(props);
+
 
   }
   login(creds){

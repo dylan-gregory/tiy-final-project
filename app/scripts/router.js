@@ -1,18 +1,21 @@
 var Backbone = require('backbone');
 var React = require('react');
 var ReactDOM = require('react-dom');
-
+var $ = require('jquery');
 
 var parse = require('./setup');
 var BaseLayout = require('./components/layouts/base.jsx').BaseLayout;
 var UserLoginContainer = require('./components/login.jsx').UserLoginContainer;
 var CoachLoginContainer = require('./components/coachLogin.jsx').CoachLoginContainer;
+var CoachWorkspaceContainer = require('./components/coachWorkspace.jsx').CoachWorkspaceContainer;
+var ClientHomeContainer = require('./components/clientHome.jsx').ClientHomeContainer;
+
 var User = require('./models/user.js').User;
 
 var AppRouter = Backbone.Router.extend({
   routes: {
     '': 'login',
-    'home/': 'userHome',
+    'accountHome/': 'clientHome',
     'coachPortal/': 'coachPortal',
     'workspace/': 'coachWorkspace'
   },
@@ -30,6 +33,7 @@ var AppRouter = Backbone.Router.extend({
       });
     }
   // Do the parse setup to set headers and configure API url
+
 
   },
   execute: function(callback, args, name) {
@@ -56,6 +60,18 @@ var AppRouter = Backbone.Router.extend({
   coachPortal: function(){
     ReactDOM.render(
       React.createElement(CoachLoginContainer),
+      document.getElementById('app')
+    )
+  },
+  coachWorkspace: function(){
+    ReactDOM.render(
+      React.createElement(CoachWorkspaceContainer),
+      document.getElementById('app')
+    )
+  },
+  clientHome: function(){
+    ReactDOM.render(
+      React.createElement(ClientHomeContainer),
       document.getElementById('app')
     )
   }

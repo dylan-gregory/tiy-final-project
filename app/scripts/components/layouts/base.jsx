@@ -15,10 +15,10 @@ class BaseLayout extends React.Component {
              <a href="#" className="brand-logo center">MOMENTUM</a>
              <a href="#" data-activates="mobile-demo" className="button-collapse"><i className="material-icons">menu</i></a>
              <ul id="nav-mobile" className="right hide-on-med-and-down">
-               <li><a href="#coachPortal/">Coach Portal</a></li>
-
                <li><a href="#">Client Portal</a></li>
-               <li><a href="#">JavaScript</a></li>
+               <li><a href="#coachPortal/">Coach Portal</a></li>
+               <li><a href="#accountHome/">Client page demo</a></li>
+               <li><a href="#workspace/">Coach page demo</a></li>
              </ul>
            </div>
          </nav>
