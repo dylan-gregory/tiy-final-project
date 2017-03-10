@@ -35,15 +35,27 @@ class CoachWorkspaceContainer extends React.Component{
                 <ul className="collapsible" data-collapsible="accordion">
                   <li>
                     <div className="collapsible-header">Sam</div>
-                    <div className="collapsible-body">percent bar</div>
+                    <div className="collapsible-body">percent bar
+                      <div className="progress">
+                          <div className="determinate"  ></div>
+                      </div>
+                    </div>
                   </li>
                   <li>
                     <div className="collapsible-header">David</div>
-                    <div className="collapsible-body">percent bar</div>
+                    <div className="collapsible-body">percent bar
+                      <div className="progress">
+                          <div className="determinate" ></div>
+                      </div>
+                    </div>
                   </li>
                   <li>
                     <div className="collapsible-header">Carl</div>
-                    <div className="collapsible-body">percent bar</div>
+                    <div className="collapsible-body">percent bar
+                      <div className="progress">
+                        <div className="determinate" ></div>
+                      </div>
+                    </div>
                   </li>
                 </ul>
               </div>
