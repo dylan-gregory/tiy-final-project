@@ -15,10 +15,10 @@ var User = require('./models/user.js').User;
 var AppRouter = Backbone.Router.extend({
   routes: {
     '': 'login',
-    'accountHome/': 'clientHome',
+    'accountHome/:clientId': 'clientHome',
     'coachPortal/': 'coachPortal',
-    'workspace/': 'coachWorkspace',
-    'workspace/:clientId': 'viewClientDetails'
+    'workspace/:coachId': 'coachWorkspace',
+    'workspace/:coachId/:clientId': 'viewClientDetails'
   },
   initialize: function(){
 
@@ -40,11 +40,19 @@ var AppRouter = Backbone.Router.extend({
   execute: function(callback, args, name) {
   // var isLoggedIn = localStorage.getItem('user');
   var user = User.current()
-  // if (!user && name != 'login') {
-  //   this.navigate('', {trigger: true});
-  //   return false;
-  // }
-  //
+  if (!user && name != 'login') {
+    this.navigate('', {trigger: true});
+    return false;
+  }
+
+  if (user.isCoach){
+    this.navigate('coachWorkspace', {trigger: true});
+  }
+
+  if (user.isCoach == false){
+    this.navigate('clientHome', {trigger: true});
+  }
+
   // if(user && name == 'login'){
   //   this.navigate('', {trigger: true});
   //   return false;
@@ -64,15 +72,15 @@ var AppRouter = Backbone.Router.extend({
       document.getElementById('app')
     )
   },
-  coachWorkspace: function(){
+  coachWorkspace: function(coachId){
     ReactDOM.render(
-      React.createElement(CoachWorkspaceContainer),
+      React.createElement(CoachWorkspaceContainer, {id: coachId}),
       document.getElementById('app')
     )
   },
-  clientHome: function(){
+  clientHome: function(clientId){
     ReactDOM.render(
-      React.createElement(ClientHomeContainer),
+      React.createElement(ClientHomeContainer, {id: clientId}),
       document.getElementById('app')
     )
   },

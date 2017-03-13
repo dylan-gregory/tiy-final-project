@@ -101,12 +101,12 @@ class CoachSignupForm extends React.Component {
     this.handleEmailChange = this.handleEmailChange.bind(this);
     this.handlePasswordChange = this.handlePasswordChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleCoachChange = this.handleCoachChange.bind(this);
+    // this.handleCoachChange = this.handleCoachChange.bind(this);
 
     this.state = {
       username: '',
       password: '',
-      coachId: '',
+      // coachId: '',
       isCoach: true
     };
   }
@@ -116,9 +116,9 @@ class CoachSignupForm extends React.Component {
   handlePasswordChange(e){
     this.setState({password: e.target.value});
   }
-  handleCoachChange(e){
-    this.setState({coachId: e.target.value});
-  }
+  // handleCoachChange(e){
+  //   this.setState({coachId: e.target.value});
+  // }
   handleSubmit(e){
     e.preventDefault();
     // input data.... this.state
@@ -127,10 +127,6 @@ class CoachSignupForm extends React.Component {
   render(){
     return (
       <form onSubmit={this.handleSubmit}>
-        <div className="form-group">
-          <label htmlFor="your-coach-id">Your Coach ID</label>
-          <input onChange={this.handleCoachChange} className="form-control" name="coach-id" id="your-coach-id" type="text" placeholder="ID#" />
-        </div>
 
         <div className="form-group">
           <label htmlFor="email-login">Email address</label>
@@ -147,6 +143,16 @@ class CoachSignupForm extends React.Component {
     )
   }
 }
+
+
+// I changed my mind = the coachId will be the objectId given to them upon signup, so they won't actually have
+// access to it until they sign in, so I removed this - for now, at least
+//
+//
+// <div className="form-group">
+//   <label htmlFor="your-coach-id">Your Coach ID</label>
+//   <input onChange={this.handleCoachChange} className="form-control" name="coach-id" id="your-coach-id" type="text" placeholder="ID#" />
+// </div>
 
 module.exports = {
   CoachLoginContainer

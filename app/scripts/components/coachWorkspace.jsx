@@ -2,6 +2,9 @@ var React = require('react');
 var Backbone = require('backbone');
 var $ = window.$ = window.jQuery = require('jquery');
 
+var User = require('../models/user.js').User;
+var Coach = require('../models/models.js').Coach;
+var CoachCollection = require('../models/models.js').CoachCollection;
 // These are the specific Materialize things needed to work the collapsibles
 
 require('materialize-sass-origin/js/collapsible.js');
@@ -15,11 +18,38 @@ class CoachWorkspaceContainer extends React.Component{
   constructor(props){
     super(props);
 
+    var coachCollection = new CoachCollection();
+    var currentCoach = new Coach();
+
+
+
+    coachCollection.fetch().then(() => {
+      currentCoach = coachCollection.findWhere({objectId: this.props.id});
+
+      this.setState({currentCoach: currentCoach, coachCollection});
+      console.log(coachCollection);
+      console.log(currentCoach);
+    });
+
+    console.log(localStorage.getItem('user'));
+
+    this.state = {
+      currentCoach,
+      coachCollection
+    };
+
+
 
   }
   componentDidMount(){
 
     $('.collapsible').collapsible();
+
+  }
+  componentWillReceiveProps(newProps){
+    this.setState(newProps.currentCoach.toJSON());
+
+
 
   }
   render(){
@@ -28,7 +58,7 @@ class CoachWorkspaceContainer extends React.Component{
       <BaseLayout>
 
           <div className="container">
-            <header>Username/Icon</header>
+            <header>{this.state.currentCoach.get('username')}/Icon</header>
             <div className="row">
               <div className="col m8">
                 <h2>Client List</h2>

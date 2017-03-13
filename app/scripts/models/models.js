@@ -68,18 +68,24 @@ var ParseCollection = Backbone.Collection.extend({
 
 var Coach = ParseModel.extend({
   defaults: function(){
-    name: '',
-    avatar: '',
-    clients: new ClientCollection(),
-    coachId: '',
+    // name: '',
+    // // avatar: '',
+    // clients: new ClientCollection(),
+    // coachId: '',
     isCoach: true
   }
 });
 
+
+//coachID will be their objectId
+
+
 var CoachCollection = ParseCollection.extend({
   model: Coach,
-  baseUrl: 'https://metal-slug.herokuapp.com/User'
+  baseUrl: 'https://metal-slug.herokuapp.com/users'
 });
+
+
 
 var Client = ParseModel.extend({
   defaults: function(){
@@ -93,9 +99,11 @@ var Client = ParseModel.extend({
   }
 });
 
+// coachId will be their coach's objectId
+
 var ClientCollection = ParseCollection.extend({
   model: Client,
-  baseUrl: 'https://metal-slug.herokuapp.com/User'
+  baseUrl: 'https://metal-slug.herokuapp.com/users'
 });
 
 var Todo = Backbone.Model.extend({
