@@ -5,6 +5,8 @@ var $ = window.$ = window.jQuery = require('jquery');
 var User = require('../models/user.js').User;
 var Coach = require('../models/models.js').Coach;
 var CoachCollection = require('../models/models.js').CoachCollection;
+var ClientCollection = require('../models/models.js').ClientCollection;
+
 // These are the specific Materialize things needed to work the collapsibles
 
 require('materialize-sass-origin/js/collapsible.js');
@@ -20,22 +22,48 @@ class CoachWorkspaceContainer extends React.Component{
 
     var coachCollection = new CoachCollection();
     var currentCoach = new Coach();
+    var clientCollection = new ClientCollection();
 
 
+
+
+    console.log(clientCollection);
 
     coachCollection.fetch().then(() => {
       currentCoach = coachCollection.findWhere({objectId: this.props.id});
 
-      this.setState({currentCoach: currentCoach, coachCollection});
-      console.log(coachCollection);
-      console.log(currentCoach);
+      clientCollection = coachCollection.where({coachId: this.props.id});
+
+      this.setState({
+        currentCoach: currentCoach,
+        coachCollection: coachCollection,
+        clientCollection: clientCollection
+      });
+      //
+      //
+      // console.log(coachCollection);
+      // console.log(currentCoach);
+      // console.log('clients', clientCollection);
     });
+
+    // var userId = User.current().get('objectId');
+    //
+    // clientCollection.parseWhere(
+    // 'coachId', '_User', userId
+    // ).fetch().then(()=> {
+    //   //
+    //   // clientCollection = coachCollection.findWhere({coachId: this.props.id});
+    //
+    //   console.log('clients', clientCollection);
+    //   this.setState({clientCollection: clientCollection});
+    // });
 
     console.log(localStorage.getItem('user'));
 
     this.state = {
       currentCoach,
-      coachCollection
+      coachCollection,
+      clientCollection
     };
 
 
@@ -47,12 +75,13 @@ class CoachWorkspaceContainer extends React.Component{
 
   }
   componentWillReceiveProps(newProps){
-    this.setState(newProps.currentCoach.toJSON());
+    this.setState({clientCollection: newProps.clientCollection});
 
 
 
   }
   render(){
+    console.log('my state',this.state);
     return (
 
       <BaseLayout>
@@ -62,62 +91,110 @@ class CoachWorkspaceContainer extends React.Component{
             <div className="row">
               <div className="col m8">
                 <h2>Client List</h2>
-                <ul className="collapsible" data-collapsible="accordion">
-                  <li>
-                    <div className="collapsible-header">Sam</div>
-                    <div className="collapsible-body">percent bar
-                      <div className="progress">
-                          <div className="determinate"  ></div>
-                      </div>
-                    </div>
-                  </li>
-                  <li>
-                    <div className="collapsible-header">David</div>
-                    <div className="collapsible-body">percent bar
-                      <div className="progress">
-                          <div className="determinate" ></div>
-                      </div>
-                    </div>
-                  </li>
-                  <li>
-                    <div className="collapsible-header">Carl</div>
-                    <div className="collapsible-body">percent bar
-                      <div className="progress">
-                        <div className="determinate" ></div>
-                      </div>
-                    </div>
-                  </li>
-                </ul>
+
+                   <CoachClientList clientCollection={this.state.clientCollection}
+                   currentCoach={this.state.currentCoach}
+                  />
+
               </div>
               <div className="col s4">
                 <h2>Client Leaderboard</h2>
-                  <table className="striped">
-                    <thead>
-                      <tr>
-                        <th>Name</th>
-                        <th>Score/Points</th>
-                      </tr>
-                    </thead>
 
-                    <tbody>
-                      <tr>
-                        <td>Carl</td>
-                        <td>1,567</td>
-                      </tr>
-                      <tr>
-                        <td>David</td>
-                        <td>1,421</td>
-                      </tr>
-                      <tr>
-                        <td>Sam</td>
-                        <td>1,345</td>
-                      </tr>
-                    </tbody>
-                  </table>
+                  <ClientLeaderBoard clientCollection={this.state.clientCollection}
+                  />
+
               </div>
             </div>
           </div>
       </BaseLayout>
+    )
+  }
+}
+
+class CoachClientList extends React.Component {
+  constructor(props){
+    super(props);
+
+    var clientCollection = new ClientCollection();
+
+    this.state = {
+      clientCollection: this.props.clientCollection,
+      currentCoach: this.props.currentCoach
+    }
+  }
+  componentWillReceiveProps(newProps){
+    console.log('new', newProps);
+    this.setState({clientCollection: newProps.clientCollection, currentCoach: newProps.currentCoach});
+
+  }
+  render(){
+    console.log(this.state.clientCollection);
+    var clientList = this.state.clientCollection.map(client =>{
+      return (
+
+          <li key={client.cid}>
+            <div className="collapsible-header"><a href={'#workspace/' + this.state.currentCoach.get('objectId') +'/' + client.get('objectId')}>{client.get('username')}</a></div>
+            <div className="collapsible-body">
+              <div className="progress">
+                  <div className="determinate"></div>
+              </div>
+            </div>
+          </li>
+
+      )
+    });
+
+    return (
+        <ul className="collapsible" data-collapsible="accordion">
+          {clientList}
+        </ul>
+
+    )
+  }
+}
+
+class ClientLeaderBoard extends React.Component {
+  constructor(props){
+    super(props);
+
+    var clientCollection = new ClientCollection();
+
+    this.state = {
+      clientCollection: this.props.clientCollection
+    }
+  }
+  componentWillReceiveProps(newProps){
+    console.log('new', newProps);
+    this.setState({clientCollection: newProps.clientCollection});
+
+  }
+  render(){
+
+    var clientPoints = this.state.clientCollection.map(client =>{
+      return (
+
+        <tr key={client.cid}>
+          <td>{client.get('username')}</td>
+          <td>1,567</td>
+        </tr>
+
+      )
+    });
+
+    return (
+      <table className="striped">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Score/Points</th>
+          </tr>
+        </thead>
+        <tbody>
+
+          {clientPoints}
+
+        </tbody>
+      </table>
     )
   }
 }

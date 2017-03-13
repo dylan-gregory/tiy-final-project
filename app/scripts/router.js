@@ -9,6 +9,7 @@ var UserLoginContainer = require('./components/login.jsx').UserLoginContainer;
 var CoachLoginContainer = require('./components/coachLogin.jsx').CoachLoginContainer;
 var CoachWorkspaceContainer = require('./components/coachWorkspace.jsx').CoachWorkspaceContainer;
 var ClientHomeContainer = require('./components/clientHome.jsx').ClientHomeContainer;
+var CoachViewClient = require('./components/coachViewClient.jsx').CoachViewClient;
 
 var User = require('./models/user.js').User;
 
@@ -39,24 +40,28 @@ var AppRouter = Backbone.Router.extend({
   },
   execute: function(callback, args, name) {
   // var isLoggedIn = localStorage.getItem('user');
-  var user = User.current()
+  var user = User.current();
+
   if (!user && name != 'login') {
     this.navigate('', {trigger: true});
+
+  }
+
+  if(user && name == 'login'){
+    this.navigate('', {trigger: true});
+
+  }
+
+  if (user.get('isCoach') && name == 'login'){
+    this.navigate('workspace/' + user.get('objectId'), {trigger: true});
+    return false;
+
+  }else if(!user.get('isCoach') && name == 'login'){
+    this.navigate('accountHome/' + user.get('objectId') , {trigger: true});
     return false;
   }
 
-  if (user.isCoach){
-    this.navigate('coachWorkspace', {trigger: true});
-  }
 
-  if (user.isCoach == false){
-    this.navigate('clientHome', {trigger: true});
-  }
-
-  // if(user && name == 'login'){
-  //   this.navigate('', {trigger: true});
-  //   return false;
-  // }
 
   return Backbone.Router.prototype.execute.apply(this, arguments);
   },
@@ -73,6 +78,7 @@ var AppRouter = Backbone.Router.extend({
     )
   },
   coachWorkspace: function(coachId){
+
     ReactDOM.render(
       React.createElement(CoachWorkspaceContainer, {id: coachId}),
       document.getElementById('app')
@@ -88,7 +94,7 @@ var AppRouter = Backbone.Router.extend({
 
     // no client specific form created yet, but will need to pass it this prop
     ReactDOM.render(
-      React.createElement(ClientHomeContainer, {clientId: clientId}),
+      React.createElement(CoachViewClient, {id: clientId}),
       document.getElementById('app')
     )
   }

@@ -20,16 +20,16 @@ class ClientHomeContainer extends React.Component {
     clientCollection.fetch().then(() => {
       currentClient = clientCollection.findWhere({objectId: this.props.id});
 
-      this.setState({currentClient: currentClient, coachCollection});
-      console.log(coachCollection);
-      console.log(currentCoach);
+      this.setState({currentClient: currentClient, clientCollection});
+      console.log(clientCollection);
+      console.log(currentClient);
     });
 
     console.log(localStorage.getItem('user'));
 
     this.state = {
-      currentCoach,
-      coachCollection
+      currentClient,
+      clientCollection
     };
 
   }
@@ -38,7 +38,7 @@ class ClientHomeContainer extends React.Component {
       <BaseLayout>
         <div className="container">
           <div className="row">
-            <h2> Welcome: </h2>
+            <h3> Welcome: {this.state.currentClient.get('username')}</h3>
             <div className="col m8">
               <h2>Your Weekly Tasks</h2>
               <ul>
