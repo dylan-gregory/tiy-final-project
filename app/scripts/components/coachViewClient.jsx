@@ -32,34 +32,38 @@ class CoachViewClient extends React.Component {
     clientCollection.fetch().then(() => {
       currentClient = clientCollection.findWhere({objectId: this.props.id});
 
-      clientTodos = currentClient.get('todos');
-
-      console.log("in here", currentClient.get('todos'));
-
-
       this.setState({
         currentClient: currentClient,
-        clientCollection,
-        clientTodos,
-        clientId: clientId
+        clientCollection
       });
       console.log(clientCollection);
       console.log(currentClient);
+    });
+
+    clientTodos.parseWhere(
+      'owner', '_User', clientId
+    ).fetch().then(() => {
+      this.setState({clientTodos: clientTodos});
     });
 
     this.state = {
       currentClient,
       clientCollection,
       clientTodos,
-    }
+      clientId
+    };
 
     this.addTodo = this.addTodo.bind(this);
+    // this.componentWillReceiveProps = this.componentWillReceiveProps.bind(this);
 
-    console.log('todos', clientTodos);
   }
+  // componentWillReceiveProps(newProps){
+  //
+  //
+  //   console.log('these todos',this.state.clientTodos);
+  // }
   addTodo(newTodo){
-    console.log('new', newTodo);
-    console.log('also todos',this.state.clientTodos);
+
 
     //
     // var newTodoItem = new Todo(newTodo);
@@ -76,7 +80,9 @@ class CoachViewClient extends React.Component {
 
           <div className="row">
 
-            <ClientTodoList currentClient={this.state.currentClient}/>
+            <ClientTodoList currentClient={this.state.currentClient}
+            clientTodos={this.state.clientTodos}
+            />
 
           </div>
 
@@ -100,7 +106,7 @@ class ClientTodoList extends React.Component {
   constructor(props){
     super(props);
 
-    var clientTodos = new TodoCollection();
+    var clientTodos = this.props.clientTodos;
 
     this.state = {
       currentClient: this.props.currentClient,
@@ -172,7 +178,7 @@ class TodoForm extends React.Component {
   }
   componentWillReceiveProps(newProps){
     this.setState({clientId: newProps.clientId});
-    
+
   }
   handleTitle(e){
     this.setState({title: e.target.value});

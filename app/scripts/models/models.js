@@ -117,7 +117,7 @@ var Todo = Backbone.Model.extend({
   }
 });
 
-var TodoCollection = Backbone.Collection.extend({
+var TodoCollection = ParseCollection.extend({
   model: Todo,
   url: 'https://metal-slug.herokuapp.com/classes/clientTasks'
 });
