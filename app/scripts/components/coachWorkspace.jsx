@@ -24,11 +24,6 @@ class CoachWorkspaceContainer extends React.Component{
     var currentCoach = new Coach();
     var clientCollection = new ClientCollection();
 
-
-
-
-    console.log(clientCollection);
-
     coachCollection.fetch().then(() => {
       currentCoach = coachCollection.findWhere({objectId: this.props.id});
 
@@ -58,7 +53,6 @@ class CoachWorkspaceContainer extends React.Component{
     //   this.setState({clientCollection: clientCollection});
     // });
 
-    console.log(localStorage.getItem('user'));
 
     this.state = {
       currentCoach,
@@ -81,7 +75,6 @@ class CoachWorkspaceContainer extends React.Component{
 
   }
   render(){
-    console.log('my state',this.state);
     return (
 
       <BaseLayout>
@@ -123,12 +116,10 @@ class CoachClientList extends React.Component {
     }
   }
   componentWillReceiveProps(newProps){
-    console.log('new', newProps);
     this.setState({clientCollection: newProps.clientCollection, currentCoach: newProps.currentCoach});
 
   }
   render(){
-    console.log(this.state.clientCollection);
     var clientList = this.state.clientCollection.map(client =>{
       return (
 
@@ -164,7 +155,6 @@ class ClientLeaderBoard extends React.Component {
     }
   }
   componentWillReceiveProps(newProps){
-    console.log('new', newProps);
     this.setState({clientCollection: newProps.clientCollection});
 
   }

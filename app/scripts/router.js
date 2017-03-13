@@ -90,7 +90,7 @@ var AppRouter = Backbone.Router.extend({
       document.getElementById('app')
     )
   },
-  viewClientDetails: function(clientId){
+  viewClientDetails: function(coachId, clientId){
 
     // no client specific form created yet, but will need to pass it this prop
     ReactDOM.render(
