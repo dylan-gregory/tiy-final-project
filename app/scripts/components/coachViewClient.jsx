@@ -24,18 +24,24 @@ class CoachViewClient extends React.Component {
     var currentClient = new Client();
     var clientTodos = new TodoCollection();
 
-    this.addTodo = this.addTodo.bind(this);
 
+    var clientId = this.props.id;
+
+    console.log(clientId);
 
     clientCollection.fetch().then(() => {
       currentClient = clientCollection.findWhere({objectId: this.props.id});
 
-      clientTodos = currentClient.todos;
+      clientTodos = currentClient.get('todos');
+
+      console.log("in here", currentClient.get('todos'));
+
 
       this.setState({
         currentClient: currentClient,
         clientCollection,
-        clientTodos
+        clientTodos,
+        clientId: clientId
       });
       console.log(clientCollection);
       console.log(currentClient);
@@ -44,12 +50,19 @@ class CoachViewClient extends React.Component {
     this.state = {
       currentClient,
       clientCollection,
-      clientTodos
+      clientTodos,
     }
+
+    this.addTodo = this.addTodo.bind(this);
 
     console.log('todos', clientTodos);
   }
   addTodo(newTodo){
+    console.log('new', newTodo);
+    console.log('also todos',this.state.clientTodos);
+
+    //
+    // var newTodoItem = new Todo(newTodo);
 
     this.state.clientTodos.create(newTodo, {success: () => {
       this.setState({clientTodos: this.state.clientTodos });
@@ -70,6 +83,7 @@ class CoachViewClient extends React.Component {
           <div className="row">
             <TodoForm clientTodos={this.state.clientTodos}
                       addTodo={this.addTodo}
+                      clientId={this.state.clientId}
             />
           </div>
 
@@ -135,27 +149,36 @@ class TodoForm extends React.Component {
     this.handleNotes = this.handleNotes.bind(this);
     this.addTodo = this.addTodo.bind(this);
 
+    console.log('id in form', this.props.clientId);
+
+    var clientId = this.props.clientId;
+
 
     this.state = {
-      todos: this.props.clientTodos,
       title: '',
       dueDate: '',
-      notes: ''
+      notes: '',
+      clientId: '',
+      owner: {"__type": "Pointer", "className": "_User", "objectId": clientId},
+
     }
   }
   componentDidMount(){
     $('.datepicker').pickadate({
       selectMonths: true, // Creates a dropdown to control month
-      selectYears: 15 // Creates a dropdown of 15 years to control year
+      selectYears: 15, // Creates a dropdown of 15 years to control year
+      formatSubmit: 'd/mmm/yyyy'
     });
   }
   componentWillReceiveProps(newProps){
-    this.setState({todos: newProps.clientTodos});
+    this.setState({clientId: newProps.clientId});
+    
   }
   handleTitle(e){
     this.setState({title: e.target.value});
   }
   handleDate(e){
+    console.log('date',this.state.dueDate);
     this.setState({dueDate: e.target.value});
   }
   handleNotes(e){
@@ -164,6 +187,7 @@ class TodoForm extends React.Component {
   addTodo(e){
     e.preventDefault();
     this.props.addTodo(this.state);
+    this.setState({title: '', dueDate:'', notes: ''});
   }
   render(){
     return (
@@ -171,12 +195,12 @@ class TodoForm extends React.Component {
         <div className="row">
           <form onSubmit={this.addTodo}>
             <div>
-              <input type="text" onChange={this.handleTitle} placeholder="What should I do?" />
-              <input type="date" className="datepicker" placeholder="When is this due by?" onChange={this.handleDate}/>
+              <input type="text" onChange={this.handleTitle} placeholder="What should I do?" value={this.state.title}/>
+              <input type="date" className="datepicker" placeholder="When is this due by?" onChange={this.handleDate} />
 
                 <div className="row">
                   <div className="input-field">
-                    <textarea id="textarea1" className="materialize-textarea" onChange={this.handleNotes}></textarea>
+                    <textarea id="textarea1" className="materialize-textarea" onChange={this.handleNotes} data-value={this.state.notes}></textarea>
                     <label htmlFor="textarea1">Any notes for your client?</label>
                       <button className="btn waves-effect waves-light" type="submit" name="action">Submit
                         <i className="material-icons right">send</i>

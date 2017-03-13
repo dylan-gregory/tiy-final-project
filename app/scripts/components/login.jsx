@@ -13,7 +13,13 @@ class UserLoginContainer extends React.Component {
   }
   login(creds){
     User.login(creds, function(user){
-      Backbone.history.navigate('home/', {trigger: true});
+      if (user.get('isCoach')) {
+        Backbone.history.navigate('workspace/' + user.get('objectId'), {trigger: true});
+      }else {
+        Backbone.history.navigate('accountHome/' + user.get('objectId'), {trigger: true} );
+      }
+
+
     });
   }
   createAccount(creds){
@@ -21,7 +27,7 @@ class UserLoginContainer extends React.Component {
     var user = new User(creds);
     user.save().then(function(data){
       localStorage.setItem('user', JSON.stringify(data));
-      Backbone.history.navigate('home/', {trigger: true});
+      Backbone.history.navigate('', {trigger: true});
     });
   }
   render(){

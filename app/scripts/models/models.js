@@ -107,16 +107,19 @@ var ClientCollection = ParseCollection.extend({
 });
 
 var Todo = Backbone.Model.extend({
-  defaults: {
-    title: '',
-    dueDate: '',
-    notes: '',
-    isComplete: false
+  defaults: function() {
+    return {
+      title: '',
+      dueDate: '',
+      notes: '',
+      isComplete: false
+    }
   }
 });
 
 var TodoCollection = Backbone.Collection.extend({
-  model: Todo
+  model: Todo,
+  url: 'https://metal-slug.herokuapp.com/classes/clientTasks'
 });
 
 module.exports = {

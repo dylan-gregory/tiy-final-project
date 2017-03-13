@@ -42,23 +42,25 @@ var AppRouter = Backbone.Router.extend({
   // var isLoggedIn = localStorage.getItem('user');
   var user = User.current();
 
+  console.log(!user && name != 'login');
+
   if (!user && name != 'login') {
     this.navigate('', {trigger: true});
-
+    return false;
   }
 
-  if(user && name == 'login'){
-    this.navigate('', {trigger: true});
 
-  }
+console.log('user', user);
 
-  if (user.get('isCoach') && name == 'login'){
-    this.navigate('workspace/' + user.get('objectId'), {trigger: true});
-    return false;
+  if(user){
+    if (user.get('isCoach') && name == 'login'){
+      this.navigate('workspace/' + user.get('objectId'), {trigger: true});
+      return false;
 
-  }else if(!user.get('isCoach') && name == 'login'){
-    this.navigate('accountHome/' + user.get('objectId') , {trigger: true});
-    return false;
+    }else if(!user.get('isCoach') && name == 'login'){
+      this.navigate('accountHome/' + user.get('objectId') , {trigger: true});
+      return false;
+    }
   }
 
 
