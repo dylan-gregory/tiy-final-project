@@ -24,7 +24,7 @@ class BaseLayout extends React.Component {
              <ul id="nav-mobile" className="right hide-on-med-and-down">
 
                <li><a href="#">Client Portal</a></li>
-               <li><a href="#coachPortal/">Coach Portal</a></li>
+
                <li><a href={User.current() ? "#accountHome/" + User.current().get('objectId') : "#"}>Client page demo</a></li>
                <li><a href={User.current() ? "#workspace/" + User.current().get('objectId') : "#"}>Coach page demo</a></li>
                <li><a onClick={this.signOut} className="waves-effect waves-light btn">Log out</a></li>
@@ -41,6 +41,7 @@ class BaseLayout extends React.Component {
 }
 
 // <img className="myLogo" src="images/Logo-Red-font.svg"></img>
+// <li><a href="#coachPortal/">Coach Portal</a></li>
 
 
 module.exports = {

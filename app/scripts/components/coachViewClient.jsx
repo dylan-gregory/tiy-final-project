@@ -44,14 +44,21 @@ class CoachViewClient extends React.Component {
 
     // parseWhere didn't seem to get the job done, but this defnitely does
 
-    clientTodos.fetch().then(() => {
-      clientTodos = clientTodos.where({clientId: this.props.id});
+      clientTodos.fetch().then(() => {
+        clientTodos = clientTodos.where({clientId: this.props.id});
 
-      this.setState({
-        clientTodos: clientTodos
+        // if (clientTodos === []) {
+        //   this.setState({
+        //     clientTodos: new TodoCollection()
+        //   });
+        // }else {
+          this.setState({
+            currentTodos: clientTodos
+          });
+        // }
+
+        console.log('current', clientTodos);
       });
-      console.log('current', clientTodos);
-    });
 
     // clientTodos.parseWhere(
     //   'owner', '_User', this.props.id
@@ -63,6 +70,7 @@ class CoachViewClient extends React.Component {
       currentClient,
       clientCollection,
       clientTodos,
+      currentTodos,
       clientId
     };
 
@@ -75,14 +83,15 @@ class CoachViewClient extends React.Component {
   //
   //   console.log('these todos',this.state.clientTodos);
   // }
-  addTodo(todo){
+  addTodo(newTodo){
 
-    var newTodo = new Todo(todo);
+    // newTodo = new Todo(newTodo);
 
-    newTodo.setPointer('owner', '_User', this.state.clientId);
+    // newTodo.setPointer('owner', '_User', this.state.clientId);
 
+    console.log('in addd', this.state.clientTodos);
     this.state.clientTodos.create(newTodo, {success: () => {
-      this.setState({clientTodos: this.state.clientTodos });
+      this.setState({currentTodos: this.state.clientTodos });
     }});
   }
   render(){

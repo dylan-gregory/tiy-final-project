@@ -73,7 +73,7 @@ var Coach = ParseModel.extend({
       avatar: '',
       clients: new ClientCollection(),
       coachId: '',
-      isCoach: true
+
     }
   }
 });
@@ -96,7 +96,7 @@ var Client = ParseModel.extend({
       avatar: '',
       todos: new TodoCollection(),
       coachId: '',
-      isCoach: false
+
     }
   }
 });

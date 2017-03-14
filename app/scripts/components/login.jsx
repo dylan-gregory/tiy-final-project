@@ -27,7 +27,11 @@ class UserLoginContainer extends React.Component {
     var user = new User(creds);
     user.save().then(function(data){
       localStorage.setItem('user', JSON.stringify(data));
-      Backbone.history.navigate('', {trigger: true});
+      if (user.get('isCoach')) {
+        Backbone.history.navigate('workspace/' + user.get('objectId'), {trigger: true});
+      }else {
+        Backbone.history.navigate('accountHome/' + user.get('objectId'), {trigger: true} );
+      }
     });
   }
   render(){
@@ -36,7 +40,7 @@ class UserLoginContainer extends React.Component {
         <div className="container">
           <div className="row">
             <div className="col m6">
-              <h2>New to Momentum? Sign up</h2>
+              <h2>New? Sign up</h2>
               <UserSignupForm action={this.createAccount} submitBtn="Create Account"/>
             </div>
             <div className="col m6">
@@ -81,8 +85,8 @@ class UserLoginForm extends React.Component {
     return (
       <form onSubmit={this.handleSubmit}>
         <div className="form-group">
-          <label htmlFor="email-login">Email address</label>
-          <input onChange={this.handleEmailChange} className="form-control" name="email" id="email-login" type="email" placeholder="email" />
+          <label htmlFor="email-login">Username/Email address</label>
+          <input onChange={this.handleEmailChange} className="form-control" name="email" id="email-login" type="email" placeholder="Name/email" />
         </div>
 
         <div className="form-group">
@@ -116,7 +120,7 @@ class UserSignupForm extends React.Component {
       username: '',
       password: '',
       coachId: '',
-      isCoach: true,
+      isCoach: false,
       showBox: true
     };
   }
@@ -137,7 +141,7 @@ class UserSignupForm extends React.Component {
   toggleIdBox(){
     this.setState({showBox: !this.state.showBox, isCoach: !this.state.isCoach});
 
-    console.log('coach?', this.state.isCoach);
+    console.log('coach?', this.state);
   }
   render(){
     return (
@@ -166,8 +170,8 @@ class UserSignupForm extends React.Component {
         </div>
 
         <div className="form-group">
-          <label htmlFor="email-login">Email address</label>
-          <input onChange={this.handleEmailChange} className="form-control" name="email" id="email-login" type="email" placeholder="email" />
+          <label htmlFor="email-login">Username/Email address</label>
+          <input onChange={this.handleEmailChange} className="form-control" name="email" id="email-login" type="email" placeholder="Name/email" />
         </div>
 
         <div className="form-group">
