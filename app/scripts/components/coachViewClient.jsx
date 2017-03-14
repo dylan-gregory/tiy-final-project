@@ -75,24 +75,23 @@ class CoachViewClient extends React.Component {
     };
 
     this.addTodo = this.addTodo.bind(this);
-    // this.componentWillReceiveProps = this.componentWillReceiveProps.bind(this);
 
   }
-  // componentWillReceiveProps(newProps){
-  //
-  //
-  //   console.log('these todos',this.state.clientTodos);
-  // }
   addTodo(newTodo){
 
-    // newTodo = new Todo(newTodo);
-
-    // newTodo.setPointer('owner', '_User', this.state.clientId);
-
-    console.log('in addd', this.state.clientTodos);
+    console.log('in addd', this.state.currentTodos);
     this.state.clientTodos.create(newTodo, {success: () => {
+
       this.setState({currentTodos: this.state.clientTodos });
     }});
+
+    this.state.clientTodos.fetch().then(() => {
+      var updatedTodo = this.state.clientTodos.where({clientId: this.props.id});
+        this.setState({
+          currentTodos: updatedTodo
+        });
+
+    });
   }
   render(){
     return (
@@ -103,13 +102,13 @@ class CoachViewClient extends React.Component {
           <div className="row">
 
             <ClientTodoList currentClient={this.state.currentClient}
-            clientTodos={this.state.clientTodos}
+            currentTodos={this.state.currentTodos}
             />
 
           </div>
 
           <div className="row">
-            <TodoForm clientTodos={this.state.clientTodos}
+            <TodoForm currentTodos={this.state.currentTodos}
                       addTodo={this.addTodo}
                       clientId={this.state.clientId}
             />
@@ -128,18 +127,18 @@ class ClientTodoList extends React.Component {
   constructor(props){
     super(props);
 
-    var clientTodos = this.props.clientTodos;
+    var currentTodos = this.props.currentTodos;
 
-    console.log('todos in list', this.props.clientTodos);
+    console.log('todos in list', this.props.currentTodos);
 
     this.state = {
       currentClient: this.props.currentClient,
-      clientTodos: clientTodos
+      currentTodos: currentTodos
     }
 
   }
   componentWillReceiveProps(newProps){
-    this.setState({clientTodos: newProps.clientTodos});
+    this.setState({currentTodos: newProps.currentTodos});
 
   }
   componentDidMount(){
@@ -148,7 +147,7 @@ class ClientTodoList extends React.Component {
 
   }
   render(){
-    var todoList = this.state.clientTodos.map(todo =>{
+    var todoList = this.state.currentTodos.map(todo =>{
       return (
 
         <li key={todo.cid}>
