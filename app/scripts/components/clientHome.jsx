@@ -101,7 +101,10 @@ class MyTodoList extends React.Component {
           <input type="checkbox" className={todo.cid} id="filled-in-box" onClick={(e) => {e.preventDefault();
                      this.taskDone(todo.cid);}}/>
           <label htmlFor="filled-in-box"></label>
-            <div className="collapsible-header">{todo.get('title')}{todo.get('dueDate')}</div>
+            <div className="collapsible-header">{todo.get('title')}{todo.get('dueDate')}
+
+              
+            </div>
 
           <div className="collapsible-body">
             {todo.get('notes')}

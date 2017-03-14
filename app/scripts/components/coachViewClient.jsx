@@ -75,6 +75,7 @@ class CoachViewClient extends React.Component {
     };
 
     this.addTodo = this.addTodo.bind(this);
+    this.deleteTodo = this.deleteTodo.bind(this);
 
   }
   addTodo(newTodo){
@@ -82,16 +83,38 @@ class CoachViewClient extends React.Component {
     console.log('in addd', this.state.currentTodos);
     this.state.clientTodos.create(newTodo, {success: () => {
 
-      this.setState({currentTodos: this.state.clientTodos });
+      this.state.clientTodos.fetch().then(() => {
+        var updatedTodo = this.state.clientTodos.where({clientId: this.props.id});
+          this.setState({
+            currentTodos: updatedTodo
+          });
+
+      });
+      // this.setState({currentTodos: this.state.clientTodos });
     }});
 
-    this.state.clientTodos.fetch().then(() => {
-      var updatedTodo = this.state.clientTodos.where({clientId: this.props.id});
-        this.setState({
-          currentTodos: updatedTodo
-        });
+    // this.state.clientTodos.fetch().then(() => {
+    //   var updatedTodo = this.state.clientTodos.where({clientId: this.props.id});
+    //     this.setState({
+    //       currentTodos: updatedTodo
+    //     });
+    //
+    // });
+  }
+  deleteTodo(todo){
+    console.log('clicked!');
+    todo.destroy({success: () =>{
 
-    });
+      this.state.clientTodos.fetch().then(() => {
+        var updatedTodo = this.state.clientTodos.where({clientId: this.props.id});
+          this.setState({
+            currentTodos: updatedTodo
+          });
+
+      });
+
+    }});
+
   }
   render(){
     return (
@@ -103,6 +126,7 @@ class CoachViewClient extends React.Component {
 
             <ClientTodoList currentClient={this.state.currentClient}
             currentTodos={this.state.currentTodos}
+            deleteTodo={this.deleteTodo}
             />
 
           </div>
@@ -151,9 +175,18 @@ class ClientTodoList extends React.Component {
       return (
 
         <li key={todo.cid}>
-          <div className="collapsible-header"><input type="checkbox"/>{todo.get('title')}{todo.get('dueDate')}</div>
+          <div className="collapsible-header"><input type="checkbox"/>{todo.get('title')}{todo.get('dueDate')}
+
+          </div>
           <div className="collapsible-body">
             {todo.get('notes')}
+
+            <a className="btn-floating btn-small waves-effect waves-light red" onClick={(e) => {
+                event.preventDefault();
+            this.props.deleteTodo(todo);}}>
+            <i className="material-icons">close</i>
+            </a>
+
           </div>
         </li>
       )
@@ -234,7 +267,7 @@ class TodoForm extends React.Component {
 
                 <div className="row">
                   <div className="input-field">
-                    <textarea id="textarea1" className="materialize-textarea" onChange={this.handleNotes} data-value={this.state.notes}></textarea>
+                    <textarea id="textarea1" className="materialize-textarea" onChange={this.handleNotes} value={this.state.notes}></textarea>
                     <label htmlFor="textarea1">Any notes for your client?</label>
                       <button className="btn waves-effect waves-light" type="submit" name="action">Submit
                         <i className="material-icons right">send</i>
