@@ -110,12 +110,14 @@ class UserSignupForm extends React.Component {
     this.handlePasswordChange = this.handlePasswordChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleCoachChange = this.handleCoachChange.bind(this);
+    this.toggleIdBox = this.toggleIdBox.bind(this);
 
     this.state = {
       username: '',
       password: '',
       coachId: '',
-      isCoach: false
+      isCoach: true,
+      showBox: true
     };
   }
   handleEmailChange(e){
@@ -132,6 +134,11 @@ class UserSignupForm extends React.Component {
     // input data.... this.state
     this.props.action(this.state);
   }
+  toggleIdBox(){
+    this.setState({showBox: !this.state.showBox, isCoach: !this.state.isCoach});
+
+    console.log('coach?', this.state.isCoach);
+  }
   render(){
     return (
       <form onSubmit={this.handleSubmit}>
@@ -140,16 +147,22 @@ class UserSignupForm extends React.Component {
           <div className="switch">
             <label>
               New client?
-              <input type="checkbox" />
+              <input type="checkbox" id="mySwitch" onClick={this.toggleIdBox}/>
               <span className="lever"></span>
               New Coach?
             </label>
           </div>
 
-          
 
-          <label htmlFor="your-coach-id">ID# of Your Coach</label>
-          <input onChange={this.handleCoachChange} className="form-control" name="coach-id" id="your-coach-id" type="text" placeholder="ID#" />
+
+          {this.state.showBox ?
+            <div>
+              <label htmlFor="your-coach-id">ID# of Your Coach</label>
+              <input onChange={this.handleCoachChange} className="form-control" name="coach-id" id="your-coach-id" type="text" placeholder="ID#" />
+          </div>
+          : null
+         }
+
         </div>
 
         <div className="form-group">
@@ -167,6 +180,7 @@ class UserSignupForm extends React.Component {
     )
   }
 }
+
 
 module.exports = {
   UserLoginContainer
