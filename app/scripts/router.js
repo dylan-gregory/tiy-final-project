@@ -42,15 +42,10 @@ var AppRouter = Backbone.Router.extend({
   // var isLoggedIn = localStorage.getItem('user');
   var user = User.current();
 
-  console.log(!user && name != 'login');
-
   if (!user && name != 'login') {
     this.navigate('', {trigger: true});
     return false;
   }
-
-
-console.log('user', user);
 
   if(user){
     if (user.get('isCoach') && name == 'login'){
@@ -93,8 +88,6 @@ console.log('user', user);
     )
   },
   viewClientDetails: function(coachId, clientId){
-
-    // no client specific form created yet, but will need to pass it this prop
     ReactDOM.render(
       React.createElement(CoachViewClient, {coachId:coachId, id: clientId}),
       document.getElementById('app')

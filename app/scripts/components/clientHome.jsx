@@ -45,6 +45,17 @@ class ClientHomeContainer extends React.Component {
     };
 
   }
+  checkOffTodo(todo){
+    if (todo.get('isComplete')) {
+      todo.set('isComplete', false);
+    }else {
+      todo.set('isComplete', true);
+    }
+
+    console.log(todo.get('isComplete'));
+
+    todo.save();
+  }
   render(){
     return (
       <BaseLayout>
@@ -52,7 +63,10 @@ class ClientHomeContainer extends React.Component {
           <div className="row">
             <h3> Welcome: {this.state.currentClient.get('username')}</h3>
 
-            <MyTodoList clientTodos={this.state.clientTodos}/>
+            <MyTodoList
+              clientTodos={this.state.clientTodos}
+              checkOffTodo={this.checkOffTodo}
+            />
 
             <div className="col m4">
               <h3>Calorie counter/Nutritionix search will go here</h3>
@@ -88,22 +102,30 @@ class MyTodoList extends React.Component {
     $('.collapsible').collapsible();
 
   }
-  taskDone(todo){
-    console.log('this todo', todo);
-    $(todo).prop('checked', true);
-  }
+  // taskDone(todo){
+  //   console.log('this todo', todo);
+  //   $('#' + todo).prop('checked', true);
+  //
+  //   console.log("comp", todo);
+  // }
   render(){
+
     var todoList = this.state.clientTodos.map(todo =>{
       return (
 
-        <li key={todo.cid} id={todo.cid}>
+        <li key={todo.cid}>
+          {console.log(todo.get('isComplete'))}
+          <input type="checkbox" defaultChecked={todo.get('isComplete') == true? "checked" : null}
+            className="filled-in" id={todo.cid}
+            onClick={() => {
+              this.props.checkOffTodo(todo);
+              }}
 
-          <input type="checkbox" className={todo.cid} id="filled-in-box" onClick={(e) => {e.preventDefault();
-                     this.taskDone(todo.cid);}}/>
-          <label htmlFor="filled-in-box"></label>
+              />
+          <label htmlFor={todo.cid}></label>
             <div className="collapsible-header">{todo.get('title')}{todo.get('dueDate')}
 
-              
+
             </div>
 
           <div className="collapsible-body">

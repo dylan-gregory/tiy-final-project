@@ -19,16 +19,12 @@ class CoachViewClient extends React.Component {
   constructor(props){
     super(props);
 
-    console.log('current clientId', this.props.id);
     var clientCollection = new ClientCollection();
     var currentClient = new Client();
     var clientTodos = new TodoCollection();
     var currentTodos = new TodoCollection();
 
-
     var clientId = this.props.id;
-
-    console.log(clientId);
 
     clientCollection.fetch().then(() => {
       currentClient = clientCollection.findWhere({objectId: this.props.id});
@@ -37,8 +33,7 @@ class CoachViewClient extends React.Component {
         currentClient: currentClient,
         clientCollection
       });
-      console.log(clientCollection);
-      console.log(currentClient);
+
     });
 
 
@@ -57,7 +52,6 @@ class CoachViewClient extends React.Component {
           });
         // }
 
-        console.log('current', clientTodos);
       });
 
     // clientTodos.parseWhere(
@@ -80,7 +74,6 @@ class CoachViewClient extends React.Component {
   }
   addTodo(newTodo){
 
-    console.log('in addd', this.state.currentTodos);
     this.state.clientTodos.create(newTodo, {success: () => {
 
       this.state.clientTodos.fetch().then(() => {
@@ -177,6 +170,11 @@ class ClientTodoList extends React.Component {
         <li key={todo.cid}>
           <div className="collapsible-header"><input type="checkbox"/>{todo.get('title')}{todo.get('dueDate')}
 
+            {todo.get('isComplete') ? <span>
+              <i className="material-icons">check_circle</i>
+            </span>
+            : null }
+
           </div>
           <div className="collapsible-body">
             {todo.get('notes')}
@@ -216,8 +214,6 @@ class TodoForm extends React.Component {
     this.handleNotes = this.handleNotes.bind(this);
     this.addTodo = this.addTodo.bind(this);
 
-    console.log('id in form', this.props.clientId);
-
     var clientId = this.props.clientId;
 
 
@@ -232,9 +228,10 @@ class TodoForm extends React.Component {
   }
   componentDidMount(){
     $('.datepicker').pickadate({
+      formatSubmit: 'd/mmm/yyyy',
+      hiddenName: true,
       selectMonths: true, // Creates a dropdown to control month
-      selectYears: 15, // Creates a dropdown of 15 years to control year
-      formatSubmit: 'd/mmm/yyyy'
+      selectYears: 15 // Creates a dropdown of 15 years to control year
     });
   }
   componentWillReceiveProps(newProps){
@@ -245,7 +242,6 @@ class TodoForm extends React.Component {
     this.setState({title: e.target.value});
   }
   handleDate(e){
-    console.log('date',this.state.dueDate);
     this.setState({dueDate: e.target.value});
   }
   handleNotes(e){
@@ -263,7 +259,10 @@ class TodoForm extends React.Component {
           <form onSubmit={this.addTodo}>
             <div>
               <input type="text" onChange={this.handleTitle} placeholder="What should I do?" value={this.state.title}/>
-              <input type="date" className="datepicker" placeholder="When is this due by?" onChange={this.handleDate} />
+
+              <input name="date_input" type="date" className="datepicker" placeholder="When is this due by?"  />
+
+              <input type="hidden" name="date_input"  onChange={this.handleDate} />
 
                 <div className="row">
                   <div className="input-field">
