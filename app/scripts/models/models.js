@@ -68,11 +68,13 @@ var ParseCollection = Backbone.Collection.extend({
 
 var Coach = ParseModel.extend({
   defaults: function(){
-    // name: '',
-    // // avatar: '',
-    // clients: new ClientCollection(),
-    // coachId: '',
-    isCoach: true
+    return {
+      name: '',
+      avatar: '',
+      clients: new ClientCollection(),
+      coachId: '',
+      isCoach: true
+    }
   }
 });
 
@@ -106,7 +108,7 @@ var ClientCollection = ParseCollection.extend({
   baseUrl: 'https://metal-slug.herokuapp.com/users'
 });
 
-var Todo = Backbone.Model.extend({
+var Todo = ParseModel.extend({
   defaults: function() {
     return {
       title: '',

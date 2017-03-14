@@ -96,7 +96,7 @@ console.log('user', user);
 
     // no client specific form created yet, but will need to pass it this prop
     ReactDOM.render(
-      React.createElement(CoachViewClient, {id: clientId}),
+      React.createElement(CoachViewClient, {coachId:coachId, id: clientId}),
       document.getElementById('app')
     )
   }

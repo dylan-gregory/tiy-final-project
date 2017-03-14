@@ -70,9 +70,8 @@ class CoachWorkspaceContainer extends React.Component{
   }
   componentWillReceiveProps(newProps){
     this.setState({clientCollection: newProps.clientCollection});
-
-
-
+    //
+    // this.setState({currentCoach: newProps.currentCoach});
   }
   render(){
     return (

@@ -19,10 +19,11 @@ class CoachViewClient extends React.Component {
   constructor(props){
     super(props);
 
-    console.log(this.props.id);
+    console.log('current clientId', this.props.id);
     var clientCollection = new ClientCollection();
     var currentClient = new Client();
     var clientTodos = new TodoCollection();
+    var currentTodos = new TodoCollection();
 
 
     var clientId = this.props.id;
@@ -40,11 +41,23 @@ class CoachViewClient extends React.Component {
       console.log(currentClient);
     });
 
-    clientTodos.parseWhere(
-      'owner', '_User', clientId
-    ).fetch().then(() => {
-      this.setState({clientTodos: clientTodos});
+
+    // parseWhere didn't seem to get the job done, but this defnitely does
+
+    clientTodos.fetch().then(() => {
+      clientTodos = clientTodos.where({clientId: this.props.id});
+
+      this.setState({
+        clientTodos: clientTodos
+      });
+      console.log('current', clientTodos);
     });
+
+    // clientTodos.parseWhere(
+    //   'owner', '_User', this.props.id
+    // ).fetch().then(() => {
+    //   this.setState({clientTodos: clientTodos});
+    // });
 
     this.state = {
       currentClient,
@@ -62,11 +75,11 @@ class CoachViewClient extends React.Component {
   //
   //   console.log('these todos',this.state.clientTodos);
   // }
-  addTodo(newTodo){
+  addTodo(todo){
 
+    var newTodo = new Todo(todo);
 
-    //
-    // var newTodoItem = new Todo(newTodo);
+    newTodo.setPointer('owner', '_User', this.state.clientId);
 
     this.state.clientTodos.create(newTodo, {success: () => {
       this.setState({clientTodos: this.state.clientTodos });
@@ -108,6 +121,8 @@ class ClientTodoList extends React.Component {
 
     var clientTodos = this.props.clientTodos;
 
+    console.log('todos in list', this.props.clientTodos);
+
     this.state = {
       currentClient: this.props.currentClient,
       clientTodos: clientTodos
@@ -115,15 +130,20 @@ class ClientTodoList extends React.Component {
 
   }
   componentWillReceiveProps(newProps){
-    this.setState({currentClient: newProps.currentClient});
+    this.setState({clientTodos: newProps.clientTodos});
+
+  }
+  componentDidMount(){
+
+    $('.collapsible').collapsible();
 
   }
   render(){
     var todoList = this.state.clientTodos.map(todo =>{
       return (
 
-        <li key={client.cid}>
-          <div className="collapsible-header"><input type="checkbox"/>{todo.get('title')}{todo.get('dueDate')}{todo.get('title')}</div>
+        <li key={todo.cid}>
+          <div className="collapsible-header"><input type="checkbox"/>{todo.get('title')}{todo.get('dueDate')}</div>
           <div className="collapsible-body">
             {todo.get('notes')}
           </div>

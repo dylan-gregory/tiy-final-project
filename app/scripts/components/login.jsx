@@ -136,6 +136,18 @@ class UserSignupForm extends React.Component {
     return (
       <form onSubmit={this.handleSubmit}>
         <div className="form-group">
+
+          <div className="switch">
+            <label>
+              New client?
+              <input type="checkbox" />
+              <span className="lever"></span>
+              New Coach?
+            </label>
+          </div>
+
+          
+
           <label htmlFor="your-coach-id">ID# of Your Coach</label>
           <input onChange={this.handleCoachChange} className="form-control" name="coach-id" id="your-coach-id" type="text" placeholder="ID#" />
         </div>
