@@ -10,6 +10,7 @@ var CoachLoginContainer = require('./components/coachLogin.jsx').CoachLoginConta
 var CoachWorkspaceContainer = require('./components/coachWorkspace.jsx').CoachWorkspaceContainer;
 var ClientHomeContainer = require('./components/clientHome.jsx').ClientHomeContainer;
 var CoachViewClient = require('./components/coachViewClient.jsx').CoachViewClient;
+var AccountSettingsContainer = require('./components/accountSettings.jsx').AccountSettingsContainer;
 
 var User = require('./models/user.js').User;
 
@@ -17,9 +18,11 @@ var AppRouter = Backbone.Router.extend({
   routes: {
     '': 'login',
     'accountHome/:clientId': 'clientHome',
-    'coachPortal/': 'coachPortal',
+    'accountHome/:clientId/settings': 'clientSettings',
+    // 'coachPortal/': 'coachPortal',
     'workspace/:coachId': 'coachWorkspace',
-    'workspace/:coachId/:clientId': 'viewClientDetails'
+    'workspace/:coachId/settings': 'coachSettings',
+    'workspace/:coachId/:clientId': 'viewClientDetails',
   },
   initialize: function(){
 
@@ -68,12 +71,12 @@ var AppRouter = Backbone.Router.extend({
       document.getElementById('app')
     )
   },
-  coachPortal: function(){
-    ReactDOM.render(
-      React.createElement(CoachLoginContainer),
-      document.getElementById('app')
-    )
-  },
+  // coachPortal: function(){
+  //   ReactDOM.render(
+  //     React.createElement(CoachLoginContainer),
+  //     document.getElementById('app')
+  //   )
+  // },
   coachWorkspace: function(coachId){
 
     ReactDOM.render(
@@ -90,6 +93,18 @@ var AppRouter = Backbone.Router.extend({
   viewClientDetails: function(coachId, clientId){
     ReactDOM.render(
       React.createElement(CoachViewClient, {coachId:coachId, id: clientId}),
+      document.getElementById('app')
+    )
+  },
+  clientSettings: function(){
+    ReactDOM.render(
+      React.createElement(AccountSettingsContainer),
+      document.getElementById('app')
+    )
+  },
+  coachSettings: function(){
+    ReactDOM.render(
+      React.createElement(AccountSettingsContainer),
       document.getElementById('app')
     )
   }
