@@ -236,10 +236,10 @@ class TodoForm extends React.Component {
       // selectYears: 15 // Creates a dropdown of 15 years to control year
     });
 
+    // This was the simplest thing in the world that took WAY too long to figure out 
     $('.datepicker').change(() => {
       this.setState({dueDate: $('.datepicker').val()});
     });
-    console.log('here', $('.datepicker').val());
 
   }
   componentWillReceiveProps(newProps){

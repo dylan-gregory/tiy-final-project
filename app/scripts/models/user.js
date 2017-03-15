@@ -8,6 +8,12 @@ var User = Backbone.Model.extend({
   idAttribute: 'objectId',
   urlRoot: function(){
     return parse.BASE_API_URL + '/users';
+  },
+  save: function(key, val, options){
+    delete this.attributes.createdAt;
+    delete this.attributes.updatedAt;
+
+    return Backbone.Model.prototype.save.apply(this, arguments);
   }
 }, {
   login: function(credentials, callback){

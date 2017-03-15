@@ -124,6 +124,15 @@ var TodoCollection = ParseCollection.extend({
   url: 'https://metal-slug.herokuapp.com/classes/clientTasks'
 });
 
+var Detail = ParseModel.extend({
+
+});
+
+var DetailCollection = ParseCollection.extend({
+  model: Detail,
+  url: 'https://metal-slug.herokuapp.com/classes/clientDetails'
+});
+
 module.exports = {
   Coach,
   CoachCollection,
@@ -131,5 +140,7 @@ module.exports = {
   ClientCollection,
   Todo,
   TodoCollection,
-  ParseModel
+  ParseModel,
+  Detail,
+  DetailCollection
 };
