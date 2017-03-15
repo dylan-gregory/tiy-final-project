@@ -130,5 +130,6 @@ module.exports = {
   Client,
   ClientCollection,
   Todo,
-  TodoCollection
+  TodoCollection,
+  ParseModel
 };
