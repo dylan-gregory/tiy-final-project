@@ -96,15 +96,15 @@ var AppRouter = Backbone.Router.extend({
       document.getElementById('app')
     )
   },
-  clientSettings: function(){
+  clientSettings: function(id){
     ReactDOM.render(
-      React.createElement(AccountSettingsContainer),
+      React.createElement(AccountSettingsContainer, {id: id}),
       document.getElementById('app')
     )
   },
-  coachSettings: function(){
+  coachSettings: function(id){
     ReactDOM.render(
-      React.createElement(AccountSettingsContainer),
+      React.createElement(AccountSettingsContainer, {id: id}),
       document.getElementById('app')
     )
   }

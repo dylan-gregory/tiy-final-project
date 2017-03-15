@@ -34,11 +34,7 @@ class CoachWorkspaceContainer extends React.Component{
         coachCollection: coachCollection,
         clientCollection: clientCollection
       });
-      //
-      //
-      // console.log(coachCollection);
-      // console.log(currentCoach);
-      // console.log('clients', clientCollection);
+
     });
 
     // var userId = User.current().get('objectId');
@@ -122,12 +118,11 @@ class CoachClientList extends React.Component {
     var clientList = this.state.clientCollection.map(client =>{
       return (
 
-          <li key={client.cid}>
-            <div className="collapsible-header"><a href={'#workspace/' + this.state.currentCoach.get('objectId') +'/' + client.get('objectId')}>{client.get('username')}</a></div>
-            <div className="collapsible-body">
-              <div className="progress">
-                  <div className="determinate"></div>
-              </div>
+          <li className="collection-item avatar" key={client.cid}>
+            <div >
+              <img src="" alt="" className="circle red" />
+              <a href={'#workspace/' + this.state.currentCoach.get('objectId') +'/' + client.get('objectId')}>{client.get('username')}</a>
+
             </div>
           </li>
 
@@ -135,7 +130,7 @@ class CoachClientList extends React.Component {
     });
 
     return (
-        <ul className="collapsible" data-collapsible="accordion">
+        <ul className="collection">
           {clientList}
         </ul>
 

@@ -13,6 +13,7 @@ var TodoCollection = require('../models/models.js').TodoCollection;
 require('materialize-sass-origin/js/collapsible.js');
 require('materialize-sass-origin/js/jquery.easing.1.3.js');
 require('materialize-sass-origin/js/date_picker/picker.date.js');
+require('materialize-sass-origin/js/date_picker/picker.js');
 
 
 class CoachViewClient extends React.Component {
@@ -213,6 +214,7 @@ class TodoForm extends React.Component {
     this.handleDate = this.handleDate.bind(this);
     this.handleNotes = this.handleNotes.bind(this);
     this.addTodo = this.addTodo.bind(this);
+    this.componentDidMount = this.componentDidMount.bind(this);
 
     var clientId = this.props.clientId;
 
@@ -229,10 +231,16 @@ class TodoForm extends React.Component {
   componentDidMount(){
     $('.datepicker').pickadate({
       formatSubmit: 'd/mmm/yyyy',
-      hiddenName: true,
-      selectMonths: true, // Creates a dropdown to control month
-      selectYears: 15 // Creates a dropdown of 15 years to control year
+      hiddenName: true
+      // selectMonths: true, // Creates a dropdown to control month
+      // selectYears: 15 // Creates a dropdown of 15 years to control year
     });
+
+    $('.datepicker').change(() => {
+      this.setState({dueDate: $('.datepicker').val()});
+    });
+    console.log('here', $('.datepicker').val());
+
   }
   componentWillReceiveProps(newProps){
     this.setState({clientId: newProps.clientId});
@@ -242,7 +250,10 @@ class TodoForm extends React.Component {
     this.setState({title: e.target.value});
   }
   handleDate(e){
-    this.setState({dueDate: e.target.value});
+
+    console.log('date', this.state.dueDate);
+
+    // this.setState({dueDate: });
   }
   handleNotes(e){
     this.setState({notes: e.target.value});
@@ -250,7 +261,7 @@ class TodoForm extends React.Component {
   addTodo(e){
     e.preventDefault();
     this.props.addTodo(this.state);
-    this.setState({title: '', dueDate:'', notes: ''});
+    this.setState({title: '', dueDate: '', notes: ''});
   }
   render(){
     return (
@@ -260,9 +271,7 @@ class TodoForm extends React.Component {
             <div>
               <input type="text" onChange={this.handleTitle} placeholder="What should I do?" value={this.state.title}/>
 
-              <input name="date_input" type="date" className="datepicker" placeholder="When is this due by?"  />
-
-              <input type="hidden" name="date_input"  onChange={this.handleDate} />
+              <input name="date-input" type="date" onChange={this.handleDate} className="datepicker" placeholder="When is this due by?"/>
 
                 <div className="row">
                   <div className="input-field">
@@ -281,6 +290,7 @@ class TodoForm extends React.Component {
     )
   }
 }
+
 
 module.exports = {
   CoachViewClient
