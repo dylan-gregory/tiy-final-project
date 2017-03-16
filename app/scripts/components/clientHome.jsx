@@ -9,6 +9,7 @@ var Client = require('../models/models.js').Client;
 var ClientCollection = require('../models/models.js').ClientCollection;
 var Todo = require('../models/models.js').Todo;
 var TodoCollection = require('../models/models.js').TodoCollection;
+var NutritionixSearch = require('../models/nutritionixSearch.js').Nutritionix;
 
 
 class ClientHomeContainer extends React.Component {
@@ -18,6 +19,7 @@ class ClientHomeContainer extends React.Component {
     var clientCollection = new ClientCollection();
     var currentClient = new Client();
     var clientTodos = new TodoCollection();
+
 
 
     clientCollection.fetch().then(() => {
@@ -70,6 +72,9 @@ class ClientHomeContainer extends React.Component {
 
             <div className="col m4">
               <h3>Calorie counter/Nutritionix search will go here</h3>
+
+            <SearchBar />
+
             </div>
           </div>
         </div>
@@ -149,6 +154,40 @@ class MyTodoList extends React.Component {
             </form>
         </div>
 
+    )
+  }
+}
+
+class SearchBar extends React.Component {
+  constructor(props){
+    super(props);
+
+
+    this.state = {
+      results: ''
+    }
+
+  }
+  search(e){
+    var searchFor = e.target.value;
+
+    var nutritionixSearch = new NutritionixSearch();
+
+    nutritionixSearch.search(searchFor);
+
+    console.log(nutritionixSearch.search(searchFor));
+
+  }
+  render(){
+
+    return (
+      <div className="search-wrapper card">
+        <form>
+          <input id="search" onChange={this.search}/>
+          <i className="material-icons">search</i>
+
+        </form>
+      </div>
     )
   }
 }

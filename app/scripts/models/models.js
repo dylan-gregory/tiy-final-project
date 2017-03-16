@@ -1,9 +1,26 @@
 var Backbone = require('backbone');
 
-var parse = require('../setup');
+var parse = require('../setup').parse;
 
 var ParseModel = Backbone.Model.extend({
   idAttribute: 'objectId',
+  sync: function(){
+    var User = require('./user.js').User;
+    var user = User.current();
+
+    if(user){
+      parse.initialize({sessionId: user.get('sessionToken')});
+    }else{
+      parse.initialize();
+    }
+
+
+    var xhr = Backbone.Model.prototype.sync.apply(this, arguments);
+
+    parse.deinitialize();
+
+    return xhr;
+  },
   save: function(key, val, options){
     delete this.attributes.createdAt;
     delete this.attributes.updatedAt;
@@ -63,8 +80,25 @@ var ParseCollection = Backbone.Collection.extend({
   },
   parse: function(data){
     return data.results;
+  },
+  sync: function(){
+    var User = require('./user.js').User;
+    var user = User.current();
+
+    if(user){
+      parse.initialize({sessionId: user.get('sessionToken')});
+    }else{
+      parse.initialize();
+    }
+
+    var xhr = Backbone.Collection.prototype.sync.apply(this, arguments);
+
+    parse.deinitialize();
+
+    return xhr;
   }
 });
+
 
 var Coach = ParseModel.extend({
   defaults: function(){

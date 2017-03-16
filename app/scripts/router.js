@@ -25,18 +25,18 @@ var AppRouter = Backbone.Router.extend({
     'workspace/:coachId/:clientId': 'viewClientDetails',
   },
   initialize: function(){
-
-    if (User.current()) {
-      var user = User.current();
-      parse.setup({
-        BASE_API_URL: 'https://metal-slug.herokuapp.com', sessionID: user.get('sessionToken')
-      });
-
-    }else {
-      parse.setup({
-        BASE_API_URL: 'https://metal-slug.herokuapp.com'
-      });
-    }
+    // 
+    // if (User.current()) {
+    //   var user = User.current();
+    //   parse.initialize({
+    //     BASE_API_URL: 'https://metal-slug.herokuapp.com', sessionID: user.get('sessionToken')
+    //   });
+    //
+    // }else {
+    //   parse.initialize({
+    //     BASE_API_URL: 'https://metal-slug.herokuapp.com'
+    //   });
+    // }
   // Do the parse setup to set headers and configure API url
 
 

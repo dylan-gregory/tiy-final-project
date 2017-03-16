@@ -4,9 +4,12 @@ var $ = require('jquery');
  * User authentication requests with Parse server
  **/
 
+
 var parse = {
   BASE_API_URL: '',
-  setup: function(config){
+  initialize: function(config){
+    config = config || {};
+
     if (config.BASE_API_URL){
       this.BASE_API_URL = config.BASE_API_URL;
     }
@@ -21,6 +24,13 @@ var parse = {
         }
       }
     });
+  },
+  deinitialize: function(){
+    $.ajaxSetup({
+      beforeSend: function(xhr){
+
+      }
+    });
   }
 }
 
@@ -28,4 +38,6 @@ var parse = {
  * Nutritionix API request may go here?
  **/
 
-module.exports = parse;
+module.exports = {
+  parse
+};
