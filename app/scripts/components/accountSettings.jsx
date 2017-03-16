@@ -26,12 +26,28 @@ class AccountSettingsContainer extends React.Component {
     var currentClient = new Client();
     var coachCollection = new CoachCollection();
     var currentCoach = new Coach();
-
+    var currentDetail = new Detail();
     var detailCollection = new DetailCollection();
 
     var user = User.current();
 
     var userId = User.current().get('objectId');
+
+
+
+    detailCollection.fetch().then(() => {
+      currentDetail = detailCollection.findWhere({ownerId: userId});
+
+      var pic = currentDetail.get('pic');
+
+      this.setState({
+        currentDetail: currentDetail,
+        detailCollection,
+        pic
+      });
+      console.log(currentDetail);
+
+    });
 
     // if (User.current().get('isCoach')) {
     //   coachCollection.fetch().then(() => {
@@ -57,32 +73,45 @@ class AccountSettingsContainer extends React.Component {
 
     this.state = {
       user,
-      detailCollection
+      userId,
+      detailCollection,
+      currentDetail,
+      pic: ''
       // currentClient,
       // currentCoach,
       // userId: userId
     };
 
-    console.log(User.current());
-    console.log('client', this.state.currentClient);
 
-    this.submitEdit = this.submitEdit.bind(this);
+
+    this.submitNewDetail = this.submitNewDetail.bind(this);
 
   }
-  submitEdit(newDetail){
+  submitNewDetail(newDetail){
 
     this.state.detailCollection.create(newDetail, {success: () => {
 
-      console.log('new', newDetail);
-      // this.state.detailCollection.fetch().then(() => {
-      //   var updatedTodo = this.state.detailCollection.where({clientId: this.props.id});
-      //     this.setState({
-      //       currentTodos: updatedTodo
-      //     });
-      //
-      // });
-      // this.setState({currentTodos: this.state.clientTodos });
+
+      this.state.detailCollection.fetch().then(() => {
+        var currentDetail = this.state.detailCollection.findWhere({ownerId: this.state.userId});
+
+        var pic = currentDetail.get('pic');
+
+        this.setState({
+          currentDetail: currentDetail,
+          detailCollection: this.state.detailCollection,
+          pic
+        });
+
+      });
     }});
+
+    this.componentWillReceiveProps = this.componentWillReceiveProps.bind(this);
+
+  }
+  componentWillReceiveProps(newProps){
+    this.setState({currentDetail: newProps.currentDetail});
+
 
   }
   render(){
@@ -93,20 +122,27 @@ class AccountSettingsContainer extends React.Component {
         <div className="container">
           <div className="col m12">
             <div className="row">
-              <h3>Account Info: {User.current().get('username')}</h3>
+              <h3>
+                <ul className="collection">
+                  <li className="collection-item avatar">
+                  <img className="circle" src={this.state.pic.url} />
+                  {this.state.currentDetail.get('name')}
+                  </li>
+                </ul>
+              </h3>
                 <div className="card large">
                   <div className="card-image waves-effect waves-block waves-light">
                     <img className="activator" src="images/stock-card-pic.jpg" />
                   </div>
                   <div className="card-content">
-                    <span className="card-title activator grey-text text-darken-4">{User.current().get('username')}<i className="material-icons right">more_vert</i></span>
-                    <p><a href="#">This is a link</a></p>
+                    <span className="card-title activator grey-text text-darken-4">{this.state.currentDetail.get('email')}<i className="material-icons right">more_vert</i></span>
+                    <div>{this.state.currentDetail.get('phone')}</div>
                   </div>
                   <div className="card-reveal">
                     <span className="card-title grey-text text-darken-4">Edit Info<i className="material-icons right">close</i></span>
                     <p>Here is some more information about this product that is only revealed once clicked on.</p>
 
-                    <UploadForm submitEdit={this.submitEdit}
+                    <UploadForm submitNewDetail={this.submitNewDetail}
                                 user={this.state.user}
                     />
 
@@ -177,7 +213,7 @@ class UploadForm extends React.Component{
 
     console.log('save?', this.state);
     // I will actually send state to the parent component, but this is what it might look like there
-    // this.props.submitEdit(this.state);
+    // this.props.submitNewDetail(this.state);
     var pic = this.state.pic;
     var fileUpload = new ParseFile(pic);
 
@@ -207,7 +243,7 @@ class UploadForm extends React.Component{
       //   console.log(puppy);
       //   // Backbone.history.navigate('detail/', {trigger: true});
       // });
-      this.props.submitEdit(this.state);
+      this.props.submitNewDetail(this.state);
 
     });
 
@@ -225,7 +261,16 @@ class UploadForm extends React.Component{
                 <input type="text" onChange={this.handleNumberChange} placeholder="Phone #" />
                 <input type="text" onChange={this.handleEmailChange} placeholder="Email address" />
 
-                  <input type="file" onChange={this.handlePicChange} />
+                    <div className="file-field input-field">
+                      <div className="btn">
+                        <span>Upload Avatar</span>
+                        <input type="file" onChange={this.handlePicChange}/>
+                      </div>
+                      <div className="file-path-wrapper">
+                        <input className="file-path validate" type="text" />
+                      </div>
+                    </div>
+
                     <img src={this.state.preview} />
 
 
