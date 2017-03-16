@@ -5,8 +5,6 @@ var parse = require('../setup.js').parse;
 
 var ParseModel = require('./models.js').ParseModel;
 
-console.log('parse', parse);
-
 
 var User = ParseModel.extend({
   idAttribute: 'objectId',

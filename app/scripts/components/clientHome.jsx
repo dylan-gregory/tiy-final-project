@@ -1,6 +1,7 @@
 var React = require('react');
 var Backbone = require('backbone');
 var $ = require('jquery');
+var _ = require('underscore');
 
 var BaseLayout = require('./layouts/base.jsx').BaseLayout;
 
@@ -36,7 +37,6 @@ class ClientHomeContainer extends React.Component {
       this.setState({
         clientTodos: clientTodos
       });
-      console.log('current', clientTodos);
     });
 
 
@@ -53,8 +53,6 @@ class ClientHomeContainer extends React.Component {
     }else {
       todo.set('isComplete', true);
     }
-
-    console.log(todo.get('isComplete'));
 
     todo.save();
   }
@@ -89,8 +87,6 @@ class MyTodoList extends React.Component {
     super(props);
 
     var clientTodos = this.props.clientTodos;
-
-    console.log('todos in list', this.props.clientTodos);
 
     this.state = {
       currentClient: this.props.currentClient,
@@ -162,28 +158,40 @@ class SearchBar extends React.Component {
   constructor(props){
     super(props);
 
+      this.search = this.search.bind(this);
+      // this.handleSearchTerm = this.handleSearchTerm.bind(this);
+      // this.search = this.search.bind(this);
 
     this.state = {
-      results: ''
+      results: '',
+      searchTerm: ''
     }
 
   }
   search(e){
+    // e.preventDefault();
     var searchFor = e.target.value;
-
     var nutritionixSearch = new NutritionixSearch();
 
-    nutritionixSearch.search(searchFor);
+    var searchResults = nutritionixSearch.search(searchFor).then(data =>{
+      this.setState({results: data.hits});
+    });
 
-    console.log(nutritionixSearch.search(searchFor));
-
+    console.log('state', this.state.results);
   }
+  // handleSearchTerm(e){
+  //   this.setState({searchTerm: e.target.value});
+  //
+
+  //   // this.search(this.state.searchTerm);
+  //
+  // }
   render(){
 
     return (
       <div className="search-wrapper card">
         <form>
-          <input id="search" onChange={this.search}/>
+          <input id="search" onChange={this.search} />
           <i className="material-icons">search</i>
 
         </form>
