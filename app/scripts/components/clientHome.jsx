@@ -39,11 +39,13 @@ class ClientHomeContainer extends React.Component {
       });
     });
 
+    this.search = _.debounce(this.search, 300).bind(this);
 
     this.state = {
       currentClient,
       clientCollection,
-      clientTodos
+      clientTodos,
+      searchResults: []
     };
 
   }
@@ -55,6 +57,17 @@ class ClientHomeContainer extends React.Component {
     }
 
     todo.save();
+  }
+  search(newSearch){
+    var nutritionixSearch = new NutritionixSearch();
+
+    var searchResults = nutritionixSearch.search(newSearch).then(data =>{
+      this.setState({searchResults: data.hits});
+
+    });
+
+    console.log('state', this.state.searchResults);
+
   }
   render(){
     return (
@@ -71,7 +84,7 @@ class ClientHomeContainer extends React.Component {
             <div className="col m4">
               <h3>Calorie counter/Nutritionix search will go here</h3>
 
-            <SearchBar />
+            <SearchBar search={this.search} results={this.state.searchResults} />
 
             </div>
           </div>
@@ -158,43 +171,62 @@ class SearchBar extends React.Component {
   constructor(props){
     super(props);
 
+      // this.search = _.debounce(this.search).bind(this);
+      this.handleSearchTerm = this.handleSearchTerm.bind(this);
       this.search = this.search.bind(this);
-      // this.handleSearchTerm = this.handleSearchTerm.bind(this);
-      // this.search = this.search.bind(this);
+      this.componentWillReceiveProps = this.componentWillReceiveProps.bind(this);
 
     this.state = {
-      results: '',
+      results: [],
       searchTerm: ''
     }
 
   }
+  componentWillReceiveProps(newProps){
+    this.setState({results: newProps.results});
+
+  }
   search(e){
     // e.preventDefault();
-    var searchFor = e.target.value;
-    var nutritionixSearch = new NutritionixSearch();
+    // e.persist();
+    // var searchFor = e.target.value;
+    // var nutritionixSearch = new NutritionixSearch();
+    //
+    // var searchResults = nutritionixSearch.search(searchFor).then(data =>{
+    //   this.setState({results: data.hits});
+    //
+    // });
+    //
+    // console.log('state', this.state.results);
 
-    var searchResults = nutritionixSearch.search(searchFor).then(data =>{
-      this.setState({results: data.hits});
-    });
-
-    console.log('state', this.state.results);
   }
-  // handleSearchTerm(e){
-  //   this.setState({searchTerm: e.target.value});
-  //
+  handleSearchTerm(e){
+    this.setState({searchTerm: e.target.value});
 
-  //   // this.search(this.state.searchTerm);
-  //
-  // }
+
+    this.props.search(this.state.searchTerm);
+
+  }
   render(){
+
+    var searchResults = this.state.results.map(result => {
+      return (
+        <li className="collection-item" key={result._id}>
+          <span>{result.fields.item_name}{result.fields.nf_calories}</span>
+        </li>
+      )
+    })
 
     return (
       <div className="search-wrapper card">
         <form>
-          <input id="search" onChange={this.search} />
+          <input id="search" onChange={this.handleSearchTerm} />
           <i className="material-icons">search</i>
-
         </form>
+
+        <ul className="collection">
+          {searchResults}
+        </ul>
       </div>
     )
   }
