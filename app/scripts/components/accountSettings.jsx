@@ -90,12 +90,21 @@ class AccountSettingsContainer extends React.Component {
 
 
     this.submitNewDetail = this.submitNewDetail.bind(this);
+    this.componentWillReceiveProps = this.componentWillReceiveProps.bind(this);
 
   }
   submitNewDetail(newDetail){
 
-    this.state.detailCollection.create(newDetail, {success: () => {
+    var detail = this.state.currentDetail;
 
+    detail.set({
+      name: newDetail.name,
+      email: newDetail.email,
+      phone: newDetail.phone,
+      pic: newDetail.pic
+    });
+
+    detail.save().then(() => {
 
       this.state.detailCollection.fetch().then(() => {
         var currentDetail = this.state.detailCollection.findWhere({ownerId: this.state.userId});
@@ -109,9 +118,28 @@ class AccountSettingsContainer extends React.Component {
         });
 
       });
-    }});
 
-    this.componentWillReceiveProps = this.componentWillReceiveProps.bind(this);
+    });
+
+
+    // this.state.detailCollection.create(newDetail, {success: () => {
+    //
+    //
+    //   this.state.detailCollection.fetch().then(() => {
+    //     var currentDetail = this.state.detailCollection.findWhere({ownerId: this.state.userId});
+    //
+    //     var pic = currentDetail.get('pic');
+    //
+    //     this.setState({
+    //       currentDetail: currentDetail,
+    //       detailCollection: this.state.detailCollection,
+    //       pic
+    //     });
+    //
+    //   });
+    // }});
+
+
 
   }
   componentWillReceiveProps(newProps){
@@ -161,6 +189,7 @@ class AccountSettingsContainer extends React.Component {
 
                     <UploadForm submitNewDetail={this.submitNewDetail}
                                 user={this.state.user}
+                                currentDetail={this.state.currentDetail}
                     />
 
                   </div>
@@ -200,6 +229,15 @@ class UploadForm extends React.Component{
     };
 
     console.log('pic', this.state.pic);
+
+  }
+  componentWillReceiveProps(newProps){
+
+    this.setState({
+      name: newProps.currentDetail.get('name'),
+      email: newProps.currentDetail.get('email'),
+      phone: newProps.currentDetail.get('phone')
+    });
 
   }
   handleNameChange(e){
@@ -274,9 +312,9 @@ class UploadForm extends React.Component{
           </div>
           <div className="col m9">
             <form onSubmit={this.handleSubmit} encType="multipart/form-data">
-              <input onChange={this.handleNameChange} type="text" placeholder="Your Name" />
-                <input type="text" onChange={this.handleNumberChange} placeholder="Phone #" />
-                <input type="text" onChange={this.handleEmailChange} placeholder="Email address" />
+              <input onChange={this.handleNameChange} value={this.state.name} type="text" placeholder="Your Name" />
+                <input type="text" onChange={this.handleNumberChange} value={this.state.phone}placeholder="Phone #" />
+                <input type="text" onChange={this.handleEmailChange} value={this.state.email} placeholder="Email address" />
 
                     <div className="file-field input-field">
                       <div className="btn">
@@ -284,7 +322,7 @@ class UploadForm extends React.Component{
                         <input type="file" onChange={this.handlePicChange}/>
                       </div>
                       <div className="file-path-wrapper">
-                        <input className="file-path validate" type="text" placeholder="So we know what you look like"/>
+                        <input className="file-path validate" placeholder="So we know what you look like"/>
                       </div>
                     </div>
 
