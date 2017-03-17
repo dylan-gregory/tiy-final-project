@@ -11,12 +11,14 @@ var CoachWorkspaceContainer = require('./components/coachWorkspace.jsx').CoachWo
 var ClientHomeContainer = require('./components/clientHome.jsx').ClientHomeContainer;
 var CoachViewClient = require('./components/coachViewClient.jsx').CoachViewClient;
 var AccountSettingsContainer = require('./components/accountSettings.jsx').AccountSettingsContainer;
+var SplashPageContainer = require('./components/splashPage.jsx').SplashPageContainer;
 
 var User = require('./models/user.js').User;
 
 var AppRouter = Backbone.Router.extend({
   routes: {
-    '': 'login',
+    '': 'splash',
+    'login/': 'login',
     'accountHome/:clientId': 'clientHome',
     'accountHome/:clientId/settings': 'clientSettings',
     // 'coachPortal/': 'coachPortal',
@@ -25,7 +27,7 @@ var AppRouter = Backbone.Router.extend({
     'workspace/:coachId/:clientId': 'viewClientDetails',
   },
   initialize: function(){
-    // 
+    //
     // if (User.current()) {
     //   var user = User.current();
     //   parse.initialize({
@@ -45,10 +47,10 @@ var AppRouter = Backbone.Router.extend({
   // var isLoggedIn = localStorage.getItem('user');
   var user = User.current();
 
-  if (!user && name != 'login') {
-    this.navigate('', {trigger: true});
-    return false;
-  }
+  // if (!user && name != 'login') {
+  //   this.navigate('', {trigger: true});
+  //   return false;
+  // }
 
   if(user){
     if (user.get('isCoach') && name == 'login'){
@@ -64,6 +66,12 @@ var AppRouter = Backbone.Router.extend({
 
 
   return Backbone.Router.prototype.execute.apply(this, arguments);
+  },
+  splash: function(){
+    ReactDOM.render(
+      React.createElement(SplashPageContainer),
+      document.getElementById('app')
+    )
   },
   login: function(){
     ReactDOM.render(
