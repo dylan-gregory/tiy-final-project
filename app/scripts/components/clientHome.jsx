@@ -165,8 +165,10 @@ class MyTodoList extends React.Component {
 
               />
           <label htmlFor={todo.cid}></label>
-            <div className="collapsible-header">{todo.get('title')}{todo.get('dueDate')}
+            <div className="collapsible-header">
 
+              <span>{todo.get('title')}</span>
+              <span className="right">Due: {todo.get('dueDate')}</span>
 
             </div>
 

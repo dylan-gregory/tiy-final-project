@@ -41,12 +41,14 @@ class AccountSettingsContainer extends React.Component {
     detailCollection.fetch().then(() => {
       currentDetail = detailCollection.findWhere({ownerId: userId});
 
-      var pic = currentDetail.get('pic');
+      if (currentDetail !== undefined) {
+        var pic = currentDetail.get('pic');
+        this.setState({pic});
+      }
 
       this.setState({
         currentDetail: currentDetail,
-        detailCollection,
-        pic
+        detailCollection
       });
       console.log(currentDetail);
 
@@ -128,25 +130,34 @@ class AccountSettingsContainer extends React.Component {
         <div className="container">
           <div className="col m12">
             <div className="row">
-              <h3>
+
                 <ul className="collection">
                   <li className="collection-item avatar">
-                  <img className="circle" src={this.state.pic.url} />
-                  {this.state.currentDetail.get('name')}
+                  <img className="circle green" src={this.state.pic.url} />
+                  <h4>{this.state.currentDetail !== undefined ? this.state.currentDetail.get('name') : this.state.user.get('username')}</h4>
                   </li>
                 </ul>
-              </h3>
+
                 <div className="card large">
+
                   <div className="card-image waves-effect waves-block waves-light">
                     <img className="activator" src="images/stock-card-pic.jpg" />
                   </div>
+
                   <div className="card-content">
-                    <span className="card-title activator grey-text text-darken-4">{this.state.currentDetail.get('email')}<i data-position="bottom" data-delay="50" data-tooltip="I am tooltip" className="material-icons right tooltipped">edit</i></span>
-                    <div>{this.state.currentDetail.get('phone')}</div>
+
+                    <span className="card-title activator grey-text text-darken-4">
+                      {this.state.currentDetail !== undefined ? "email: " + this.state.currentDetail.get('email') : "Why don't you tell us a little about yourself?"}
+                      <i data-position="bottom" data-delay="50" data-tooltip="I am tooltip" className="material-icons right tooltipped">edit</i>
+                    </span>
+
+                    <div>
+                        {this.state.currentDetail !== undefined ? "phone: " + this.state.currentDetail.get('phone') : null}
+                    </div>
+
                   </div>
                   <div className="card-reveal">
                     <span className="card-title grey-text text-darken-4">Edit Info<i className="material-icons right">close</i></span>
-                    <p>Here is some more information about this product that is only revealed once clicked on.</p>
 
                     <UploadForm submitNewDetail={this.submitNewDetail}
                                 user={this.state.user}
@@ -273,7 +284,7 @@ class UploadForm extends React.Component{
                         <input type="file" onChange={this.handlePicChange}/>
                       </div>
                       <div className="file-path-wrapper">
-                        <input className="file-path validate" type="text" />
+                        <input className="file-path validate" type="text" placeholder="So we know what you look like"/>
                       </div>
                     </div>
 

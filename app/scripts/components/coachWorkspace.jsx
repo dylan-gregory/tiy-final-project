@@ -104,7 +104,18 @@ class CoachWorkspaceContainer extends React.Component{
       <BaseLayout>
 
           <div className="container">
-            <header>{ this.state.currentDetail !== undefined ? this.state.currentDetail.get('name') :this.state.currentCoach.get('username')}/Icon</header>
+            <header>
+
+              <ul className="collection">
+                <li className="collection-item avatar">
+                  <img className="circle green" src={this.state.pic !== undefined ? this.state.pic.url : null} />
+                  <h4>{this.state.currentDetail !== undefined ? this.state.currentDetail.get('name') : this.state.currentCoach.get('username')}
+                  </h4>
+                </li>
+              </ul>
+
+            </header>
+
             <div className="row">
               <div className="col m8">
                 <h2>Client List</h2>

@@ -186,7 +186,10 @@ class ClientTodoList extends React.Component {
       return (
 
         <li key={todo.cid}>
-          <div className="collapsible-header"><input type="checkbox"/>{todo.get('title')}{todo.get('dueDate')}
+          <div className="collapsible-header"><input type="checkbox"/>
+
+            <span>{todo.get('title')}</span>
+            <span className="right">Due: {todo.get('dueDate')}</span>
 
             {todo.get('isComplete') ? <span>
               <i className="material-icons">check_circle</i>
