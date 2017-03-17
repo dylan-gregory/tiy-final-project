@@ -200,11 +200,13 @@ class ClientTodoList extends React.Component {
           <div className="collapsible-body">
             {todo.get('notes')}
 
-            <a className="btn-floating btn-small waves-effect waves-light red" onClick={(e) => {
+            <span className="right"><a className="btn-floating btn-small waves-effect waves-light red" onClick={(e) => {
                 event.preventDefault();
             this.props.deleteTodo(todo);}}>
             <i className="material-icons">close</i>
             </a>
+            </span>
+            <div className="clearfix"></div>
 
           </div>
         </li>
@@ -222,7 +224,11 @@ class ClientTodoList extends React.Component {
 
               <li>
                 <div className="collapsible-header">
-                  <a onClick={this.toggleForm} className="btn-floating btn-large waves-effect waves-light red"><i className="material-icons">add</i></a>
+
+                  <span className="right">Add new task </span><a onClick={this.toggleForm} className="btn-floating btn-small waves-effect waves-light right todo-add-button center-align middle-valign"><i className="material-icons add-icon">add</i></a>
+
+                  <div className="clearfix"></div>
+
                 </div>
 
                 <div className="collapsible-body">

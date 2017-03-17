@@ -95,50 +95,50 @@ class AccountSettingsContainer extends React.Component {
   }
   submitNewDetail(newDetail){
 
-    var detail = this.state.currentDetail;
+    if (this.state.currentDetail !== undefined) {
+      var detail = this.state.currentDetail;
 
-    detail.set({
-      name: newDetail.name,
-      email: newDetail.email,
-      phone: newDetail.phone,
-      pic: newDetail.pic
-    });
+      detail.set({
+        name: newDetail.name,
+        email: newDetail.email,
+        phone: newDetail.phone,
+        pic: newDetail.pic
+      });
 
-    detail.save().then(() => {
+      detail.save().then(() => {
 
-      this.state.detailCollection.fetch().then(() => {
-        var currentDetail = this.state.detailCollection.findWhere({ownerId: this.state.userId});
+        this.state.detailCollection.fetch().then(() => {
+          var currentDetail = this.state.detailCollection.findWhere({ownerId: this.state.userId});
 
-        var pic = currentDetail.get('pic');
+          var pic = currentDetail.get('pic');
 
-        this.setState({
-          currentDetail: currentDetail,
-          detailCollection: this.state.detailCollection,
-          pic
+          this.setState({
+            currentDetail: currentDetail,
+            detailCollection: this.state.detailCollection,
+            pic
+          });
+
         });
 
       });
+    }else{
+      this.state.detailCollection.create(newDetail, {success: () => {
 
-    });
 
+        this.state.detailCollection.fetch().then(() => {
+          var currentDetail = this.state.detailCollection.findWhere({ownerId: this.state.userId});
 
-    // this.state.detailCollection.create(newDetail, {success: () => {
-    //
-    //
-    //   this.state.detailCollection.fetch().then(() => {
-    //     var currentDetail = this.state.detailCollection.findWhere({ownerId: this.state.userId});
-    //
-    //     var pic = currentDetail.get('pic');
-    //
-    //     this.setState({
-    //       currentDetail: currentDetail,
-    //       detailCollection: this.state.detailCollection,
-    //       pic
-    //     });
-    //
-    //   });
-    // }});
+          var pic = currentDetail.get('pic');
 
+          this.setState({
+            currentDetail: currentDetail,
+            detailCollection: this.state.detailCollection,
+            pic
+          });
+
+        });
+      }});
+    }
 
 
   }
@@ -233,11 +233,14 @@ class UploadForm extends React.Component{
   }
   componentWillReceiveProps(newProps){
 
-    this.setState({
-      name: newProps.currentDetail.get('name'),
-      email: newProps.currentDetail.get('email'),
-      phone: newProps.currentDetail.get('phone')
-    });
+    if (newProps.currentDetail !== undefined) {
+      this.setState({
+        name: newProps.currentDetail.get('name'),
+        email: newProps.currentDetail.get('email'),
+        phone: newProps.currentDetail.get('phone')
+      });
+    }
+
 
   }
   handleNameChange(e){
