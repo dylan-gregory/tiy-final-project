@@ -10,6 +10,9 @@ var Client = require('../models/models.js').Client;
 var ClientCollection = require('../models/models.js').ClientCollection;
 var Todo = require('../models/models.js').Todo;
 var TodoCollection = require('../models/models.js').TodoCollection;
+var Detail = require('../models/models.js').Detail;
+var DetailCollection = require('../models/models.js').DetailCollection;
+
 var NutritionixSearch = require('../models/nutritionixSearch.js').Nutritionix;
 
 
@@ -20,6 +23,8 @@ class ClientHomeContainer extends React.Component {
     var clientCollection = new ClientCollection();
     var currentClient = new Client();
     var clientTodos = new TodoCollection();
+    var currentDetail = new Detail();
+    var detailCollection = new DetailCollection();
 
 
 
@@ -39,14 +44,37 @@ class ClientHomeContainer extends React.Component {
       });
     });
 
+    detailCollection.fetch().then(() => {
+      currentDetail = detailCollection.findWhere({ownerId: this.props.id});
+
+      var pic = currentDetail.get('pic');
+
+      console.log('deet', currentDetail);
+
+      this.setState({
+        currentDetail: currentDetail,
+        detailCollection,
+        pic
+      });
+
+
+    });
+
+
     this.search = _.debounce(this.search, 300).bind(this);
 
     this.state = {
       currentClient,
       clientCollection,
       clientTodos,
-      searchResults: []
+      searchResults: [],
+      detailCollection,
+      currentDetail
     };
+
+  }
+  componentWillReceiveProps(newProps){
+
 
   }
   checkOffTodo(todo){
@@ -74,7 +102,7 @@ class ClientHomeContainer extends React.Component {
       <BaseLayout>
         <div className="container">
           <div className="row">
-            <h3> Welcome: {this.state.currentClient.get('username')}</h3>
+            <h3> Welcome: { this.state.currentDetail ? this.state.currentDetail.get('name') :this.state.currentClient.get('username')}</h3>
 
             <MyTodoList
               clientTodos={this.state.clientTodos}
@@ -201,7 +229,13 @@ class SearchBar extends React.Component {
 
   }
   handleSearchTerm(e){
-    this.setState({searchTerm: e.target.value});
+
+    if (e.target.value == '') {
+      this.setState({searchTerm: ''});
+    }else {
+      this.setState({searchTerm: e.target.value});
+    }
+
 
 
     this.props.search(this.state.searchTerm);
@@ -213,6 +247,7 @@ class SearchBar extends React.Component {
       return (
         <li className="collection-item" key={result._id}>
           <span>{result.fields.item_name}{result.fields.nf_calories}</span>
+          <span>{result.fields.nf_sugars}{result.fields.item_description}</span>
         </li>
       )
     })

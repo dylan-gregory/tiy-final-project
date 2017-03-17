@@ -2,6 +2,7 @@ var React = require('react');
 var Backbone = require('backbone');
 var $ = window.$ = window.jQuery = require('jquery');
 
+
 var BaseLayout = require('./layouts/base.jsx').BaseLayout;
 
 var User = require('../models/user.js').User;
@@ -13,10 +14,12 @@ var CoachCollection = require('../models/models.js').CoachCollection;
 var Detail = require('../models/models.js').Detail;
 var DetailCollection = require('../models/models.js').DetailCollection;
 
+// require('materialize-sass-origin/js/bin/materialize.js');
 require('materialize-sass-origin/js/waves.js');
 require('materialize-sass-origin/js/velocity.min.js');
 require('materialize-sass-origin/js/cards.js');
-require('dropzone');
+// require('materialize-sass-origin/js/tooltip.js');
+
 
 class AccountSettingsContainer extends React.Component {
   constructor(props){
@@ -114,6 +117,9 @@ class AccountSettingsContainer extends React.Component {
 
 
   }
+  componentDidMount(){
+    // $('.tooltipped').tooltip({delay: 50});
+  }
   render(){
 
     return (
@@ -135,7 +141,7 @@ class AccountSettingsContainer extends React.Component {
                     <img className="activator" src="images/stock-card-pic.jpg" />
                   </div>
                   <div className="card-content">
-                    <span className="card-title activator grey-text text-darken-4">{this.state.currentDetail.get('email')}<i className="material-icons right">more_vert</i></span>
+                    <span className="card-title activator grey-text text-darken-4">{this.state.currentDetail.get('email')}<i data-position="bottom" data-delay="50" data-tooltip="I am tooltip" className="material-icons right tooltipped">edit</i></span>
                     <div>{this.state.currentDetail.get('phone')}</div>
                   </div>
                   <div className="card-reveal">

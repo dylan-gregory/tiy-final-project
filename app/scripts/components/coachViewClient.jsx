@@ -71,6 +71,7 @@ class CoachViewClient extends React.Component {
 
     this.addTodo = this.addTodo.bind(this);
     this.deleteTodo = this.deleteTodo.bind(this);
+    this.toggleForm = this.toggleForm.bind(this);
 
   }
   addTodo(newTodo){
@@ -110,6 +111,10 @@ class CoachViewClient extends React.Component {
     }});
 
   }
+  toggleForm(){
+    this.setState({showForm: !this.state.showForm});
+
+  }
   render(){
     return (
       <BaseLayout>
@@ -119,18 +124,17 @@ class CoachViewClient extends React.Component {
           <div className="row">
 
             <ClientTodoList currentClient={this.state.currentClient}
-            currentTodos={this.state.currentTodos}
-            deleteTodo={this.deleteTodo}
+                            currentTodos={this.state.currentTodos}
+                            deleteTodo={this.deleteTodo}
+                            addTodo={this.addTodo}
+                            clientId={this.state.clientId}
             />
 
           </div>
 
-          <div className="row">
-            <TodoForm currentTodos={this.state.currentTodos}
-                      addTodo={this.addTodo}
-                      clientId={this.state.clientId}
-            />
-          </div>
+            <div className="row">
+
+            </div>
 
         </div>
 
@@ -138,6 +142,12 @@ class CoachViewClient extends React.Component {
     )
   }
 }
+
+// { this.state.showForm ? <TodoForm currentTodos={this.state.currentTodos}
+//             addTodo={this.addTodo}
+//             clientId={this.state.clientId}
+// />
+// : null}
 
 
 
@@ -149,9 +159,12 @@ class ClientTodoList extends React.Component {
 
     console.log('todos in list', this.props.currentTodos);
 
+    this.toggleForm = this.toggleForm.bind(this);
+
     this.state = {
       currentClient: this.props.currentClient,
-      currentTodos: currentTodos
+      currentTodos: currentTodos,
+      showForm: false
     }
 
   }
@@ -162,6 +175,10 @@ class ClientTodoList extends React.Component {
   componentDidMount(){
 
     $('.collapsible').collapsible();
+
+  }
+  toggleForm(){
+    this.setState({showForm: !this.state.showForm});
 
   }
   render(){
@@ -199,6 +216,21 @@ class ClientTodoList extends React.Component {
           <h3>Todos</h3>
             <ul className="collapsible" data-collapsible="accordion">
               {todoList}
+
+              <li>
+                <div className="collapsible-header">
+                  <a onClick={this.toggleForm} className="btn-floating btn-large waves-effect waves-light red"><i className="material-icons">add</i></a>
+                </div>
+
+                <div className="collapsible-body">
+
+                  <TodoForm currentTodos={this.props.currentTodos}
+                          addTodo={this.props.addTodo}
+                          clientId={this.props.clientId}
+                  />
+                </div>
+
+              </li>
             </ul>
         </div>
 
@@ -236,7 +268,7 @@ class TodoForm extends React.Component {
       // selectYears: 15 // Creates a dropdown of 15 years to control year
     });
 
-    // This was the simplest thing in the world that took WAY too long to figure out 
+    // This was the simplest thing in the world that took WAY too long to figure out
     $('.datepicker').change(() => {
       this.setState({dueDate: $('.datepicker').val()});
     });
@@ -265,15 +297,15 @@ class TodoForm extends React.Component {
   }
   render(){
     return (
-      <div className="col m8">
-        <div className="row">
+
+        <div>
           <form onSubmit={this.addTodo}>
             <div>
               <input type="text" onChange={this.handleTitle} placeholder="What should I do?" value={this.state.title}/>
 
-              <input name="date-input" type="date" onChange={this.handleDate} className="datepicker" placeholder="When is this due by?"/>
+              <input name="date-input" type="date" onChange={this.handleDate} value={this.state.dueDate} className="datepicker" placeholder="When is this due by?"/>
 
-                <div className="row">
+                <div>
                   <div className="input-field">
                     <textarea id="textarea1" className="materialize-textarea" onChange={this.handleNotes} value={this.state.notes}></textarea>
                     <label htmlFor="textarea1">Any notes for your client?</label>
@@ -286,7 +318,7 @@ class TodoForm extends React.Component {
             </div>
           </form>
         </div>
-      </div>
+
     )
   }
 }

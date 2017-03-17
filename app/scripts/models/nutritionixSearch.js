@@ -18,7 +18,9 @@ var Nutritionix = Backbone.Collection.extend({
        "appKey":"b14e1f98119937669fe17c9df1aa91ec",
        "fields": [
          "item_name",
-         "nf_calories"
+         "nf_calories",
+         "nf_sugars",
+         "item_description"
        ],
        "limit": "20",
        "query": this.searchTerm

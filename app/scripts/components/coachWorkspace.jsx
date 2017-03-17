@@ -6,6 +6,8 @@ var User = require('../models/user.js').User;
 var Coach = require('../models/models.js').Coach;
 var CoachCollection = require('../models/models.js').CoachCollection;
 var ClientCollection = require('../models/models.js').ClientCollection;
+var Detail = require('../models/models.js').Detail;
+var DetailCollection = require('../models/models.js').DetailCollection;
 
 // These are the specific Materialize things needed to work the collapsibles
 
@@ -23,6 +25,8 @@ class CoachWorkspaceContainer extends React.Component{
     var coachCollection = new CoachCollection();
     var currentCoach = new Coach();
     var clientCollection = new ClientCollection();
+    var currentDetail = new Detail();
+    var detailCollection = new DetailCollection();
 
     coachCollection.fetch().then(() => {
       currentCoach = coachCollection.findWhere({objectId: this.props.id});
@@ -36,6 +40,29 @@ class CoachWorkspaceContainer extends React.Component{
       });
 
     });
+
+    detailCollection.fetch().then(() => {
+      currentDetail = detailCollection.findWhere({ownerId: this.props.id});
+      console.log('here', currentDetail);
+
+      if (currentDetail !== undefined) {
+        var pic = currentDetail.get('pic');
+        this.setState({pic});
+      }
+
+
+      console.log('deet', currentDetail);
+
+      this.setState({
+        currentDetail: currentDetail,
+        detailCollection
+
+      });
+
+
+    });
+
+
 
     // var userId = User.current().get('objectId');
     //
@@ -53,7 +80,9 @@ class CoachWorkspaceContainer extends React.Component{
     this.state = {
       currentCoach,
       coachCollection,
-      clientCollection
+      clientCollection,
+      detailCollection,
+      currentDetail
     };
 
 
@@ -75,7 +104,7 @@ class CoachWorkspaceContainer extends React.Component{
       <BaseLayout>
 
           <div className="container">
-            <header>{this.state.currentCoach.get('username')}/Icon</header>
+            <header>{ this.state.currentDetail !== undefined ? this.state.currentDetail.get('name') :this.state.currentCoach.get('username')}/Icon</header>
             <div className="row">
               <div className="col m8">
                 <h2>Client List</h2>
