@@ -43,12 +43,13 @@ class AccountSettingsContainer extends React.Component {
 
       if (currentDetail !== undefined) {
         var pic = currentDetail.get('pic');
-        this.setState({pic});
+        this.setState({pic: pic});
       }
 
       this.setState({
         currentDetail: currentDetail,
-        detailCollection
+        detailCollection,
+         pic
       });
       console.log(currentDetail);
 
@@ -278,14 +279,8 @@ class UploadForm extends React.Component{
     fileUpload.save({}, {
       data: pic
     }).then((response)=>{
-      // 2. we need to get the image url from the server response
-      var imageUrl = response.url;
-      // 3. we need to save our puppy with the image url
-      // {
-      //   name: 'Watson',
-      //   pic: {name: '', url: ''}
-      // }
 
+      var imageUrl = response.url;
 
       this.setState({
         name: this.state.name,
@@ -297,10 +292,6 @@ class UploadForm extends React.Component{
         phone: this.state.phone,
       });
 
-      // userDetails.save().then(function(){
-      //   console.log(puppy);
-      //   // Backbone.history.navigate('detail/', {trigger: true});
-      // });
       this.props.submitNewDetail(this.state);
 
     });
@@ -316,16 +307,16 @@ class UploadForm extends React.Component{
           <div className="col m9">
             <form onSubmit={this.handleSubmit} encType="multipart/form-data">
               <input onChange={this.handleNameChange} value={this.state.name} type="text" placeholder="Your Name" />
-                <input type="text" onChange={this.handleNumberChange} value={this.state.phone}placeholder="Phone #" />
+                <input type="text" onChange={this.handleNumberChange} value={this.state.phone} placeholder="Phone #" />
                 <input type="text" onChange={this.handleEmailChange} value={this.state.email} placeholder="Email address" />
 
                     <div className="file-field input-field">
                       <div className="btn">
                         <span>Upload Avatar</span>
-                        <input type="file" onChange={this.handlePicChange}/>
+                        <input type="file" onChange={this.handlePicChange} value=''/>
                       </div>
                       <div className="file-path-wrapper">
-                        <input className="file-path validate" placeholder="So we know what you look like"/>
+                        <input className="file-path validate" value='' placeholder="So we know what you look like" />
                       </div>
                     </div>
 

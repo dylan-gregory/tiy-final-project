@@ -47,15 +47,12 @@ class CoachWorkspaceContainer extends React.Component{
 
       if (currentDetail !== undefined) {
         var pic = currentDetail.get('pic');
-        this.setState({pic});
+        this.setState({pic: pic});
       }
-
-
-      console.log('deet', currentDetail);
 
       this.setState({
         currentDetail: currentDetail,
-        detailCollection
+        detailCollection: detailCollection
 
       });
 
@@ -122,6 +119,7 @@ class CoachWorkspaceContainer extends React.Component{
 
                    <CoachClientList clientCollection={this.state.clientCollection}
                    currentCoach={this.state.currentCoach}
+                   detailCollection={this.state.detailCollection}
                   />
 
               </div>
@@ -151,16 +149,17 @@ class CoachClientList extends React.Component {
     }
   }
   componentWillReceiveProps(newProps){
-    this.setState({clientCollection: newProps.clientCollection, currentCoach: newProps.currentCoach});
+    this.setState({clientCollection: newProps.clientCollection, currentCoach: newProps.currentCoach, detailCollection: newProps.detailCollection});
 
   }
   render(){
+
     var clientList = this.state.clientCollection.map(client =>{
       return (
 
           <li className="collection-item avatar" key={client.cid}>
             <div >
-              <img src="" alt="" className="circle red" />
+              <img src='' className="circle red" />
               <a href={'#workspace/' + this.state.currentCoach.get('objectId') +'/' + client.get('objectId')}>{client.get('username')}</a>
 
             </div>
@@ -177,6 +176,8 @@ class CoachClientList extends React.Component {
     )
   }
 }
+
+// {this.state.detailCollection.findWhere({ownerId: client.get('objectId')}).get('pic').url}
 
 class ClientLeaderBoard extends React.Component {
   constructor(props){

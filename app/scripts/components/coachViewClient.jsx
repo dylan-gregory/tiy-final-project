@@ -66,12 +66,16 @@ class CoachViewClient extends React.Component {
       clientCollection,
       clientTodos,
       currentTodos,
-      clientId
+      clientId,
+      currentDate: '',
+      currentTitle: '',
+      currentNotes: ''
     };
 
     this.addTodo = this.addTodo.bind(this);
     this.deleteTodo = this.deleteTodo.bind(this);
     this.toggleForm = this.toggleForm.bind(this);
+    this.editTodo = this.editTodo.bind(this);
 
   }
   addTodo(newTodo){
@@ -95,6 +99,14 @@ class CoachViewClient extends React.Component {
     //     });
     //
     // });
+  }
+  editTodo(todo){
+    // this.setState({
+    //   currentDate: todo.get('dueDate'),
+    //   currentTitle: todo.get('title'),
+    //   currentNotes: todo.get('notes')
+    // });
+
   }
   deleteTodo(todo){
     console.log('clicked!');
@@ -128,6 +140,7 @@ class CoachViewClient extends React.Component {
                             deleteTodo={this.deleteTodo}
                             addTodo={this.addTodo}
                             clientId={this.state.clientId}
+                            editTodo={this.editTodo}
             />
 
           </div>
@@ -160,10 +173,14 @@ class ClientTodoList extends React.Component {
     console.log('todos in list', this.props.currentTodos);
 
     this.toggleForm = this.toggleForm.bind(this);
+    this.editTodo = this.editTodo.bind(this);
 
     this.state = {
       currentClient: this.props.currentClient,
       currentTodos: currentTodos,
+      currentDate: '',
+      currentTitle: '',
+      currentNotes: '',
       showForm: false
     }
 
@@ -176,6 +193,14 @@ class ClientTodoList extends React.Component {
 
     $('.collapsible').collapsible();
 
+  }
+  editTodo(todo){
+    this.setState({
+      currentDate: todo.get('dueDate'),
+      currentTitle: todo.get('title'),
+      currentNotes: todo.get('notes')
+    });
+    // this.props.editTodo(todo);
   }
   toggleForm(){
     this.setState({showForm: !this.state.showForm});
@@ -201,12 +226,22 @@ class ClientTodoList extends React.Component {
             {todo.get('notes')}
 
             <span className="right"><a className="btn-floating btn-small waves-effect waves-light red" onClick={(e) => {
-                event.preventDefault();
+                e.preventDefault();
             this.props.deleteTodo(todo);}}>
             <i className="material-icons">close</i>
             </a>
             </span>
+
+
+            <span className="right"><a className="btn-floating btn-small waves-effect waves-light yellow" onClick={(e) => {
+                e.preventDefault();
+                this.toggleForm();
+            this.editTodo(todo);}}>
+            <i className="material-icons">build</i>
+            </a>
+            </span>
             <div className="clearfix"></div>
+
 
           </div>
         </li>
@@ -236,6 +271,9 @@ class ClientTodoList extends React.Component {
                   <TodoForm currentTodos={this.props.currentTodos}
                           addTodo={this.props.addTodo}
                           clientId={this.props.clientId}
+                          currentDate={this.state.currentDate}
+                          currentTitle={this.state.currentTitle}
+                          currentNotes={this.state.currentNotes}
                   />
                 </div>
 
@@ -261,9 +299,9 @@ class TodoForm extends React.Component {
 
 
     this.state = {
-      title: '',
-      dueDate: '',
-      notes: '',
+      title: this.props.currentTitle,
+      dueDate: this.props.currentDate,
+      notes: this.props.currentNotes,
       clientId: '',
       owner: {"__type": "Pointer", "className": "_User", "objectId": clientId},
 
