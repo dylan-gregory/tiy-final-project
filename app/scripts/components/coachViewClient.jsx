@@ -236,7 +236,7 @@ class ClientTodoList extends React.Component {
             <span className="right"><a className="btn-floating btn-small waves-effect waves-light yellow" onClick={(e) => {
                 e.preventDefault();
                 this.toggleForm();
-            this.editTodo(todo);}}>
+                this.editTodo(todo);}}>
             <i className="material-icons">build</i>
             </a>
             </span>

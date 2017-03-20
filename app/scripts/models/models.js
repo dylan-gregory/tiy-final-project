@@ -167,6 +167,15 @@ var DetailCollection = ParseCollection.extend({
   url: 'https://metal-slug.herokuapp.com/classes/clientDetails'
 });
 
+var DailyValue = ParseModel.extend({
+
+});
+
+var DailyValueCollection = ParseCollection.extend({
+  model: DailyValue,
+  url: 'https://metal-slug.herokuapp.com/classes/dailyValues'
+});
+
 module.exports = {
   Coach,
   CoachCollection,
@@ -176,5 +185,6 @@ module.exports = {
   TodoCollection,
   ParseModel,
   Detail,
-  DetailCollection
+  DetailCollection,
+  DailyValueCollection
 };

@@ -12,6 +12,7 @@ var Todo = require('../models/models.js').Todo;
 var TodoCollection = require('../models/models.js').TodoCollection;
 var Detail = require('../models/models.js').Detail;
 var DetailCollection = require('../models/models.js').DetailCollection;
+var DailyValueCollection = require('../models/models.js').DailyValueCollection;
 
 var NutritionixSearch = require('../models/nutritionixSearch.js').Nutritionix;
 
@@ -25,6 +26,8 @@ class ClientHomeContainer extends React.Component {
     var clientTodos = new TodoCollection();
     var currentDetail = new Detail();
     var detailCollection = new DetailCollection();
+    var dailyValueCollection = new DailyValueCollection();
+    var dailyValues = new DailyValueCollection();
 
 
 
@@ -32,8 +35,6 @@ class ClientHomeContainer extends React.Component {
       currentClient = clientCollection.findWhere({objectId: this.props.id});
 
       this.setState({currentClient: currentClient, clientCollection});
-      console.log(clientCollection);
-      console.log(currentClient);
     });
 
     clientTodos.fetch().then(() => {
@@ -49,14 +50,19 @@ class ClientHomeContainer extends React.Component {
 
       var pic = currentDetail.get('pic');
 
-      console.log('deet', currentDetail);
-
       this.setState({
         currentDetail: currentDetail,
         detailCollection,
         pic
       });
+    });
 
+    dailyValueCollection.fetch().then(() => {
+      dailyValues = dailyValueCollection.where({clientId: this.props.id});
+
+        this.setState({
+          dailyValues: dailyValues
+        });
 
     });
 
@@ -69,7 +75,9 @@ class ClientHomeContainer extends React.Component {
       clientTodos,
       searchResults: [],
       detailCollection,
-      currentDetail
+      currentDetail,
+      dailyValues,
+      dailyValueCollection
     };
 
   }
@@ -97,6 +105,10 @@ class ClientHomeContainer extends React.Component {
     console.log('state', this.state.searchResults);
 
   }
+  addFood(food){
+
+
+  }
   render(){
     return (
       <BaseLayout>
@@ -109,10 +121,15 @@ class ClientHomeContainer extends React.Component {
               checkOffTodo={this.checkOffTodo}
             />
 
-            <div className="col m4">
-              <h3>Calorie counter/Nutritionix search will go here</h3>
+          <div className="col m6">
 
-            <SearchBar search={this.search} results={this.state.searchResults} />
+              <h4>Daily Intake:</h4>
+                <DailyIntakeList />
+
+                <SearchBar search={this.search}
+                  results={this.state.searchResults}
+                  addFood={this.addFood}
+                />
 
             </div>
           </div>
@@ -156,7 +173,6 @@ class MyTodoList extends React.Component {
       return (
 
         <li key={todo.cid}>
-          {console.log(todo.get('isComplete'))}
           <input type="checkbox" defaultChecked={todo.get('isComplete') == true? "checked" : null}
             className="filled-in" id={todo.cid}
             onClick={() => {
@@ -183,9 +199,8 @@ class MyTodoList extends React.Component {
 
     return (
 
-
-        <div className="col m8">
-          <h3>Todos</h3>
+        <div className="col m6">
+          <h4>Coming up:</h4>
             <form>
               <ul className="collapsible" data-collapsible="accordion">
                 {todoList}
@@ -228,7 +243,6 @@ class SearchBar extends React.Component {
     // });
     //
     // console.log('state', this.state.results);
-
   }
   handleSearchTerm(e){
 
@@ -237,9 +251,6 @@ class SearchBar extends React.Component {
     }else {
       this.setState({searchTerm: e.target.value});
     }
-
-
-
     this.props.search(this.state.searchTerm);
 
   }
@@ -250,6 +261,15 @@ class SearchBar extends React.Component {
         <li className="collection-item" key={result._id}>
           <span>{result.fields.item_name}{result.fields.nf_calories}</span>
           <span>{result.fields.nf_sugars}{result.fields.item_description}</span>
+
+            <span className="right"><a className="btn-floating btn-small waves-effect waves-light red" onClick={(e) => {
+                e.preventDefault();
+                this.props.addFood(result);}}>
+            <i className="material-icons">add</i>
+            </a>
+            </span>
+            <div className="clearfix"></div>
+
         </li>
       )
     })
@@ -265,6 +285,48 @@ class SearchBar extends React.Component {
           {searchResults}
         </ul>
       </div>
+    )
+  }
+}
+
+
+class DailyIntakeList extends React.Component {
+  render(){
+
+
+
+    return (
+      <table className="striped">
+        <thead>
+          <tr>
+            <th>Calories</th>
+            <th>Sugar</th>
+            <th>Sodium</th>
+            <th>Carbs</th>
+            <th>Cholesterol</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr >
+            <td>3,500</td>
+            <td>30 (g)</td>
+            <td>28 (g)</td>
+            <td>25 (g)</td>
+            <td>12 (g)</td>
+            <td>
+              <span className="right"><a className="btn-floating btn-small waves-effect waves-light red" onClick={(e) => {
+                  e.preventDefault();
+                  this.props.deleteTodo(todo);}}>
+              <i className="material-icons">close</i>
+              </a>
+              </span>
+            </td>
+          </tr>
+
+
+
+        </tbody>
+      </table>
     )
   }
 }
