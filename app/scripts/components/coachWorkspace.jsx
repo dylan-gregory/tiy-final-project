@@ -160,7 +160,8 @@ class CoachClientList extends React.Component {
           <li className="collection-item avatar" key={client.cid}>
             <div >
               <img src='' className="circle red" />
-              <a href={'#workspace/' + this.state.currentCoach.get('objectId') +'/' + client.get('objectId')}>{client.get('username')}</a>
+
+              <a className="client-name" href={'#workspace/' + this.state.currentCoach.get('objectId') +'/' + client.get('objectId')}>{client.get('username')}</a>
 
             </div>
           </li>

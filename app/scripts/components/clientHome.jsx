@@ -202,27 +202,24 @@ class MyTodoList extends React.Component {
     $('.collapsible').collapsible();
 
   }
-  // taskDone(todo){
-  //   console.log('this todo', todo);
-  //   $('#' + todo).prop('checked', true);
-  //
-  //   console.log("comp", todo);
-  // }
   render(){
 
     var todoList = this.state.clientTodos.map(todo =>{
       return (
 
         <li key={todo.cid}>
-          <input type="checkbox" defaultChecked={todo.get('isComplete') == true? "checked" : null}
-            className="filled-in" id={todo.cid}
-            onClick={() => {
-              this.props.checkOffTodo(todo);
-              }}
 
-              />
-          <label htmlFor={todo.cid}></label>
             <div className="collapsible-header">
+              <span>
+                <input type="checkbox" defaultChecked={todo.get('isComplete') == true? "checked" : null}
+                  className="filled-in checkbox" id={todo.cid}
+                  onClick={() => {
+                    this.props.checkOffTodo(todo);
+                    }}
+
+                    />
+                  <label htmlFor={todo.cid} className="check-label"></label>
+                </span>
 
               <span>{todo.get('title')}</span>
               <span className="right">Due: {todo.get('dueDate')}</span>
@@ -230,7 +227,11 @@ class MyTodoList extends React.Component {
             </div>
 
           <div className="collapsible-body">
-            {todo.get('notes')}
+            <div className="client-notes">
+              {todo.get('notes')}
+            </div>
+
+
           </div>
 
         </li>
@@ -437,7 +438,7 @@ class DailyIntakeList extends React.Component {
         </thead>
         <tbody>
           <tr >
-            <td>{totalCal}</td>
+            <td>{Math.floor(totalCal)}</td>
             <td>{totalSugar}(g)</td>
             <td>{totalSodium}(g)</td>
             <td>{totalCarbs}(g)</td>

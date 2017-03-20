@@ -27,6 +27,11 @@ body{
   font-family: 'Roboto', sans-serif;
 }
 
+a{
+  text-decoration: none;
+  color: black;
+}
+
 .search-wrapper{
 
   i{
@@ -48,15 +53,79 @@ body{
   }
 
 }
-//
-// .todo-add-button{
-//   position: relative;
-//   text-align: center;
+
+.nav-wrapper{
+  background-color: #790C10;
+}
+
+footer.page-footer{
+  background-color: #790C10;
+}
+
+.btn{
+  background-color: #A35242;
+}
+
+.btn:hover{
+  background-color: #AD3C1C;
+}
+
+.collection .collection-item.avatar{
+  // background-color: #B2BDBE;
+  font-size: 21px;
+
+}
+
+.collection .collection-item{
+  padding-top: 20px;
+
+}
+
+.collection .collection-item:hover{
+  transition: .3s;
+  background-color: grey;
+  color: white;
+}
+
+.collapsible-header{
+  font-size: 19px;
+}
+
+.collapsible-body{
+  font-size: 19px;
+
+}
+
+
+
+.todo-notes{
+  display: inline-block;
+  margin-left: 20px;
+  margin-top: 15px;
+}
+
+.todo-add-button{
+
+}
+
+.todo-delete{
+  margin: 10px;
+}
+
+.client-name{
+  margin-top: 10px;
+}
+
+// .checkbox{
 //   vertical-align: middle;
 // }
-//
-// .add-icon{
-//   position: relative;
-//   vertical-align: middle;
-//   text-align: center;
-// }
+
+.check-label{
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.client-notes{
+  margin: 15px;
+  margin-left: 20px;
+}

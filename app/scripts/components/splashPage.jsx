@@ -12,8 +12,11 @@ class SplashPageContainer extends React.Component {
 
       <BaseLayout>
         <div className="header">
+          
           <img src="images/stock-card-pic.jpg" />
+
         </div>
+
         <footer className="page-footer">
           <div className="container">
             <div className="row">
