@@ -66,10 +66,11 @@ class ClientHomeContainer extends React.Component {
 
     });
 
-
     this.search = _.debounce(this.search, 300).bind(this);
+    this.addFood = this.addFood.bind(this);
 
     this.state = {
+      clientId: this.props.id,
       currentClient,
       clientCollection,
       clientTodos,
@@ -82,8 +83,6 @@ class ClientHomeContainer extends React.Component {
 
   }
   componentWillReceiveProps(newProps){
-
-
   }
   checkOffTodo(todo){
     if (todo.get('isComplete')) {
@@ -107,6 +106,17 @@ class ClientHomeContainer extends React.Component {
   }
   addFood(food){
 
+    this.state.dailyValues.create(food, {success: () =>
+
+      this.state.dailyValues.fetch().then(() => {
+        var updatedValues = this.state.dailyValues.where({ownerId: this.props.id});
+          this.setState({
+            dailyValues: updatedValues
+          });
+
+      })
+
+    });
 
   }
   render(){
@@ -126,9 +136,11 @@ class ClientHomeContainer extends React.Component {
               <h4>Daily Intake:</h4>
                 <DailyIntakeList />
 
-                <SearchBar search={this.search}
+                <SearchBar
+                  search={this.search}
                   results={this.state.searchResults}
                   addFood={this.addFood}
+                  clientId={this.state.clientId}
                 />
 
             </div>
@@ -220,15 +232,25 @@ class SearchBar extends React.Component {
       this.handleSearchTerm = this.handleSearchTerm.bind(this);
       this.search = this.search.bind(this);
       this.componentWillReceiveProps = this.componentWillReceiveProps.bind(this);
+      this.addFood = this.addFood.bind(this);
+
+      var clientId = this.props.clientId;
 
     this.state = {
       results: [],
-      searchTerm: ''
+      searchTerm: '',
+      clientId: '',
+      owner: {"__type": "Pointer", "className": "_User", "objectId": clientId},
+      name: '',
+      calories: '',
+      sugar: '',
+      carbs: '',
+      sodium: '',
     }
 
   }
   componentWillReceiveProps(newProps){
-    this.setState({results: newProps.results});
+    this.setState({results: newProps.results, clientId: newProps.clientId});
 
   }
   search(e){
@@ -254,17 +276,26 @@ class SearchBar extends React.Component {
     this.props.search(this.state.searchTerm);
 
   }
+  addFood(food){
+
+  }
   render(){
 
     var searchResults = this.state.results.map(result => {
       return (
         <li className="collection-item" key={result._id}>
-          <span>{result.fields.item_name}{result.fields.nf_calories}</span>
-          <span>{result.fields.nf_sugars}{result.fields.item_description}</span>
+          <span>{result.fields.item_name} {result.fields.item_description}
+            Serving Size: {result.fields.nf_serving_size_qty}
+           {result.fields.nf_serving_size_unit}</span>
+          <span>Cal: {result.fields.nf_calories}
+            Sugars: {result.fields.nf_sugars}
+            Sodium: {result.fields.nf_sodium}
+            Cholest: {result.fields.nf_cholesterol} 
+            Carbs: {result.fields.nf_total_carbohydrate}</span>
 
             <span className="right"><a className="btn-floating btn-small waves-effect waves-light red" onClick={(e) => {
                 e.preventDefault();
-                this.props.addFood(result);}}>
+                this.addFood(result);}}>
             <i className="material-icons">add</i>
             </a>
             </span>
@@ -314,10 +345,10 @@ class DailyIntakeList extends React.Component {
             <td>25 (g)</td>
             <td>12 (g)</td>
             <td>
-              <span className="right"><a className="btn-floating btn-small waves-effect waves-light red" onClick={(e) => {
+              <span className="right"><a className="btn-floating btn-small waves-effect waves-light blue" onClick={(e) => {
                   e.preventDefault();
                   this.props.deleteTodo(todo);}}>
-              <i className="material-icons">close</i>
+              <i className="material-icons">refresh</i>
               </a>
               </span>
             </td>

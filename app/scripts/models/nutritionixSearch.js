@@ -20,7 +20,12 @@ var Nutritionix = Backbone.Collection.extend({
          "item_name",
          "nf_calories",
          "nf_sugars",
-         "item_description"
+         "item_description",
+         "nf_sodium",
+         "nf_cholesterol",
+         "nf_total_carbohydrate",
+         "nf_serving_size_qty",
+         "nf_serving_size_unit"
        ],
        "limit": "20",
        "query": this.searchTerm
