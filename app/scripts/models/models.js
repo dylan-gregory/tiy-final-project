@@ -186,5 +186,6 @@ module.exports = {
   ParseModel,
   Detail,
   DetailCollection,
-  DailyValueCollection
+  DailyValueCollection,
+  DailyValue
 };

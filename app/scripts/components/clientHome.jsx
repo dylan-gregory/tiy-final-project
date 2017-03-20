@@ -12,6 +12,7 @@ var Todo = require('../models/models.js').Todo;
 var TodoCollection = require('../models/models.js').TodoCollection;
 var Detail = require('../models/models.js').Detail;
 var DetailCollection = require('../models/models.js').DetailCollection;
+var DailyValue = require('../models/models.js').DailyValue
 var DailyValueCollection = require('../models/models.js').DailyValueCollection;
 
 var NutritionixSearch = require('../models/nutritionixSearch.js').Nutritionix;
@@ -106,10 +107,13 @@ class ClientHomeContainer extends React.Component {
   }
   addFood(food){
 
-    this.state.dailyValues.create(food, {success: () =>
+    console.log('this food', food);
 
-      this.state.dailyValues.fetch().then(() => {
-        var updatedValues = this.state.dailyValues.where({ownerId: this.props.id});
+    this.state.dailyValueCollection.create(food, {success: () =>
+
+      this.state.dailyValueCollection.fetch().then(() => {
+        var updatedValues = this.state.dailyValueCollection.where({clientId: this.props.id});
+
           this.setState({
             dailyValues: updatedValues
           });
@@ -134,7 +138,8 @@ class ClientHomeContainer extends React.Component {
           <div className="col m6">
 
               <h4>Daily Intake:</h4>
-                <DailyIntakeList />
+
+                <DailyIntakeList dailyValues={this.state.dailyValues}/>
 
                 <SearchBar
                   search={this.search}
@@ -246,7 +251,8 @@ class SearchBar extends React.Component {
       sugar: '',
       carbs: '',
       sodium: '',
-    }
+      cholesterol: ''
+    };
 
   }
   componentWillReceiveProps(newProps){
@@ -278,20 +284,35 @@ class SearchBar extends React.Component {
   }
   addFood(food){
 
+    this.setState({
+      name: food.fields.item_name,
+      calories: food.fields.nf_calories,
+      sugar: food.fields.nf_sugars,
+      carbs: food.fields.nf_total_carbohydrate,
+      sodium: food.fields.nf_sodium,
+      cholesterol: food.fields.nf_cholesterol
+    }, () => {
+      console.log('state', this.state);
+
+      this.props.addFood(this.state);
+    });
+
+    // //  this.props.addFood(this.state);
+
   }
   render(){
 
     var searchResults = this.state.results.map(result => {
       return (
         <li className="collection-item" key={result._id}>
-          <span>{result.fields.item_name} {result.fields.item_description}
-            Serving Size: {result.fields.nf_serving_size_qty}
-           {result.fields.nf_serving_size_unit}</span>
-          <span>Cal: {result.fields.nf_calories}
-            Sugars: {result.fields.nf_sugars}
-            Sodium: {result.fields.nf_sodium}
-            Cholest: {result.fields.nf_cholesterol} 
-            Carbs: {result.fields.nf_total_carbohydrate}</span>
+          <div>{result.fields.item_name} - {result.fields.item_description}</div>
+
+            <div>Serving Size: {result.fields.nf_serving_size_qty} {result.fields.nf_serving_size_unit}
+            </div>
+
+          <div>Cal: {result.fields.nf_calories} Sugars: {result.fields.nf_sugars}</div>
+          <div>
+             Sodium: {result.fields.nf_sodium} Cholest: {result.fields.nf_cholesterol} Carbs: {result.fields.nf_total_carbohydrate}</div>
 
             <span className="right"><a className="btn-floating btn-small waves-effect waves-light red" onClick={(e) => {
                 e.preventDefault();
@@ -322,7 +343,62 @@ class SearchBar extends React.Component {
 
 
 class DailyIntakeList extends React.Component {
+  constructor(props){
+    super(props);
+
+    var dailyValues = new DailyValueCollection();
+
+    this.state = {
+      dailyValues
+    }
+
+  }
+  componentWillReceiveProps(newProps){
+    this.setState({dailyValues: newProps.dailyValues});
+    console.log('new', newProps.dailyValues);
+
+  }
   render(){
+
+    var calArray = this.state.dailyValues.map(food => {
+      return food.get('calories');
+    });
+
+    var totalCal = _.reduce(calArray, function(memo, num){
+      return memo + num;
+    });
+
+    var sugarArray = this.state.dailyValues.map(food => {
+      return food.get('sugar');
+    });
+
+    var totalSugar = _.reduce(sugarArray, function(memo, num){
+      return memo + num;
+    });
+
+    var sodiumArray = this.state.dailyValues.map(food => {
+      return food.get('sodium');
+    });
+
+    var totalSodium = _.reduce(sodiumArray, function(memo, num){
+      return memo + num;
+    });
+
+    var carbsArray = this.state.dailyValues.map(food => {
+      return food.get('carbs');
+    });
+
+    var totalCarbs = _.reduce(carbsArray, function(memo, num){
+      return memo + num;
+    });
+
+    var cholestArray = this.state.dailyValues.map(food => {
+      return food.get('cholesterol');
+    });
+
+    var totalCholest = _.reduce(cholestArray, function(memo, num){
+      return memo + num;
+    });
 
 
 
@@ -339,11 +415,11 @@ class DailyIntakeList extends React.Component {
         </thead>
         <tbody>
           <tr >
-            <td>3,500</td>
-            <td>30 (g)</td>
-            <td>28 (g)</td>
-            <td>25 (g)</td>
-            <td>12 (g)</td>
+            <td>{totalCal}</td>
+            <td>{totalSugar}(g)</td>
+            <td>{totalSodium} (g)</td>
+            <td>{totalCarbs} (g)</td>
+            <td>{totalCholest} (g)</td>
             <td>
               <span className="right"><a className="btn-floating btn-small waves-effect waves-light blue" onClick={(e) => {
                   e.preventDefault();
