@@ -12,6 +12,7 @@ var TodoCollection = require('../models/models.js').TodoCollection;
 
 require('materialize-sass-origin/js/collapsible.js');
 require('materialize-sass-origin/js/jquery.easing.1.3.js');
+
 require('materialize-sass-origin/js/date_picker/picker.date.js');
 require('materialize-sass-origin/js/date_picker/picker.js');
 

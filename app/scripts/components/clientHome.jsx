@@ -67,8 +67,9 @@ class ClientHomeContainer extends React.Component {
 
     });
 
-    this.search = _.debounce(this.search, 300).bind(this);
+    this.search = _.debounce(this.search, 800).bind(this);
     this.addFood = this.addFood.bind(this);
+    this.resetIntake = this.resetIntake.bind(this);
 
     this.state = {
       clientId: this.props.id,
@@ -84,6 +85,7 @@ class ClientHomeContainer extends React.Component {
 
   }
   componentWillReceiveProps(newProps){
+
   }
   checkOffTodo(todo){
     if (todo.get('isComplete')) {
@@ -123,6 +125,25 @@ class ClientHomeContainer extends React.Component {
     });
 
   }
+  resetIntake(intake){
+
+    intake.map(model => {
+        model.destroy({success: ()=>{
+
+          this.state.dailyValueCollection.fetch().then(() => {
+            var updatedValues = this.state.dailyValueCollection.where({clientId: this.props.id});
+            console.log('vals', updatedValues);
+
+              this.setState({
+                dailyValues: updatedValues
+              });
+
+          });
+
+        }});
+      });
+
+  }
   render(){
     return (
       <BaseLayout>
@@ -139,7 +160,10 @@ class ClientHomeContainer extends React.Component {
 
               <h4>Daily Intake:</h4>
 
-                <DailyIntakeList dailyValues={this.state.dailyValues}/>
+                <DailyIntakeList
+                  dailyValues={this.state.dailyValues}
+                  resetIntake={this.resetIntake}
+                />
 
                 <SearchBar
                   search={this.search}
@@ -247,11 +271,11 @@ class SearchBar extends React.Component {
       clientId: '',
       owner: {"__type": "Pointer", "className": "_User", "objectId": clientId},
       name: '',
-      calories: '',
-      sugar: '',
-      carbs: '',
-      sodium: '',
-      cholesterol: ''
+      calories: 0,
+      sugar: 0,
+      carbs: 0,
+      sodium: 0,
+      cholesterol: 0
     };
 
   }
@@ -329,7 +353,7 @@ class SearchBar extends React.Component {
     return (
       <div className="search-wrapper card">
         <form>
-          <input id="search" onChange={this.handleSearchTerm} />
+          <input id="search" onChange={this.handleSearchTerm} value={this.state.searchTerm} />
           <i className="material-icons">search</i>
         </form>
 
@@ -400,8 +424,6 @@ class DailyIntakeList extends React.Component {
       return memo + num;
     });
 
-
-
     return (
       <table className="striped">
         <thead>
@@ -417,13 +439,13 @@ class DailyIntakeList extends React.Component {
           <tr >
             <td>{totalCal}</td>
             <td>{totalSugar}(g)</td>
-            <td>{totalSodium} (g)</td>
-            <td>{totalCarbs} (g)</td>
-            <td>{totalCholest} (g)</td>
+            <td>{totalSodium}(g)</td>
+            <td>{totalCarbs}(g)</td>
+            <td>{totalCholest}(g)</td>
             <td>
               <span className="right"><a className="btn-floating btn-small waves-effect waves-light blue" onClick={(e) => {
                   e.preventDefault();
-                  this.props.deleteTodo(todo);}}>
+                  this.props.resetIntake(this.state.dailyValues);}}>
               <i className="material-icons">refresh</i>
               </a>
               </span>
