@@ -438,11 +438,11 @@ class DailyIntakeList extends React.Component {
         </thead>
         <tbody>
           <tr >
-            <td>{Math.floor(totalCal)}</td>
-            <td>{totalSugar}(g)</td>
-            <td>{totalSodium}(g)</td>
-            <td>{totalCarbs}(g)</td>
-            <td>{totalCholest}(g)</td>
+            <td>{parseFloat(totalCal).toFixed(2)}</td>
+            <td>{parseFloat(totalSugar).toFixed(2)}(g)</td>
+            <td>{parseFloat(totalSodium).toFixed(2)}(g)</td>
+            <td>{parseFloat(totalCarbs).toFixed(2)}(g)</td>
+            <td>{parseFloat(totalCholest).toFixed(2)}(g)</td>
             <td>
               <span className="right"><a className="btn-floating btn-small waves-effect waves-light blue" onClick={(e) => {
                   e.preventDefault();

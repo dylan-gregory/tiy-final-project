@@ -1,5 +1,6 @@
 var React = require('react');
 var Backbone = require('backbone');
+var _ = require('underscore');
 var $ = window.$ = window.jQuery = require('jquery');
 
 var User = require('../models/user.js').User;
@@ -56,23 +57,7 @@ class CoachWorkspaceContainer extends React.Component{
 
       });
 
-
     });
-
-
-
-    // var userId = User.current().get('objectId');
-    //
-    // clientCollection.parseWhere(
-    // 'coachId', '_User', userId
-    // ).fetch().then(()=> {
-    //   //
-    //   // clientCollection = coachCollection.findWhere({coachId: this.props.id});
-    //
-    //   console.log('clients', clientCollection);
-    //   this.setState({clientCollection: clientCollection});
-    // });
-
 
     this.state = {
       currentCoach,
@@ -81,8 +66,6 @@ class CoachWorkspaceContainer extends React.Component{
       detailCollection,
       currentDetail
     };
-
-
 
   }
   componentDidMount(){
@@ -108,6 +91,7 @@ class CoachWorkspaceContainer extends React.Component{
                   <img className="circle green" src={this.state.pic !== undefined ? this.state.pic.url : null} />
                   <h4>{this.state.currentDetail !== undefined ? this.state.currentDetail.get('name') : this.state.currentCoach.get('username')}
                   </h4>
+                  <span>Current number of clients: {this.state.clientCollection.length}</span>
                 </li>
               </ul>
 
@@ -142,11 +126,20 @@ class CoachClientList extends React.Component {
     super(props);
 
     var clientCollection = new ClientCollection();
+    var detailCollection = new DetailCollection();
+
+
+    detailCollection.fetch().then(() => {
+      this.setState({
+        detailCollection: detailCollection
+      });
+    });
 
     this.state = {
       clientCollection: this.props.clientCollection,
-      currentCoach: this.props.currentCoach
-    }
+      currentCoach: this.props.currentCoach,
+      detailCollection
+    };
   }
   componentWillReceiveProps(newProps){
     this.setState({clientCollection: newProps.clientCollection, currentCoach: newProps.currentCoach, detailCollection: newProps.detailCollection});
@@ -159,9 +152,12 @@ class CoachClientList extends React.Component {
 
           <li className="collection-item avatar" key={client.cid}>
             <div >
-              <img src='' className="circle red" />
+              <img src={this.state.detailCollection.findWhere({ownerId: client.get('objectId')}) !== undefined ? this.state.detailCollection.findWhere({ownerId: client.get('objectId')}).get('pic').url : null } className="circle grey" />
 
-              <a className="client-name" href={'#workspace/' + this.state.currentCoach.get('objectId') +'/' + client.get('objectId')}>{client.get('username')}</a>
+              <a className="client-name"
+                href={'#workspace/' + this.state.currentCoach.get('objectId') + '/' + client.get('objectId')}>
+                {client.get('username')}
+              </a>
 
               <div className="progress">
                 <div className="determinate" style={{width: 70 + '%'}}></div>
@@ -183,6 +179,7 @@ class CoachClientList extends React.Component {
 }
 
 // {this.state.detailCollection.findWhere({ownerId: client.get('objectId')}).get('pic').url}
+//this.state.detailCollection ? this.state.detailCollection.findWhere({ownerId: client.get('objectId')}).get('name') :
 
 class ClientLeaderBoard extends React.Component {
   constructor(props){

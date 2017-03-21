@@ -96,6 +96,15 @@ class AccountSettingsContainer extends React.Component {
   }
   submitNewDetail(newDetail){
 
+    // this.state.user.set({
+    //   name: newDetail.name,
+    //       email: newDetail.email,
+    //       phone: newDetail.phone,
+    //       pic: newDetail.pic
+    // });
+    //
+    // this.state.user.save();
+
     if (this.state.currentDetail !== undefined) {
       var detail = this.state.currentDetail;
 
@@ -122,6 +131,7 @@ class AccountSettingsContainer extends React.Component {
         });
 
       });
+
     }else{
       this.state.detailCollection.create(newDetail, {success: () => {
 
@@ -164,6 +174,7 @@ class AccountSettingsContainer extends React.Component {
                   <li className="collection-item avatar">
                   <img className="circle green" src={this.state.pic.url} />
                   <h4>{this.state.currentDetail !== undefined ? this.state.currentDetail.get('name') : this.state.user.get('username')}</h4>
+                  <span>{this.state.user.get('isCoach') == true ? "Your coach ID: " + this.state.user.get('objectId') : null }</span>
                   </li>
                 </ul>
 
@@ -177,7 +188,7 @@ class AccountSettingsContainer extends React.Component {
 
                     <span className="card-title activator grey-text text-darken-4">
                       {this.state.currentDetail !== undefined ? "email: " + this.state.currentDetail.get('email') : "Why don't you tell us a little about yourself?"}
-                      <i data-position="bottom" data-delay="50" data-tooltip="I am tooltip" className="material-icons right tooltipped">edit</i>
+                      <i data-position="bottom" data-delay="50" data-tooltip="I am tooltip" className="material-icons right tooltipped">rate_review</i>
                     </span>
 
                     <div>
@@ -312,7 +323,7 @@ class UploadForm extends React.Component{
 
                     <div className="file-field input-field">
                       <div className="btn">
-                        <span>Upload Avatar</span>
+                        <span>Upload Picture</span>
                         <input type="file" onChange={this.handlePicChange} value=''/>
                       </div>
                       <div className="file-path-wrapper">
