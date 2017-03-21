@@ -124,7 +124,7 @@ class CoachWorkspaceContainer extends React.Component{
 
               </div>
               <div className="col s4">
-                <h2>Client Leaderboard</h2>
+                <h2>Client Progress chart? Graph?</h2>
 
                   <ClientLeaderBoard clientCollection={this.state.clientCollection}
                   />
@@ -162,6 +162,10 @@ class CoachClientList extends React.Component {
               <img src='' className="circle red" />
 
               <a className="client-name" href={'#workspace/' + this.state.currentCoach.get('objectId') +'/' + client.get('objectId')}>{client.get('username')}</a>
+
+              <div className="progress">
+                <div className="determinate" style={{width: 70 + '%'}}></div>
+              </div>
 
             </div>
           </li>

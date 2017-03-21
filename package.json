@@ -68,6 +68,7 @@
     ]
   },
   "dependencies": {
+    "chart.js": "^2.5.0",
     "react-tap-event-plugin": "^2.0.1"
   }
 }
