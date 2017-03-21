@@ -2,6 +2,7 @@ var React = require('react');
 var Backbone = require('backbone');
 var _ = require('underscore');
 var $ = window.$ = window.jQuery = require('jquery');
+var Chart = require('chart.js');
 
 var User = require('../models/user.js').User;
 var Coach = require('../models/models.js').Coach;
@@ -108,9 +109,11 @@ class CoachWorkspaceContainer extends React.Component{
 
               </div>
               <div className="col s4">
-                <h2>Client Progress chart? Graph?</h2>
+                <h2>Leaderboard</h2>
 
-                  <ClientLeaderBoard clientCollection={this.state.clientCollection}
+                  <ClientLeaderBoard
+                    clientCollection={this.state.clientCollection}
+                    detailCollection={this.state.detailCollection}
                   />
 
               </div>
@@ -151,12 +154,13 @@ class CoachClientList extends React.Component {
       return (
 
           <li className="collection-item avatar" key={client.cid}>
-            <div >
+            <div>
+
               <img src={this.state.detailCollection.findWhere({ownerId: client.get('objectId')}) !== undefined ? this.state.detailCollection.findWhere({ownerId: client.get('objectId')}).get('pic').url : null } className="circle grey" />
 
               <a className="client-name"
                 href={'#workspace/' + this.state.currentCoach.get('objectId') + '/' + client.get('objectId')}>
-                {client.get('username')}
+                {this.state.detailCollection.findWhere({ownerId: client.get('objectId')}) !== undefined ? this.state.detailCollection.findWhere({ownerId: client.get('objectId')}).get('name') : client.get('username')}
               </a>
 
               <div className="progress">
@@ -188,11 +192,52 @@ class ClientLeaderBoard extends React.Component {
     var clientCollection = new ClientCollection();
 
     this.state = {
-      clientCollection: this.props.clientCollection
+      clientCollection: this.props.clientCollection,
+      detailCollection: this.props.detailCollection
     }
   }
   componentWillReceiveProps(newProps){
-    this.setState({clientCollection: newProps.clientCollection});
+    this.setState({clientCollection: newProps.clientCollection, detailCollection: newProps.detailCollection});
+
+
+  }
+  componentDidMount(){
+
+    var clientNames = this.state.detailCollection.map(client => {
+
+      return client.get('name');
+
+    });
+
+    var ctx = document.getElementById("myChart");
+    var myChart = new Chart(ctx, {
+        type: 'polarArea',
+        data: {
+            labels: clientNames,
+            datasets: [{
+                label: '# of Votes',
+                data: [12, 19, 3, 5, 2, 3],
+                backgroundColor: [
+                    'rgba(255,99,132,1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero:true
+                    }
+                }]
+            }
+        }
+    });
 
   }
   render(){
@@ -201,27 +246,32 @@ class ClientLeaderBoard extends React.Component {
       return (
 
         <tr key={client.cid}>
-          <td>{client.get('username')}</td>
-          <td>1,567</td>
+          <td>{this.state.detailCollection.findWhere({ownerId: client.get('objectId')}) !== undefined ? this.state.detailCollection.findWhere({ownerId: client.get('objectId')}).get('name') : client.get('username')}</td>
+          <td>{this.state.detailCollection.findWhere({ownerId: client.get('objectId')}) !== undefined ? this.state.detailCollection.findWhere({ownerId: client.get('objectId')}).get('stars') : 0 }</td>
         </tr>
 
       )
     });
 
     return (
-      <table className="striped">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Score/Points</th>
-          </tr>
-        </thead>
-        <tbody>
+      <div>
+        <canvas id="myChart" style={{width: 200 + 'px', height:200 + "px"}}></canvas>
 
-          {clientPoints}
+          <table className="striped">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Stars</th>
+              </tr>
+            </thead>
+            <tbody>
 
-        </tbody>
-      </table>
+              {clientPoints}
+
+            </tbody>
+          </table>
+
+      </div>
     )
   }
 }

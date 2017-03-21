@@ -17,6 +17,9 @@ var DailyValueCollection = require('../models/models.js').DailyValueCollection;
 
 var NutritionixSearch = require('../models/nutritionixSearch.js').Nutritionix;
 
+require('materialize-sass-origin/js/sideNav.js');
+require('materialize-sass-origin/js/slider.js');
+
 
 class ClientHomeContainer extends React.Component {
   constructor(props){
@@ -149,7 +152,15 @@ class ClientHomeContainer extends React.Component {
       <BaseLayout>
         <div className="container">
           <div className="row">
-            <h3> Welcome: { this.state.currentDetail ? this.state.currentDetail.get('name') :this.state.currentClient.get('username')}</h3>
+            <div>
+              <h3> Welcome: {this.state.currentDetail ? this.state.currentDetail.get('name') : this.state.currentClient.get('username')}
+
+              </h3>
+
+              Your stars: {this.state.currentDetail ? this.state.currentDetail.get('stars') : 0}
+              <a className="btn-floating btn-small waves-effect waves-light amber"><i className="material-icons star">star</i></a>
+
+            </div>
 
             <MyTodoList
               clientTodos={this.state.clientTodos}
@@ -159,6 +170,7 @@ class ClientHomeContainer extends React.Component {
           <div className="col m6">
 
               <h4>Daily Intake:</h4>
+
 
                 <DailyIntakeList
                   dailyValues={this.state.dailyValues}
@@ -172,6 +184,7 @@ class ClientHomeContainer extends React.Component {
                   clientId={this.state.clientId}
                 />
 
+
             </div>
           </div>
         </div>
@@ -179,6 +192,14 @@ class ClientHomeContainer extends React.Component {
     )
   }
 }
+
+// <ul id="slide-out" className="side-nav"></ul>
+// <div className="fixed-action-btn horizontal click-to-toggle">
+//   <a className="btn-floating btn-small waves-effect waves-light amber"><i className="material-icons star">star</i></a>
+//   <ul>
+//     <li><a className="btn-floating green"><i className="material-icons">publish</i></a></li>
+//   </ul>
+// </div>
 
 
 class MyTodoList extends React.Component {

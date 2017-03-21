@@ -215,7 +215,6 @@ class AccountSettingsContainer extends React.Component {
   }
 }
 
-// outside of React and using AJAX requests, encType is NECESSARY - though React takes care of it for us
 
 
 class UploadForm extends React.Component{
@@ -249,7 +248,8 @@ class UploadForm extends React.Component{
       this.setState({
         name: newProps.currentDetail.get('name'),
         email: newProps.currentDetail.get('email'),
-        phone: newProps.currentDetail.get('phone')
+        phone: newProps.currentDetail.get('phone'),
+        pic: newProps.currentDetail.get('pic')
       });
     }
 

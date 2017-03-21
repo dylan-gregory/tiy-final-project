@@ -55,7 +55,10 @@ class CoachViewClient extends React.Component {
     detailCollection.fetch().then(() => {
       currentDetail = detailCollection.findWhere({ownerId: this.props.id});
 
-      var pic = currentDetail.get('pic');
+      if (currentDetail !== undefined) {
+        var pic = currentDetail.get('pic').url;
+        this.setState({pic: pic});
+      }
 
       this.setState({
         currentDetail: currentDetail,
@@ -146,7 +149,11 @@ class CoachViewClient extends React.Component {
     return (
       <BaseLayout>
         <div className="container">
-          <h2>Client: {this.state.currentClient ? this.state.currentClient.get('username') : null}</h2>
+          <h2>Client:
+
+            {console.log('pic', this.state.clientPic)}
+            <img className="circle avatar-image" src={this.state.clientPic !== undefined ? this.state.clientPic : null} />
+            {this.state.currentDetail ?  this.state.currentDetail.get('name') : this.state.currentClient.get('username')}</h2>
 
           <div className="row">
 
@@ -239,7 +246,7 @@ class ClientTodoList extends React.Component {
 
           </div>
           <div className="collapsible-body">
-            <div className="todo-notes">{todo.get('notes')}</div>
+            <div className="todo-notes">Notes: {todo.get('notes')}</div>
 
             <span className="right"><a className="btn-floating btn-small waves-effect waves-light red todo-delete" onClick={(e) => {
                 e.preventDefault();
@@ -248,12 +255,14 @@ class ClientTodoList extends React.Component {
             </a>
             </span>
 
-            <span className="right"><a className="btn-floating btn-small waves-effect waves-light yellow todo-delete" onClick={(e) => {
-                e.preventDefault();
-            this.props.awardStar(todo);}}>
-            <i className="material-icons">star</i>
-            </a>
-            </span>
+            {todo.get('isComplete') ?
+                <span className="right"><a className="btn-floating btn-small waves-effect waves-light amber todo-delete" onClick={(e) => {
+                    e.preventDefault();
+                this.props.awardStar(todo);}}>
+                <i className="material-icons">star</i>
+                </a>
+                </span>
+                : null }
 
             <div className="clearfix"></div>
 
