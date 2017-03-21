@@ -9,12 +9,12 @@ var ParseModel = require('./models.js').ParseModel;
 var User = ParseModel.extend({
   idAttribute: 'objectId',
   urlRoot: 'https://metal-slug.herokuapp.com/users',
-  save: function(key, val, options){
-    delete this.attributes.createdAt;
-    delete this.attributes.updatedAt;
-
-    return Backbone.Model.prototype.save.apply(this, arguments);
-  }
+  // save: function(key, val, options){
+  //   delete this.attributes.createdAt;
+  //   delete this.attributes.updatedAt;
+  //
+  //   return Backbone.Model.prototype.save.apply(this, arguments);
+  // }
 }, {
   login: function(credentials, callback){
     var url = 'https://metal-slug.herokuapp.com/login?' + $.param(credentials);

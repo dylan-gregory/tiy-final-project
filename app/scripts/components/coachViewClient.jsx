@@ -9,6 +9,8 @@ var Client = require('../models/models.js').Client;
 var ClientCollection = require('../models/models.js').ClientCollection;
 var Todo = require('../models/models.js').Todo;
 var TodoCollection = require('../models/models.js').TodoCollection;
+var Detail = require('../models/models.js').Detail;
+var DetailCollection = require('../models/models.js').DetailCollection;
 
 require('materialize-sass-origin/js/collapsible.js');
 require('materialize-sass-origin/js/jquery.easing.1.3.js');
@@ -25,6 +27,8 @@ class CoachViewClient extends React.Component {
     var currentClient = new Client();
     var clientTodos = new TodoCollection();
     var currentTodos = new TodoCollection();
+    var currentDetail = new Detail();
+    var detailCollection = new DetailCollection();
 
     var clientId = this.props.id;
 
@@ -37,36 +41,37 @@ class CoachViewClient extends React.Component {
       });
 
     });
-
-
     // parseWhere didn't seem to get the job done, but this defnitely does
 
-      clientTodos.fetch().then(() => {
-        clientTodos = clientTodos.where({clientId: this.props.id});
+    clientTodos.fetch().then(() => {
+      clientTodos = clientTodos.where({clientId: this.props.id});
 
-        // if (clientTodos === []) {
-        //   this.setState({
-        //     clientTodos: new TodoCollection()
-        //   });
-        // }else {
-          this.setState({
-            currentTodos: clientTodos
-          });
-        // }
+        this.setState({
+          currentTodos: clientTodos
+        });
 
+    });
+
+    detailCollection.fetch().then(() => {
+      currentDetail = detailCollection.findWhere({ownerId: this.props.id});
+
+      var pic = currentDetail.get('pic');
+
+      this.setState({
+        currentDetail: currentDetail,
+        detailCollection,
+        clientPic: pic
       });
-
-    // clientTodos.parseWhere(
-    //   'owner', '_User', this.props.id
-    // ).fetch().then(() => {
-    //   this.setState({clientTodos: clientTodos});
-    // });
+    });
 
     this.state = {
       currentClient,
       clientCollection,
       clientTodos,
       currentTodos,
+      detailCollection,
+      currentDetail,
+      clientPic: null,
       clientId,
       currentDate: '',
       currentTitle: '',
@@ -77,6 +82,7 @@ class CoachViewClient extends React.Component {
     this.deleteTodo = this.deleteTodo.bind(this);
     this.toggleForm = this.toggleForm.bind(this);
     this.editTodo = this.editTodo.bind(this);
+    this.awardStar = this.awardStar.bind(this);
 
   }
   addTodo(newTodo){
@@ -124,6 +130,14 @@ class CoachViewClient extends React.Component {
     }});
 
   }
+  awardStar(){
+    console.log('starred');
+
+    console.log(this.state.currentClient.get('stars'));
+    this.state.currentDetail.set({stars: this.state.currentDetail.get('stars') + 1});
+    this.state.currentDetail.save();
+
+  }
   toggleForm(){
     this.setState({showForm: !this.state.showForm});
 
@@ -142,6 +156,7 @@ class CoachViewClient extends React.Component {
                             addTodo={this.addTodo}
                             clientId={this.state.clientId}
                             editTodo={this.editTodo}
+                            awardStar={this.awardStar}
             />
 
           </div>
@@ -230,6 +245,13 @@ class ClientTodoList extends React.Component {
                 e.preventDefault();
             this.props.deleteTodo(todo);}}>
             <i className="material-icons">close</i>
+            </a>
+            </span>
+
+            <span className="right"><a className="btn-floating btn-small waves-effect waves-light yellow todo-delete" onClick={(e) => {
+                e.preventDefault();
+            this.props.awardStar(todo);}}>
+            <i className="material-icons">star</i>
             </a>
             </span>
 

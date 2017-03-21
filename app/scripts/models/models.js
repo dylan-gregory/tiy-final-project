@@ -130,6 +130,7 @@ var Client = ParseModel.extend({
       avatar: '',
       todos: new TodoCollection(),
       coachId: '',
+      stars: 0
 
     }
   }
@@ -159,7 +160,9 @@ var TodoCollection = ParseCollection.extend({
 });
 
 var Detail = ParseModel.extend({
-
+  defaults: {
+    stars: 0
+  }
 });
 
 var DetailCollection = ParseCollection.extend({

@@ -88,7 +88,7 @@ class CoachWorkspaceContainer extends React.Component{
 
               <ul className="collection">
                 <li className="collection-item avatar">
-                  <img className="circle green" src={this.state.pic !== undefined ? this.state.pic.url : null} />
+                  <img className="circle grey" src={this.state.pic !== undefined ? this.state.pic.url : null} />
                   <h4>{this.state.currentDetail !== undefined ? this.state.currentDetail.get('name') : this.state.currentCoach.get('username')}
                   </h4>
                   <span>Current number of clients: {this.state.clientCollection.length}</span>
