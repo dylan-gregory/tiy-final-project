@@ -20,6 +20,7 @@ var NutritionixSearch = require('../models/nutritionixSearch.js').Nutritionix;
 
 
 require('materialize-sass-origin/js/bin/materialize.js');
+require('materialize-sass-origin/js/tooltip.js');
 require('materialize-sass-origin/js/sideNav.js');
 require('materialize-sass-origin/js/slider.js');
 
@@ -73,7 +74,7 @@ class ClientHomeContainer extends React.Component {
 
     });
 
-    this.search = _.debounce(this.search, 800).bind(this);
+    this.search = _.debounce(this.search, 300).bind(this);
     this.addFood = this.addFood.bind(this);
     this.resetIntake = this.resetIntake.bind(this);
 
@@ -90,8 +91,9 @@ class ClientHomeContainer extends React.Component {
     };
 
   }
-  componentWillReceiveProps(newProps){
-
+  componentDidMount(){
+    $('.button-collapse').sideNav('show');
+    $('.tooltipped').tooltip({delay: 50});
   }
   checkOffTodo(todo){
     if (todo.get('isComplete')) {
@@ -114,8 +116,6 @@ class ClientHomeContainer extends React.Component {
 
   }
   addFood(food){
-
-    console.log('this food', food);
 
     this.state.dailyValueCollection.create(food, {success: () =>
 
@@ -161,7 +161,7 @@ class ClientHomeContainer extends React.Component {
               </h3>
 
               Your stars: {this.state.currentDetail ? this.state.currentDetail.get('stars') : 0}
-              <a className="btn-floating btn-small waves-effect waves-light amber"><i className="material-icons star">star</i></a>
+              <a className="btn-floating btn-small waves-effect waves-light amber tooltipped" data-position="bottom" data-delay="50" data-tooltip="Cash in your stars!"><i className="material-icons star">star</i></a>
 
             </div>
 
@@ -170,7 +170,8 @@ class ClientHomeContainer extends React.Component {
               checkOffTodo={this.checkOffTodo}
             />
 
-          <div className="col m6">
+          <div className="col m5">
+
 
               <h4>Daily Intake:</h4>
 
@@ -188,9 +189,12 @@ class ClientHomeContainer extends React.Component {
                 />
 
 
+
+
             </div>
           </div>
         </div>
+
       </BaseLayout>
     )
   }
@@ -203,6 +207,20 @@ class ClientHomeContainer extends React.Component {
 //     <li><a className="btn-floating green"><i className="material-icons">publish</i></a></li>
 //   </ul>
 // </div>
+// <ul id="slide-out" className="side-nav">
+//   <DailyIntakeList
+//     dailyValues={this.state.dailyValues}
+//     resetIntake={this.resetIntake}
+//   />
+//
+//   <SearchBar
+//     search={this.search}
+//     results={this.state.searchResults}
+//     addFood={this.addFood}
+//     clientId={this.state.clientId}
+//   />
+// <a href="#" data-activates="slide-out" className="button-collapse"><i className="material-icons">menu</i></a>
+// </ul>
 
 
 class MyTodoList extends React.Component {
@@ -265,7 +283,7 @@ class MyTodoList extends React.Component {
 
     return (
 
-        <div className="col m6">
+        <div className="col m7">
           <h4>Coming up:</h4>
             <form>
               <ul className="collapsible" data-collapsible="accordion">
@@ -341,7 +359,7 @@ class SearchBar extends React.Component {
       sodium: food.fields.nf_sodium,
       cholesterol: food.fields.nf_cholesterol
     }, () => {
-      console.log('state', this.state);
+
 
       this.props.addFood(this.state);
     });
@@ -376,6 +394,7 @@ class SearchBar extends React.Component {
     })
 
     return (
+
       <div className="search-wrapper card">
         <form>
           <input id="search" onChange={this.handleSearchTerm} value={this.state.searchTerm} />
@@ -404,7 +423,6 @@ class DailyIntakeList extends React.Component {
   }
   componentWillReceiveProps(newProps){
     this.setState({dailyValues: newProps.dailyValues});
-    console.log('new', newProps.dailyValues);
 
   }
   render(){
@@ -450,7 +468,7 @@ class DailyIntakeList extends React.Component {
     });
 
     return (
-      <table className="striped">
+      <table className="striped responsive-table">
         <thead>
           <tr>
             <th>Calories</th>
@@ -462,13 +480,13 @@ class DailyIntakeList extends React.Component {
         </thead>
         <tbody>
           <tr >
-            <td>{parseFloat(totalCal).toFixed(2)}</td>
-            <td>{parseFloat(totalSugar).toFixed(2)}(g)</td>
-            <td>{parseFloat(totalSodium).toFixed(2)}(g)</td>
-            <td>{parseFloat(totalCarbs).toFixed(2)}(g)</td>
-            <td>{parseFloat(totalCholest).toFixed(2)}(g)</td>
+            <td>{totalCal ? parseFloat(totalCal).toFixed(2) : 0}</td>
+            <td>{totalSugar ? parseFloat(totalSugar).toFixed(1) : 0}(g)</td>
+            <td>{totalSodium ? parseFloat(totalSodium).toFixed(1) : 0}(g)</td>
+            <td>{totalSodium ? parseFloat(totalSodium).toFixed(1) : 0}(g)</td>
+            <td>{totalCholest ? parseFloat(totalCholest).toFixed(1) : 0}(g)</td>
             <td>
-              <span className="right"><a className="btn-floating btn-small waves-effect waves-light blue" onClick={(e) => {
+              <span className="right"><a className="btn-floating btn-small waves-effect waves-light blue tooltipped" data-position="bottom" data-delay="50" data-tooltip="Restart counter" onClick={(e) => {
                   e.preventDefault();
                   this.props.resetIntake(this.state.dailyValues);}}>
               <i className="material-icons">refresh</i>

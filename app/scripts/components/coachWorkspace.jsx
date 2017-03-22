@@ -13,6 +13,7 @@ var DetailCollection = require('../models/models.js').DetailCollection;
 
 // These are the specific Materialize things needed to work the collapsibles
 
+
 require('materialize-sass-origin/js/collapsible.js');
 require('materialize-sass-origin/js/jquery.easing.1.3.js');
 
@@ -29,6 +30,8 @@ class CoachWorkspaceContainer extends React.Component{
     var clientCollection = new ClientCollection();
     var currentDetail = new Detail();
     var detailCollection = new DetailCollection();
+    var clientNames;
+    var clientStars;
 
     coachCollection.fetch().then(() => {
       currentCoach = coachCollection.findWhere({objectId: this.props.id});
@@ -52,20 +55,38 @@ class CoachWorkspaceContainer extends React.Component{
         this.setState({pic: pic});
       }
 
+      clientNames = detailCollection.map(client => {
+        console.log('name', client.get('name'));
+       return client.get('name');
+
+      });
+
+      clientStars = detailCollection.map(client => {
+        console.log('stars', client.get('stars'));
+        return client.get('stars');
+
+      });
+      console.log('cl', clientStars);
+
       this.setState({
         currentDetail: currentDetail,
-        detailCollection: detailCollection
+        detailCollection: detailCollection,
+        clientStars: clientStars,
+        clientNames: clientNames
 
       });
 
     });
+
 
     this.state = {
       currentCoach,
       coachCollection,
       clientCollection,
       detailCollection,
-      currentDetail
+      currentDetail,
+      clientNames,
+      clientStars
     };
 
   }
@@ -114,6 +135,8 @@ class CoachWorkspaceContainer extends React.Component{
                   <ClientLeaderBoard
                     clientCollection={this.state.clientCollection}
                     detailCollection={this.state.detailCollection}
+                    clientStars={this.state.clientStars}
+                    clientNames={this.state.clientNames}
                   />
 
               </div>
@@ -190,39 +213,47 @@ class ClientLeaderBoard extends React.Component {
     super(props);
 
     var clientCollection = new ClientCollection();
+    var detailCollection = new DetailCollection();
+
+    var clientNames;
+    var clientStars;
+
 
     this.state = {
-      clientCollection: this.props.clientCollection,
-      detailCollection: this.props.detailCollection
-    }
+      clientCollection: clientCollection,
+      detailCollection: detailCollection,
+      clientStars: this.props.clientStars,
+      clientNames: this.props.clientNames
+
+    };
+
   }
   componentWillReceiveProps(newProps){
-    this.setState({clientCollection: newProps.clientCollection, detailCollection: newProps.detailCollection});
 
+    this.setState({clientCollection: newProps.clientCollection, detailCollection: newProps.detailCollection, clientStars: newProps.clientStars, clientNames: newProps.clientNames});
 
   }
   componentDidMount(){
 
-    var clientNames = this.state.detailCollection.map(client => {
-
-      return client.get('name');
-
-    });
+    // var this.state.detailCollection.findWhere({ownerId: client.get('objectId')})
 
     var ctx = document.getElementById("myChart");
     var myChart = new Chart(ctx, {
         type: 'polarArea',
         data: {
-            labels: clientNames,
+            labels: this.state.clientNames,
             datasets: [{
                 label: '# of Votes',
-                data: [12, 19, 3, 5, 2, 3],
+                data: this.state.clientStars,
                 backgroundColor: [
                     'rgba(255,99,132,1)',
                     'rgba(54, 162, 235, 1)',
                     'rgba(255, 206, 86, 1)',
                     'rgba(75, 192, 192, 1)',
                     'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)',
+                    'rgba(255, 159, 64, 1)',
+                    'rgba(255, 159, 64, 1)',
                     'rgba(255, 159, 64, 1)'
                 ],
                 borderWidth: 1
@@ -239,8 +270,12 @@ class ClientLeaderBoard extends React.Component {
         }
     });
 
+
+
   }
   render(){
+
+      console.log('names', this.state.clientNames);
 
     var clientPoints = this.state.clientCollection.map(client =>{
       return (

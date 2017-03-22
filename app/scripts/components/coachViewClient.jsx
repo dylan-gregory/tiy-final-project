@@ -258,7 +258,7 @@ class ClientTodoList extends React.Component {
             </span>
 
             {todo.get('isComplete') ?
-                <span className="right"><a className="btn-floating tooltipped btn-small waves-effect waves-light amber todo-delete" data-position="left" data-delay="50" data-tooltip="Reward your client with a gold star!" onClick={(e) => {
+                <span className="right"><a className="btn-floating btn-small tooltipped waves-effect waves-light amber todo-delete" data-position="left" data-delay="50" data-tooltip="Reward" onClick={(e) => {
                     e.preventDefault();
                     Materialize.toast('You awarded a star!', 4000, 'rounded');
                 this.props.awardStar(todo);}}>
@@ -266,7 +266,6 @@ class ClientTodoList extends React.Component {
                 </a>
                 </span>
                 : null }
-
             <div className="clearfix"></div>
 
 

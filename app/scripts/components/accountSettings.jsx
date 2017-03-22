@@ -14,7 +14,7 @@ var CoachCollection = require('../models/models.js').CoachCollection;
 var Detail = require('../models/models.js').Detail;
 var DetailCollection = require('../models/models.js').DetailCollection;
 
-// require('materialize-sass-origin/js/bin/materialize.js');
+require('materialize-sass-origin/js/bin/materialize.js');
 require('materialize-sass-origin/js/waves.js');
 // require('materialize-sass-origin/js/velocity.min.js');
 require('materialize-sass-origin/js/cards.js');
@@ -51,7 +51,6 @@ class AccountSettingsContainer extends React.Component {
         detailCollection,
          pic
       });
-      console.log(currentDetail);
 
     });
 
@@ -239,8 +238,6 @@ class UploadForm extends React.Component{
       ownerId: userId
     };
 
-    console.log('pic', this.state.pic);
-
   }
   componentWillReceiveProps(newProps){
 
@@ -280,10 +277,6 @@ class UploadForm extends React.Component{
   }
   handleSubmit(e){
     e.preventDefault();
-
-    console.log('save?', this.state);
-    // I will actually send state to the parent component, but this is what it might look like there
-    // this.props.submitNewDetail(this.state);
     var pic = this.state.pic;
     var fileUpload = new ParseFile(pic);
 
