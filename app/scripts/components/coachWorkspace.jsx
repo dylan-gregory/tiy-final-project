@@ -2,7 +2,9 @@ var React = require('react');
 var Backbone = require('backbone');
 var _ = require('underscore');
 var $ = window.$ = window.jQuery = require('jquery');
-var Chart = require('chart.js');
+var PolarAreaChart = require('react-chartjs').PolarArea;
+// var Chart = require('chart.js');
+
 
 var User = require('../models/user.js').User;
 var Coach = require('../models/models.js').Coach;
@@ -126,7 +128,7 @@ class CoachWorkspaceContainer extends React.Component{
 
               <ul className="collection">
                 <li className="collection-item avatar">
-                  <img className="circle grey" src={this.state.pic !== undefined ? this.state.pic.url : null} />
+                  <img className="circle" src={this.state.pic !== undefined ? this.state.pic.url : "images/ic_account_circle_black_24px.svg"} />
                   <h4>{this.state.currentDetail !== undefined ? this.state.currentDetail.get('name') : this.state.currentCoach.get('username')}
                   </h4>
                   <span>Current number of clients: {this.state.clientCollection.length}</span>
@@ -147,6 +149,11 @@ class CoachWorkspaceContainer extends React.Component{
               </div>
               <div className="col s4">
                 <h2>Leaderboard</h2>
+
+                <ClientStarChart
+                  clientStars={this.state.clientStars}
+                  clientNames={this.state.clientNames}
+                />
 
                   <ClientLeaderBoard
                     clientCollection={this.state.clientCollection}
@@ -249,46 +256,46 @@ class ClientLeaderBoard extends React.Component {
     this.setState({clientCollection: newProps.clientCollection, detailCollection: newProps.detailCollection, clientStars: newProps.clientStars, clientNames: newProps.clientNames});
 
   }
-  componentDidMount(){
-
-    console.log('state', this.state);
-    // var this.state.detailCollection.findWhere({ownerId: client.get('objectId')})
-
-    var ctx = document.getElementById("myChart");
-    var myChart = new Chart(ctx, {
-        type: 'polarArea',
-        data: {
-            labels: this.state.clientNames,
-            datasets: [{
-                label: '# of Votes',
-                data: this.state.clientStars,
-                backgroundColor: [
-                    'rgba(255,99,132,1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(153, 102, 255, 1)',
-                    'rgba(255, 159, 64, 1)',
-                    'rgba(255, 159, 64, 1)',
-                    'rgba(255, 159, 64, 1)',
-                    'rgba(255, 159, 64, 1)'
-                ],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero:true
-                    }
-                }]
-            }
-        }
-    });
-
-
-  }
+  // componentDidMount(){
+  //
+  //   console.log('state', this.state);
+  //   // var this.state.detailCollection.findWhere({ownerId: client.get('objectId')})
+  //
+  //   var ctx = document.getElementById("myChart");
+  //   var myChart = new Chart(ctx, {
+  //       type: 'polarArea',
+        // data: {
+        //     labels: this.state.clientNames,
+        //     datasets: [{
+        //         label: '# of Votes',
+        //         data: this.state.clientStars,
+        //         backgroundColor: [
+        //             'rgba(255,99,132,1)',
+        //             'rgba(54, 162, 235, 1)',
+        //             'rgba(255, 206, 86, 1)',
+        //             'rgba(75, 192, 192, 1)',
+        //             'rgba(153, 102, 255, 1)',
+        //             'rgba(255, 159, 64, 1)',
+        //             'rgba(255, 159, 64, 1)',
+        //             'rgba(255, 159, 64, 1)',
+        //             'rgba(255, 159, 64, 1)'
+        //         ],
+        //         borderWidth: 1
+        //     }]
+        // },
+  //       options: {
+  //           scales: {
+  //               yAxes: [{
+  //                   ticks: {
+  //                       beginAtZero:true
+  //                   }
+  //               }]
+  //           }
+  //       }
+  //   });
+  //
+  //
+  // }
   render(){
 
       console.log('names', this.state.clientNames);
@@ -306,7 +313,6 @@ class ClientLeaderBoard extends React.Component {
 
     return (
       <div>
-        <canvas id="myChart" style={{width: 200 + 'px', height:200 + "px"}}></canvas>
 
           <table className="striped">
             <thead>
@@ -326,6 +332,72 @@ class ClientLeaderBoard extends React.Component {
     )
   }
 }
+
+class ClientStarChart extends React.Component {
+  constructor(props){
+    super(props);
+    var clientNames = [];
+    var clientStars = [];
+    var chartData = {};
+
+    this.setState = {
+      chartData,
+      clientNames,
+      clientStars
+    };
+    //
+    // this.componentWillReceiveProps = this.componentWillReceiveProps.bind(this);
+
+  }
+  // componentWillReceiveProps(newProps){
+  //
+  // // var newChartData = {
+  // //       labels: newProps.clientNames,
+  // //       datasets: [{
+  // //           data: newProps.clientStars,
+  // //           backgroundColor: [
+  // //               'rgba(255,99,132,1)',
+  // //               'rgba(54, 162, 235, 1)',
+  // //               'rgba(255, 206, 86, 1)',
+  // //               'rgba(75, 192, 192, 1)',
+  // //               'rgba(153, 102, 255, 1)',
+  // //               'rgba(255, 159, 64, 1)',
+  // //               'rgba(255, 159, 64, 1)',
+  // //               'rgba(255, 159, 64, 1)',
+  // //               'rgba(255, 159, 64, 1)'
+  // //           ],
+  // //           borderWidth: 1
+  // //       }]
+  // //   };
+  //
+  //   this.setState({clientNames: newProps.clientNames, clientStars: newProps.clientStars});
+  //
+  // }
+  render(){
+
+    var chartData = {
+        labels: this.props.clientNames,
+        datasets: [{
+            data: this.props.clientStars,
+            backgroundColor: [
+                'rgba(255,99,132,1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)',
+                'rgba(255, 159, 64, 1)',
+                'rgba(255, 159, 64, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
+        }]
+    }
+    return <PolarAreaChart data={chartData} />
+  }
+}
+
+
 
 module.exports = {
   CoachWorkspaceContainer
