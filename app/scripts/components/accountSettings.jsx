@@ -16,9 +16,9 @@ var DetailCollection = require('../models/models.js').DetailCollection;
 
 // require('materialize-sass-origin/js/bin/materialize.js');
 require('materialize-sass-origin/js/waves.js');
-require('materialize-sass-origin/js/velocity.min.js');
+// require('materialize-sass-origin/js/velocity.min.js');
 require('materialize-sass-origin/js/cards.js');
-// require('materialize-sass-origin/js/tooltip.js');
+require('materialize-sass-origin/js/tooltip.js');
 
 
 class AccountSettingsContainer extends React.Component {
@@ -159,7 +159,7 @@ class AccountSettingsContainer extends React.Component {
 
   }
   componentDidMount(){
-    // $('.tooltipped').tooltip({delay: 50});
+    $('.tooltipped').tooltip({delay: 50});
   }
   render(){
 
@@ -188,7 +188,7 @@ class AccountSettingsContainer extends React.Component {
 
                     <span className="card-title activator grey-text text-darken-4">
                       {this.state.currentDetail !== undefined ? "email: " + this.state.currentDetail.get('email') : "Why don't you tell us a little about yourself?"}
-                      <i data-position="bottom" data-delay="50" data-tooltip="I am tooltip" className="material-icons right tooltipped">rate_review</i>
+                      <i data-position="bottom" data-delay="50" data-tooltip="Edit your profile" className="material-icons right tooltipped">rate_review</i>
                     </span>
 
                     <div>

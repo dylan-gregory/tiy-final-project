@@ -12,9 +12,10 @@ var TodoCollection = require('../models/models.js').TodoCollection;
 var Detail = require('../models/models.js').Detail;
 var DetailCollection = require('../models/models.js').DetailCollection;
 
+require('materialize-sass-origin/js/bin/materialize.js');
 require('materialize-sass-origin/js/collapsible.js');
 require('materialize-sass-origin/js/jquery.easing.1.3.js');
-
+require('materialize-sass-origin/js/tooltip.js');
 require('materialize-sass-origin/js/date_picker/picker.date.js');
 require('materialize-sass-origin/js/date_picker/picker.js');
 
@@ -213,8 +214,9 @@ class ClientTodoList extends React.Component {
 
   }
   componentDidMount(){
-
+    $('.tooltipped').tooltip({delay: 50});
     $('.collapsible').collapsible();
+
 
   }
   editTodo(todo){
@@ -256,8 +258,9 @@ class ClientTodoList extends React.Component {
             </span>
 
             {todo.get('isComplete') ?
-                <span className="right"><a className="btn-floating btn-small waves-effect waves-light amber todo-delete" onClick={(e) => {
+                <span className="right"><a className="btn-floating tooltipped btn-small waves-effect waves-light amber todo-delete" data-position="left" data-delay="50" data-tooltip="Reward your client with a gold star!" onClick={(e) => {
                     e.preventDefault();
+                    Materialize.toast('You awarded a star!', 4000, 'rounded');
                 this.props.awardStar(todo);}}>
                 <i className="material-icons">star</i>
                 </a>

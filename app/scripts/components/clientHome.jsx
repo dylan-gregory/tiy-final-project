@@ -3,6 +3,7 @@ var Backbone = require('backbone');
 var $ = require('jquery');
 var _ = require('underscore');
 
+
 var BaseLayout = require('./layouts/base.jsx').BaseLayout;
 
 var User = require('../models/user.js').User;
@@ -17,6 +18,8 @@ var DailyValueCollection = require('../models/models.js').DailyValueCollection;
 
 var NutritionixSearch = require('../models/nutritionixSearch.js').Nutritionix;
 
+
+require('materialize-sass-origin/js/bin/materialize.js');
 require('materialize-sass-origin/js/sideNav.js');
 require('materialize-sass-origin/js/slider.js');
 
