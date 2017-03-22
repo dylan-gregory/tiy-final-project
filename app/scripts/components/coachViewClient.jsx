@@ -135,9 +135,7 @@ class CoachViewClient extends React.Component {
 
   }
   awardStar(){
-    console.log('starred');
 
-    console.log(this.state.currentClient.get('stars'));
     this.state.currentDetail.set({stars: this.state.currentDetail.get('stars') + 1});
     this.state.currentDetail.save();
 
@@ -151,13 +149,10 @@ class CoachViewClient extends React.Component {
       <BaseLayout>
         <div className="container">
           <h2>Client:
-
-            {console.log('pic', this.state.clientPic)}
-            <img className="circle avatar-image" src={this.state.clientPic !== undefined ? this.state.clientPic : null} />
             {this.state.currentDetail ?  this.state.currentDetail.get('name') : this.state.currentClient.get('username')}</h2>
 
           <div className="row">
-
+            <h3>Coming up:</h3>
             <ClientTodoList currentClient={this.state.currentClient}
                             currentTodos={this.state.currentTodos}
                             deleteTodo={this.deleteTodo}
@@ -166,6 +161,12 @@ class CoachViewClient extends React.Component {
                             editTodo={this.editTodo}
                             awardStar={this.awardStar}
             />
+
+          <ClientInfo currentClient={this.state.currentClient}
+                     clientId={this.state.clientId}
+                     currentDetail={this.state.currentDetail}
+                     clientPic={this.state.clientPic}
+                     />
 
           </div>
 
@@ -279,7 +280,6 @@ class ClientTodoList extends React.Component {
 
 
         <div className="col m8">
-          <h3>Coming up:</h3>
             <ul className="collapsible" data-collapsible="accordion">
               {todoList}
 
@@ -313,13 +313,61 @@ class ClientTodoList extends React.Component {
 
 
 
-    // <span className="right"><a className="btn-floating btn-small waves-effect waves-light yellow" onClick={(e) => {
-    //     e.preventDefault();
-    //     this.toggleForm();
-    //     this.editTodo(todo);}}>
-    // <i className="material-icons">build</i>
-    // </a>
-    // </span>
+class ClientInfo extends React.Component {
+  constructor(props){
+    super(props);
+    var currentClient;
+    var clientId;
+    var clientPic;
+    var currentDetail;
+    var username;
+
+    this.state = {
+      currentClient,
+      clientId,
+      clientPic,
+      currentDetail,
+      username
+    };
+
+  }
+  componentWillReceiveProps(newProps){
+    this.setState({currentClient: newProps.currentClient, clientId: newProps.clientId, clientPic: newProps.clientPic, currentDetail: newProps.currentDetail, username: newProps.currentClient.get('username') });
+
+  }
+  componentDidMount(){
+    $('.tooltipped').tooltip({delay: 50});
+  }
+  render(){
+
+    return(
+
+      <div className="col m4">
+        <div className="card">
+          <div className="card-image waves-effect waves-block waves-light valign-wrapper">
+            <img className="activator client-avatar" src={this.state.clientPic !== undefined ? this.state.clientPic : "images/ic_account_circle_black_24px.svg"} />
+
+          </div>
+          <div className="card-content">
+            <span className="card-title activator grey-text text-darken-4">
+              {this.state.currentDetail ?  this.state.currentDetail.get('name') : 'New Client'}
+              <i className="material-icons right tooltipped" data-position="bottom" data-delay="50" data-tooltip="Client bio">info_outline</i></span>
+          </div>
+          <div className="card-reveal">
+            <span className="card-title grey-text text-darken-4 client-card-name">{this.state.currentDetail ?  this.state.currentDetail.get('name') : 'New Client'}
+              <i className="material-icons right">close</i>
+              </span>
+            <div>Email: {this.state.currentDetail ?  this.state.currentDetail.get('email') : null}</div>
+            <div>Phone: {this.state.currentDetail ?  this.state.currentDetail.get('phone') : null}</div>
+            <div>Stars: {this.state.currentDetail ?  this.state.currentDetail.get('stars') : 0}</div>
+          </div>
+        </div>
+      </div>
+
+      )
+
+  }
+}
 
 
 

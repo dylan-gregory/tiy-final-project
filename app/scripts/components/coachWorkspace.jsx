@@ -10,6 +10,9 @@ var CoachCollection = require('../models/models.js').CoachCollection;
 var ClientCollection = require('../models/models.js').ClientCollection;
 var Detail = require('../models/models.js').Detail;
 var DetailCollection = require('../models/models.js').DetailCollection;
+var Todo = require('../models/models.js').Todo;
+var TodoCollection = require('../models/models.js').TodoCollection;
+
 
 // These are the specific Materialize things needed to work the collapsibles
 
@@ -30,6 +33,7 @@ class CoachWorkspaceContainer extends React.Component{
     var clientCollection = new ClientCollection();
     var currentDetail = new Detail();
     var detailCollection = new DetailCollection();
+    var clientTodos = new TodoCollection();
     var clientNames;
     var clientStars;
 
@@ -79,6 +83,17 @@ class CoachWorkspaceContainer extends React.Component{
     });
 
 
+
+    clientTodos.fetch().then(() => {
+      clientTodos = clientTodos.where({clientId: this.props.id});
+
+        this.setState({
+          clientTodos: clientTodos
+        });
+
+    });
+
+
     this.state = {
       currentCoach,
       coachCollection,
@@ -86,7 +101,8 @@ class CoachWorkspaceContainer extends React.Component{
       detailCollection,
       currentDetail,
       clientNames,
-      clientStars
+      clientStars,
+      clientTodos
     };
 
   }
@@ -179,7 +195,7 @@ class CoachClientList extends React.Component {
           <li className="collection-item avatar" key={client.cid}>
             <div>
 
-              <img src={this.state.detailCollection.findWhere({ownerId: client.get('objectId')}) !== undefined ? this.state.detailCollection.findWhere({ownerId: client.get('objectId')}).get('pic').url : null } className="circle grey" />
+              <img src={this.state.detailCollection.findWhere({ownerId: client.get('objectId')}) !== undefined ? this.state.detailCollection.findWhere({ownerId: client.get('objectId')}).get('pic').url : "images/ic_account_circle_black_24px.svg" } className="circle" />
 
               <a className="client-name"
                 href={'#workspace/' + this.state.currentCoach.get('objectId') + '/' + client.get('objectId')}>
@@ -235,6 +251,7 @@ class ClientLeaderBoard extends React.Component {
   }
   componentDidMount(){
 
+    console.log('state', this.state);
     // var this.state.detailCollection.findWhere({ownerId: client.get('objectId')})
 
     var ctx = document.getElementById("myChart");
@@ -269,7 +286,6 @@ class ClientLeaderBoard extends React.Component {
             }
         }
     });
-
 
 
   }

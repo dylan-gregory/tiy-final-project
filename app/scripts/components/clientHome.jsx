@@ -56,7 +56,9 @@ class ClientHomeContainer extends React.Component {
     detailCollection.fetch().then(() => {
       currentDetail = detailCollection.findWhere({ownerId: this.props.id});
 
-      var pic = currentDetail.get('pic');
+      if(currentDetail !== undefined){
+        var pic = currentDetail.get('pic');
+      }
 
       this.setState({
         currentDetail: currentDetail,
