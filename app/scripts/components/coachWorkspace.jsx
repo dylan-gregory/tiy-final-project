@@ -2,8 +2,9 @@ var React = require('react');
 var Backbone = require('backbone');
 var _ = require('underscore');
 var $ = window.$ = window.jQuery = require('jquery');
-var PolarAreaChart = require('react-chartjs').PolarArea;
-// var Chart = require('chart.js');
+var Chart = require('chart.js');
+var Polar = require('react-chartjs-2').Polar;
+
 
 
 var User = require('../models/user.js').User;
@@ -61,18 +62,34 @@ class CoachWorkspaceContainer extends React.Component{
         this.setState({pic: pic});
       }
 
-      clientNames = detailCollection.map(client => {
-        console.log('name', client.get('name'));
-       return client.get('name');
+      console.log('my clients', clientCollection);
 
-      });
-
-      clientStars = detailCollection.map(client => {
-        console.log('stars', client.get('stars'));
-        return client.get('stars');
-
-      });
-      console.log('cl', clientStars);
+      // var clientIds = clientCollection.map(client => {
+      //   client.get('objectId');
+      //   return client.get('objectId');
+      //
+      // });
+      //
+      // clientNames = clientIds.map(id => {
+      //   var client = detailCollection.findWhere({ownerId: id}).get('name');
+      //   console.log('my names', client);
+      //   // if (client) {
+      //     return client;
+      //   // }
+      //   // if(client.get('name') == undefined){
+      //   //   return 'New client';
+      //   // }
+      //
+      //
+      //
+      // });
+      //
+      // clientStars = detailCollection.map(client => {
+      //   console.log('stars', client.get('stars'));
+      //   return client.get('stars');
+      //
+      // });
+      // console.log('cl', clientStars);
 
       this.setState({
         currentDetail: currentDetail,
@@ -138,7 +155,7 @@ class CoachWorkspaceContainer extends React.Component{
             </header>
 
             <div className="row">
-              <div className="col m8">
+              <div className="col m7">
                 <h2>Client List</h2>
 
                    <CoachClientList clientCollection={this.state.clientCollection}
@@ -147,16 +164,18 @@ class CoachWorkspaceContainer extends React.Component{
                   />
 
               </div>
-              <div className="col s4">
+              <div className="col s5">
                 <h2>Leaderboard</h2>
 
-
+                  <ClientStarChart
+                    clientCollection={this.state.clientCollection}
+                    detailCollection={this.state.detailCollection}
+                  />
 
                   <ClientLeaderBoard
                     clientCollection={this.state.clientCollection}
                     detailCollection={this.state.detailCollection}
-                    clientStars={this.state.clientStars}
-                    clientNames={this.state.clientNames}
+
                   />
 
               </div>
@@ -167,10 +186,7 @@ class CoachWorkspaceContainer extends React.Component{
   }
 }
 
-// <ClientStarChart
-//   clientStars={this.state.clientStars}
-//   clientNames={this.state.clientNames}
-// />
+
 
 class CoachClientList extends React.Component {
   constructor(props){
@@ -240,67 +256,19 @@ class ClientLeaderBoard extends React.Component {
     var clientCollection = new ClientCollection();
     var detailCollection = new DetailCollection();
 
-    var clientNames;
-    var clientStars;
-
-
     this.state = {
       clientCollection: clientCollection,
       detailCollection: detailCollection,
-      clientStars: this.props.clientStars,
-      clientNames: this.props.clientNames
 
     };
 
   }
   componentWillReceiveProps(newProps){
 
-    this.setState({clientCollection: newProps.clientCollection, detailCollection: newProps.detailCollection, clientStars: newProps.clientStars, clientNames: newProps.clientNames});
+    this.setState({clientCollection: newProps.clientCollection, detailCollection: newProps.detailCollection});
 
   }
-  // componentDidMount(){
-  //
-  //   console.log('state', this.state);
-  //   // var this.state.detailCollection.findWhere({ownerId: client.get('objectId')})
-  //
-  //   var ctx = document.getElementById("myChart");
-  //   var myChart = new Chart(ctx, {
-  //       type: 'polarArea',
-        // data: {
-        //     labels: this.state.clientNames,
-        //     datasets: [{
-        //         label: '# of Votes',
-        //         data: this.state.clientStars,
-        //         backgroundColor: [
-        //             'rgba(255,99,132,1)',
-        //             'rgba(54, 162, 235, 1)',
-        //             'rgba(255, 206, 86, 1)',
-        //             'rgba(75, 192, 192, 1)',
-        //             'rgba(153, 102, 255, 1)',
-        //             'rgba(255, 159, 64, 1)',
-        //             'rgba(255, 159, 64, 1)',
-        //             'rgba(255, 159, 64, 1)',
-        //             'rgba(255, 159, 64, 1)'
-        //         ],
-        //         borderWidth: 1
-        //     }]
-        // },
-  //       options: {
-  //           scales: {
-  //               yAxes: [{
-  //                   ticks: {
-  //                       beginAtZero:true
-  //                   }
-  //               }]
-  //           }
-  //       }
-  //   });
-  //
-  //
-  // }
   render(){
-
-      console.log('names', this.state.clientNames);
 
     var clientPoints = this.state.clientCollection.map(client =>{
       return (
@@ -335,50 +303,62 @@ class ClientLeaderBoard extends React.Component {
   }
 }
 
-// class ClientStarChart extends React.Component {
-//   constructor(props){
-//     super(props);
-//     var clientNames = ['tom', 'joe'];
-//     var clientStars = [1, 2];
-//     var chartData = {};
-//
-//     this.setState = {
-//       chartData,
-//       clientNames,
-//       clientStars
-//     };
-//
-//     this.componentWillReceiveProps = this.componentWillReceiveProps.bind(this);
-//
-//   }
-//   componentWillReceiveProps(newProps){
-//
-//     this.setState({clientNames: newProps.clientNames, clientStars: newProps.clientStars});
-//
-//   }
-//   render(){
-//
-//     var chartData = {
-//         labels: this.state.clientNames,
-//         datasets: [{
-//             data: this.state.clientStars,
-//             backgroundColor: [
-//                 'rgba(255,99,132,1)',
-//                 'rgba(54, 162, 235, 1)',
-//                 'rgba(255, 206, 86, 1)',
-//                 'rgba(75, 192, 192, 1)',
-//                 'rgba(153, 102, 255, 1)',
-//                 'rgba(255, 159, 64, 1)',
-//                 'rgba(255, 159, 64, 1)',
-//                 'rgba(255, 159, 64, 1)',
-//                 'rgba(255, 159, 64, 1)'
-//             ],
-//             borderWidth: 1
-//         }]
-//     }
-//     return <PolarAreaChart data={chartData} />
-//   }
-// }
+class ClientStarChart extends React.Component {
+  constructor(props){
+    super(props);
+    var clientCollection = new ClientCollection();
+    var detailCollection = new DetailCollection();
+
+    this.state = {
+      clientCollection: clientCollection,
+      detailCollection: detailCollection,
+
+    };
+
+    this.componentWillReceiveProps = this.componentWillReceiveProps.bind(this);
+
+  }
+  componentWillReceiveProps(newProps){
+
+    this.setState({clientCollection: newProps.clientCollection, detailCollection: newProps.detailCollection});
+
+  }
+  render(){
+
+    var clientStars = this.state.clientCollection.map(client =>{
+      return (
+
+          this.state.detailCollection.findWhere({ownerId: client.get('objectId')}) !== undefined ? this.state.detailCollection.findWhere({ownerId: client.get('objectId')}).get('stars') : 0
+      )
+    });
+
+    var clientNames = this.state.clientCollection.map(client => {
+      return (
+        this.state.detailCollection.findWhere({ownerId: client.get('objectId')}) !== undefined ? this.state.detailCollection.findWhere({ownerId: client.get('objectId')}).get('name') : client.get('username')
+      )
+    });
+
+    var chartData = {
+        labels: clientNames,
+        datasets: [{
+            data: clientStars,
+            backgroundColor: [
+                'rgba(255,99,132,1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)',
+                'rgba(255, 159, 64, 1)',
+                'rgba(255, 159, 64, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
+        }]
+    }
+    return <Polar data={chartData} style={{width: 200 + 'px', height: 250 + 'px'}}redraw/>
+  }
+}
 
 
 
