@@ -292,7 +292,7 @@ class MyTodoList extends React.Component {
 
           <div className="collapsible-body">
             <div className="client-notes">
-              {todo.get('notes')}
+              Notes: {todo.get('notes')}
             </div>
 
 

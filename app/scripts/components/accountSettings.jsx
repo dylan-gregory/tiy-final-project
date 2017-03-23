@@ -225,6 +225,7 @@ class UploadForm extends React.Component{
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleEmailChange = this.handleEmailChange.bind(this);
     this.handleNumberChange = this.handleNumberChange.bind(this);
+    this.toggleNewImage = this.toggleNewImage.bind(this);
 
     var userId = this.props.user.get('objectId');
 
@@ -235,9 +236,14 @@ class UploadForm extends React.Component{
       pic: '',
       preview: '',
       owner: {"__type": "Pointer", "className": "_User", "objectId": this.props.user},
-      ownerId: userId
+      ownerId: userId,
+      newImage: false
     };
 
+  }
+  toggleNewImage(){
+    this.setState({newImage: true});
+    console.log('new?', this.state.newImage);
   }
   componentWillReceiveProps(newProps){
 
@@ -269,7 +275,7 @@ class UploadForm extends React.Component{
     //use FileReader to display preview
     var reader = new FileReader();
     reader.onloadend = () => {
-      this.setState({preview: reader.result});
+      this.setState({preview: reader.result, newImage: true});
     }
 
     reader.readAsDataURL(file);
@@ -277,31 +283,50 @@ class UploadForm extends React.Component{
   }
   handleSubmit(e){
     e.preventDefault();
-    var pic = this.state.pic;
-    var fileUpload = new ParseFile(pic);
 
-    fileUpload.save({}, {
-      data: pic
-    }).then((response)=>{
+    if (this.state.newImage) {
+      var pic = this.state.pic;
+      var fileUpload = new ParseFile(pic);
 
-      var imageUrl = response.url;
+      fileUpload.save({}, {
+        data: pic
+      }).then((response)=>{
 
+        var imageUrl = response.url;
+
+        this.setState({
+          name: this.state.name,
+          pic: {
+            name: this.state.pic.name,
+            url: imageUrl
+          },
+          email: this.state.email,
+          phone: this.state.phone,
+        });
+
+        this.props.submitNewDetail(this.state);
+
+      });
+    }else {
       this.setState({
         name: this.state.name,
-        pic: {
-          name: this.state.pic.name,
-          url: imageUrl
-        },
         email: this.state.email,
         phone: this.state.phone,
       });
 
-      this.props.submitNewDetail(this.state);
+      this.props.submitNewDetail({
+        name: this.state.name,
+        email: this.state.email,
+        phone: this.state.phone,
+      });
+    }
 
-    });
 
   }
   render(){
+
+    var currentPic = new ParseFile(this.state.pic)
+
     return (
       <div>
         <div className="row">
@@ -314,8 +339,9 @@ class UploadForm extends React.Component{
                 <input type="text" onChange={this.handleNumberChange} value={this.state.phone ? this.state.phone : '' } placeholder="Phone #" />
                 <input type="text" onChange={this.handleEmailChange} value={this.state.email ? this.state.email : ''} placeholder="Email address" />
 
+
                     <div className="file-field input-field">
-                      <div className="btn">
+                      <div className="btn" onClick={this.toggleNewImage}>
                         <span>Upload Picture</span>
 
                         <input type="file" onChange={this.handlePicChange} />
@@ -323,7 +349,7 @@ class UploadForm extends React.Component{
                       </div>
                       <div className="file-path-wrapper">
 
-                        <input className="file-path validate" onChange={this.handlePicChange} value={this.state.pic ? this.state.pic.url : ''} placeholder="So we know what you look like" />
+                        <input className="file-path validate" onChange={this.handlePicChange} value={this.state.pic ? this.state.pic.name : ''} placeholder="So we know what you look like" />
                       </div>
 
                     </div>
@@ -339,6 +365,15 @@ class UploadForm extends React.Component{
     )
   }
 }
+
+// <div className="switch">
+//   <label>
+//     Not new pic
+//     <input type="checkbox" id="mySwitch" onClick={this.toggleNewImage}/>
+//     <span className="lever"></span>
+//     New pic
+//   </label>
+// </div>
 
 module.exports = {
   AccountSettingsContainer
