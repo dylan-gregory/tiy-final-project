@@ -101,8 +101,6 @@ class CoachWorkspaceContainer extends React.Component{
 
     });
 
-
-
     clientTodos.fetch().then(() => {
       clientTodos = clientTodos.where({clientId: this.props.id});
 

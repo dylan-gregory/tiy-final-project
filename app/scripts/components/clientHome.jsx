@@ -76,7 +76,7 @@ class ClientHomeContainer extends React.Component {
 
     });
 
-    this.search = _.debounce(this.search, 300).bind(this);
+    this.search = _.debounce(this.search, 800).bind(this);
     this.addFood = this.addFood.bind(this);
     this.resetIntake = this.resetIntake.bind(this);
 
@@ -172,7 +172,7 @@ class ClientHomeContainer extends React.Component {
         <div className="container">
           <div className="row">
             <div>
-              <h3> Welcome: {this.state.currentDetail ? this.state.currentDetail.get('name') : this.state.currentClient.get('username')}
+              <h3> Logged in as: {this.state.currentDetail ? this.state.currentDetail.get('name') : this.state.currentClient.get('username')}
 
               </h3>
 
@@ -424,7 +424,7 @@ class SearchBar extends React.Component {
         </form>
 
         <ul className="collection">
-          {searchResults}
+          {this.state.searchTerm !== '' ? searchResults : null}
         </ul>
       </div>
     )
