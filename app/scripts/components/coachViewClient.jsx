@@ -100,16 +100,9 @@ class CoachViewClient extends React.Component {
           });
 
       });
-      // this.setState({currentTodos: this.state.clientTodos });
+
     }});
 
-    // this.state.clientTodos.fetch().then(() => {
-    //   var updatedTodo = this.state.clientTodos.where({clientId: this.props.id});
-    //     this.setState({
-    //       currentTodos: updatedTodo
-    //     });
-    //
-    // });
   }
   editTodo(todo){
     console.log('into edit');
@@ -142,6 +135,11 @@ class CoachViewClient extends React.Component {
     this.state.currentDetail.save();
 
   }
+  deleteClient(client){
+    client.destroy();
+    var user = User.current();
+    Backbone.navigate('workspace/' + user.get('objectId'), {trigger: true});
+  }
   toggleForm(){
     this.setState({showForm: !this.state.showForm});
 
@@ -168,6 +166,7 @@ class CoachViewClient extends React.Component {
                      clientId={this.state.clientId}
                      currentDetail={this.state.currentDetail}
                      clientPic={this.state.clientPic}
+                     deleteClient={this.deleteClient}
                      />
 
           </div>
@@ -293,9 +292,11 @@ class ClientTodoList extends React.Component {
               {todoList}
 
               <li>
-                <div className="collapsible-header">
+                <div className="collapsible-header valign-wrapper">
 
-                  <span className="right">Add new task </span><a onClick={this.toggleForm} className="btn-floating btn-small waves-effect waves-light right todo-add-button center-align middle-valign"><i className="material-icons add-icon">add</i></a>
+                  <i className="material-icons md-36 add-icon right">add_circle</i>
+                  <span className="right valign">Add new task </span>
+
 
                   <div className="clearfix"></div>
 
@@ -319,6 +320,10 @@ class ClientTodoList extends React.Component {
     )
   }
 }
+
+// <span className="right">
+// <a onClick={this.toggleForm} className="btn-floating btn-small waves-effect waves-light todo-add-button todo-delete"></a>
+// </span>
 
 
 
@@ -369,6 +374,13 @@ class ClientInfo extends React.Component {
             <div>Email: {this.state.currentDetail ?  this.state.currentDetail.get('email') : null}</div>
             <div>Phone: {this.state.currentDetail ?  this.state.currentDetail.get('phone') : null}</div>
             <div>Stars: {this.state.currentDetail ?  this.state.currentDetail.get('stars') : 0}</div>
+
+              <span className="right"><a className="btn btn-small waves-effect waves-light red todo-delete tooltipped" data-position="left" data-delay="50" data-tooltip="Remove client?"onClick={(e) => {
+                  e.preventDefault();
+              this.props.deleteClient(this.state.currentClient);}}>
+              <i className="material-icons">delete_forever</i>
+              </a>
+              </span>
           </div>
         </div>
       </div>

@@ -152,6 +152,20 @@ class ClientHomeContainer extends React.Component {
       });
 
   }
+  cashStars(){
+    this.state.currentDetail.set('stars', 0);
+
+    this.state.currentDetail.save({success: () => {
+
+      this.state.detailCollection.fetch().then(() => {
+        var currentDetail = this.state.detailCollection.findWhere({ownerId: this.props.id});
+
+        this.setState({
+          currentDetail: currentDetail
+        });
+      });
+    }});
+  }
   render(){
     return (
       <BaseLayout>
@@ -163,7 +177,13 @@ class ClientHomeContainer extends React.Component {
               </h3>
 
               Your stars: {this.state.currentDetail ? this.state.currentDetail.get('stars') : 0}
-              <a className="btn-floating btn-small waves-effect waves-light amber tooltipped" data-position="bottom" data-delay="50" data-tooltip="Cash in your stars!"><i className="material-icons star">star</i></a>
+              <a className="btn-floating btn-small waves-effect waves-light amber tooltipped" data-position="bottom" data-delay="50" data-tooltip="Cash in your stars!"
+                onClick={(e) => {
+                    e.preventDefault();
+                this.cashStars();}}>
+                <i className="material-icons star">star</i>
+
+                </a>
 
             </div>
 
