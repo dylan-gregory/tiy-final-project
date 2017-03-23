@@ -112,6 +112,8 @@ class CoachViewClient extends React.Component {
     // });
   }
   editTodo(todo){
+    console.log('into edit');
+    this.toggleForm();
     // this.setState({
     //   currentDate: todo.get('dueDate'),
     //   currentTitle: todo.get('title'),
@@ -255,6 +257,13 @@ class ClientTodoList extends React.Component {
                 e.preventDefault();
             this.props.deleteTodo(todo);}}>
             <i className="material-icons">close</i>
+            </a>
+            </span>
+
+            <span className="right"><a className="btn-floating btn-small waves-effect waves-light orange todo-delete" onClick={(e) => {
+                e.preventDefault();
+            this.props.editTodo(todo);}}>
+            <i className="material-icons">build</i>
             </a>
             </span>
 

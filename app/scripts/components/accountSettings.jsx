@@ -232,8 +232,8 @@ class UploadForm extends React.Component{
       name: '',
       email: '',
       phone: '',
-      pic: null,
-      preview: null,
+      pic: '',
+      preview: '',
       owner: {"__type": "Pointer", "className": "_User", "objectId": this.props.user},
       ownerId: userId
     };
@@ -310,21 +310,25 @@ class UploadForm extends React.Component{
           </div>
           <div className="col m9">
             <form onSubmit={this.handleSubmit} encType="multipart/form-data">
-              <input onChange={this.handleNameChange} value={this.state.name} type="text" placeholder="Your Name" />
-                <input type="text" onChange={this.handleNumberChange} value={this.state.phone} placeholder="Phone #" />
-                <input type="text" onChange={this.handleEmailChange} value={this.state.email} placeholder="Email address" />
+              <input onChange={this.handleNameChange} value={this.state.name ? this.state.name : ''} type="text" placeholder="Your Name" />
+                <input type="text" onChange={this.handleNumberChange} value={this.state.phone ? this.state.phone : '' } placeholder="Phone #" />
+                <input type="text" onChange={this.handleEmailChange} value={this.state.email ? this.state.email : ''} placeholder="Email address" />
 
                     <div className="file-field input-field">
                       <div className="btn">
                         <span>Upload Picture</span>
-                        <input type="file" onChange={this.handlePicChange} value=''/>
+
+                        <input type="file" onChange={this.handlePicChange} />
+
                       </div>
                       <div className="file-path-wrapper">
-                        <input className="file-path validate" value='' placeholder="So we know what you look like" />
+
+                        <input className="file-path validate" onChange={this.handlePicChange} value={this.state.pic ? this.state.pic.url : ''} placeholder="So we know what you look like" />
                       </div>
+
                     </div>
 
-                    <img src={this.state.preview} />
+                    <img className="preview-img" src={this.state.preview} />
 
 
               <input className="btn" type="submit" value="Save"/>
