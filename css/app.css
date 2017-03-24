@@ -8630,6 +8630,11 @@ footer.page-footer {
   margin-left: 20px;
   margin-top: 15px; }
 
+.material-icons.md-36 {
+  font-size: 36px;
+  margin-left: -10;
+  color: green; }
+
 .todo-delete {
   margin: 10px; }
 
@@ -8654,5 +8659,9 @@ footer.page-footer {
 
 .client-card-name {
   overflow: hidden; }
+
+.preview-img {
+  max-height: 250px;
+  max-width: 250px; }
 
 /*# sourceMappingURL=app.css.map */

@@ -227,6 +227,7 @@ class UploadForm extends React.Component{
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleEmailChange = this.handleEmailChange.bind(this);
     this.handleNumberChange = this.handleNumberChange.bind(this);
+    this.toggleNewImage = this.toggleNewImage.bind(this);
 
     var userId = this.props.user.get('objectId');
 
@@ -234,12 +235,17 @@ class UploadForm extends React.Component{
       name: '',
       email: '',
       phone: '',
-      pic: null,
-      preview: null,
+      pic: '',
+      preview: '',
       owner: {"__type": "Pointer", "className": "_User", "objectId": this.props.user},
-      ownerId: userId
+      ownerId: userId,
+      newImage: false
     };
 
+  }
+  toggleNewImage(){
+    this.setState({newImage: true});
+    console.log('new?', this.state.newImage);
   }
   componentWillReceiveProps(newProps){
 
@@ -271,7 +277,7 @@ class UploadForm extends React.Component{
     //use FileReader to display preview
     var reader = new FileReader();
     reader.onloadend = () => {
-      this.setState({preview: reader.result});
+      this.setState({preview: reader.result, newImage: true});
     }
 
     reader.readAsDataURL(file);
@@ -279,31 +285,52 @@ class UploadForm extends React.Component{
   }
   handleSubmit(e){
     e.preventDefault();
-    var pic = this.state.pic;
-    var fileUpload = new ParseFile(pic);
 
-    fileUpload.save({}, {
-      data: pic
-    }).then((response)=>{
+    if (this.state.newImage) {
+      var pic = this.state.pic;
+      var fileUpload = new ParseFile(pic);
 
-      var imageUrl = response.url;
+      fileUpload.save({}, {
+        data: pic
+      }).then((response)=>{
 
+        var imageUrl = response.url;
+
+        this.setState({
+          name: this.state.name,
+          pic: {
+            name: this.state.pic.name,
+            url: imageUrl
+          },
+          email: this.state.email,
+          phone: this.state.phone,
+          newImage: false
+        });
+
+        this.props.submitNewDetail(this.state);
+
+      });
+    }else {
       this.setState({
         name: this.state.name,
-        pic: {
-          name: this.state.pic.name,
-          url: imageUrl
-        },
+        email: this.state.email,
+        phone: this.state.phone,
+        newImage: false
+      });
+
+      this.props.submitNewDetail({
+        name: this.state.name,
         email: this.state.email,
         phone: this.state.phone,
       });
+    }
 
-      this.props.submitNewDetail(this.state);
-
-    });
 
   }
   render(){
+
+    var currentPic = new ParseFile(this.state.pic)
+
     return (
       React.createElement("div", null, 
         React.createElement("div", {className: "row"}, 
@@ -312,21 +339,26 @@ class UploadForm extends React.Component{
           ), 
           React.createElement("div", {className: "col m9"}, 
             React.createElement("form", {onSubmit: this.handleSubmit, encType: "multipart/form-data"}, 
-              React.createElement("input", {onChange: this.handleNameChange, value: this.state.name, type: "text", placeholder: "Your Name"}), 
-                React.createElement("input", {type: "text", onChange: this.handleNumberChange, value: this.state.phone, placeholder: "Phone #"}), 
-                React.createElement("input", {type: "text", onChange: this.handleEmailChange, value: this.state.email, placeholder: "Email address"}), 
+              React.createElement("input", {onChange: this.handleNameChange, value: this.state.name ? this.state.name : '', type: "text", placeholder: "Your Name"}), 
+                React.createElement("input", {type: "text", onChange: this.handleNumberChange, value: this.state.phone ? this.state.phone : '', placeholder: "Phone #"}), 
+                React.createElement("input", {type: "text", onChange: this.handleEmailChange, value: this.state.email ? this.state.email : '', placeholder: "Email address"}), 
+
 
                     React.createElement("div", {className: "file-field input-field"}, 
-                      React.createElement("div", {className: "btn"}, 
+                      React.createElement("div", {className: "btn", onClick: this.toggleNewImage}, 
                         React.createElement("span", null, "Upload Picture"), 
-                        React.createElement("input", {type: "file", onChange: this.handlePicChange, value: ""})
+
+                        React.createElement("input", {type: "file", onChange: this.handlePicChange})
+
                       ), 
                       React.createElement("div", {className: "file-path-wrapper"}, 
-                        React.createElement("input", {className: "file-path validate", value: "", placeholder: "So we know what you look like"})
+
+                        React.createElement("input", {className: "file-path validate", onChange: this.handlePicChange, value: this.state.pic ? this.state.pic.name : '', placeholder: "So we know what you look like"})
                       )
+
                     ), 
 
-                    React.createElement("img", {src: this.state.preview}), 
+                    React.createElement("img", {className: "preview-img", src: this.state.preview}), 
 
 
               React.createElement("input", {className: "btn", type: "submit", value: "Save"})
@@ -337,6 +369,15 @@ class UploadForm extends React.Component{
     )
   }
 }
+
+// <div className="switch">
+//   <label>
+//     Not new pic
+//     <input type="checkbox" id="mySwitch" onClick={this.toggleNewImage}/>
+//     <span className="lever"></span>
+//     New pic
+//   </label>
+// </div>
 
 module.exports = {
   AccountSettingsContainer
@@ -422,7 +463,7 @@ class ClientHomeContainer extends React.Component {
 
     });
 
-    this.search = _.debounce(this.search, 300).bind(this);
+    this.search = _.debounce(this.search, 800).bind(this);
     this.addFood = this.addFood.bind(this);
     this.resetIntake = this.resetIntake.bind(this);
 
@@ -498,18 +539,38 @@ class ClientHomeContainer extends React.Component {
       });
 
   }
+  cashStars(){
+    this.state.currentDetail.set('stars', 0);
+
+    this.state.currentDetail.save({success: () => {
+
+      this.state.detailCollection.fetch().then(() => {
+        var currentDetail = this.state.detailCollection.findWhere({ownerId: this.props.id});
+
+        this.setState({
+          currentDetail: currentDetail
+        });
+      });
+    }});
+  }
   render(){
     return (
       React.createElement(BaseLayout, null, 
         React.createElement("div", {className: "container"}, 
           React.createElement("div", {className: "row"}, 
             React.createElement("div", null, 
-              React.createElement("h3", null, " Welcome: ", this.state.currentDetail ? this.state.currentDetail.get('name') : this.state.currentClient.get('username')
+              React.createElement("h3", null, " Logged in as: ", this.state.currentDetail ? this.state.currentDetail.get('name') : this.state.currentClient.get('username')
 
               ), 
 
               "Your stars: ", this.state.currentDetail ? this.state.currentDetail.get('stars') : 0, 
-              React.createElement("a", {className: "btn-floating btn-small waves-effect waves-light amber tooltipped", "data-position": "bottom", "data-delay": "50", "data-tooltip": "Cash in your stars!"}, React.createElement("i", {className: "material-icons star"}, "star"))
+              React.createElement("a", {className: "btn-floating btn-small waves-effect waves-light amber tooltipped", "data-position": "bottom", "data-delay": "50", "data-tooltip": "Cash in your stars!", 
+                onClick: (e) => {
+                    e.preventDefault();
+                this.cashStars();}}, 
+                React.createElement("i", {className: "material-icons star"}, "star")
+
+                )
 
             ), 
 
@@ -618,7 +679,7 @@ class MyTodoList extends React.Component {
 
           React.createElement("div", {className: "collapsible-body"}, 
             React.createElement("div", {className: "client-notes"}, 
-              todo.get('notes')
+              "Notes: ", todo.get('notes')
             )
 
 
@@ -750,7 +811,7 @@ class SearchBar extends React.Component {
         ), 
 
         React.createElement("ul", {className: "collection"}, 
-          searchResults
+          this.state.searchTerm !== '' ? searchResults : null
         )
       )
     )
@@ -1122,18 +1183,13 @@ class CoachViewClient extends React.Component {
           });
 
       });
-      // this.setState({currentTodos: this.state.clientTodos });
+
     }});
 
-    // this.state.clientTodos.fetch().then(() => {
-    //   var updatedTodo = this.state.clientTodos.where({clientId: this.props.id});
-    //     this.setState({
-    //       currentTodos: updatedTodo
-    //     });
-    //
-    // });
   }
   editTodo(todo){
+    console.log('into edit');
+    this.toggleForm();
     // this.setState({
     //   currentDate: todo.get('dueDate'),
     //   currentTitle: todo.get('title'),
@@ -1162,6 +1218,11 @@ class CoachViewClient extends React.Component {
     this.state.currentDetail.save();
 
   }
+  deleteClient(client){
+    client.destroy();
+    var user = User.current();
+    Backbone.navigate('workspace/' + user.get('objectId'), {trigger: true});
+  }
   toggleForm(){
     this.setState({showForm: !this.state.showForm});
 
@@ -1187,7 +1248,8 @@ class CoachViewClient extends React.Component {
           React.createElement(ClientInfo, {currentClient: this.state.currentClient, 
                      clientId: this.state.clientId, 
                      currentDetail: this.state.currentDetail, 
-                     clientPic: this.state.clientPic}
+                     clientPic: this.state.clientPic, 
+                     deleteClient: this.deleteClient}
                      )
 
           ), 
@@ -1280,6 +1342,13 @@ class ClientTodoList extends React.Component {
             )
             ), 
 
+            React.createElement("span", {className: "right"}, React.createElement("a", {className: "btn-floating btn-small waves-effect waves-light orange todo-delete", onClick: (e) => {
+                e.preventDefault();
+            this.props.editTodo(todo);}}, 
+            React.createElement("i", {className: "material-icons"}, "build")
+            )
+            ), 
+
             todo.get('isComplete') ?
                 React.createElement("span", {className: "right"}, React.createElement("a", {className: "btn-floating btn-small tooltipped waves-effect waves-light amber todo-delete", "data-position": "left", "data-delay": "50", "data-tooltip": "Reward", onClick: (e) => {
                     e.preventDefault();
@@ -1306,9 +1375,11 @@ class ClientTodoList extends React.Component {
               todoList, 
 
               React.createElement("li", null, 
-                React.createElement("div", {className: "collapsible-header"}, 
+                React.createElement("div", {className: "collapsible-header valign-wrapper"}, 
 
-                  React.createElement("span", {className: "right"}, "Add new task "), React.createElement("a", {onClick: this.toggleForm, className: "btn-floating btn-small waves-effect waves-light right todo-add-button center-align middle-valign"}, React.createElement("i", {className: "material-icons add-icon"}, "add")), 
+                  React.createElement("i", {className: "material-icons md-36 add-icon right"}, "add_circle"), 
+                  React.createElement("span", {className: "right valign"}, "Add new task "), 
+
 
                   React.createElement("div", {className: "clearfix"})
 
@@ -1332,6 +1403,10 @@ class ClientTodoList extends React.Component {
     )
   }
 }
+
+// <span className="right">
+// <a onClick={this.toggleForm} className="btn-floating btn-small waves-effect waves-light todo-add-button todo-delete"></a>
+// </span>
 
 
 
@@ -1381,7 +1456,14 @@ class ClientInfo extends React.Component {
               ), 
             React.createElement("div", null, "Email: ", this.state.currentDetail ?  this.state.currentDetail.get('email') : null), 
             React.createElement("div", null, "Phone: ", this.state.currentDetail ?  this.state.currentDetail.get('phone') : null), 
-            React.createElement("div", null, "Stars: ", this.state.currentDetail ?  this.state.currentDetail.get('stars') : 0)
+            React.createElement("div", null, "Stars: ", this.state.currentDetail ?  this.state.currentDetail.get('stars') : 0), 
+
+              React.createElement("span", {className: "right"}, React.createElement("a", {className: "btn btn-small waves-effect waves-light red todo-delete tooltipped", "data-position": "left", "data-delay": "50", "data-tooltip": "Remove client?", onClick: (e) => {
+                  e.preventDefault();
+              this.props.deleteClient(this.state.currentClient);}}, 
+              React.createElement("i", {className: "material-icons"}, "delete_forever")
+              )
+              )
           )
         )
       )
@@ -1587,8 +1669,6 @@ class CoachWorkspaceContainer extends React.Component{
       });
 
     });
-
-
 
     clientTodos.fetch().then(() => {
       clientTodos = clientTodos.where({clientId: this.props.id});
@@ -1843,11 +1923,11 @@ class ClientStarChart extends React.Component {
             borderWidth: 1
         }]
     }
-    return React.createElement(Polar, {data: chartData, style: {width: 200 + 'px', height: 250 + 'px'}, redraw: true})
+    return React.createElement(Polar, {data: chartData, redraw: true})
   }
 }
 
-
+// style={{width: 200 + 'px', height: 250 + 'px'}}
 
 module.exports = {
   CoachWorkspaceContainer
