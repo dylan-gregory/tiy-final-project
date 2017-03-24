@@ -200,6 +200,10 @@ class ClientTodoList extends React.Component {
 
     this.toggleForm = this.toggleForm.bind(this);
     this.editTodo = this.editTodo.bind(this);
+    this.toggleEdit = this.toggleEdit.bind(this);
+    this.handleNoteChange = this.handleNoteChange.bind(this);
+    this.handleTitleChange = this.handleTitleChange.bind(this);
+    this.handleDateChange = this.handleDateChange.bind(this);
 
     this.state = {
       currentClient: this.props.currentClient,
@@ -207,7 +211,8 @@ class ClientTodoList extends React.Component {
       currentDate: '',
       currentTitle: '',
       currentNotes: '',
-      showForm: false
+      showForm: false,
+      isEditing: false
     }
 
   }
@@ -222,12 +227,44 @@ class ClientTodoList extends React.Component {
 
   }
   editTodo(todo){
+    todo.set({
+      title: this.state.currentTitle,
+      dueDate: this.state.currentDate,
+      notes: this.state.currentNotes,
+      isEditing: false
+    });
+
+    todo.save();
+
+    // this.forceUpdate();
+    this.setState({
+      currentDate: '',
+      currentTitle: '',
+      currentNotes: '',
+    });
+    // this.props.editTodo(todo);
+  }
+  toggleEdit(todo){
+    console.log('click');
+    todo.set({isEditing: !todo.get('isEditing')});
+    todo.save();
+    this.forceUpdate();
+
     this.setState({
       currentDate: todo.get('dueDate'),
       currentTitle: todo.get('title'),
-      currentNotes: todo.get('notes')
-    });
-    // this.props.editTodo(todo);
+      currentNotes: todo.get('notes'),
+    })
+
+  }
+  handleDateChange(e){
+    this.setState({currentDate: e.target.value});
+  }
+  handleTitleChange(e){
+    this.setState({currentTitle: e.target.value});
+  }
+  handleNoteChange(e){
+    this.setState({currentNotes: e.target.value});
   }
   toggleForm(){
     this.setState({showForm: !this.state.showForm});
@@ -240,8 +277,13 @@ class ClientTodoList extends React.Component {
         <li key={todo.cid}>
           <div className="collapsible-header"><input type="checkbox"/>
 
-            <span>{todo.get('title')}</span>
-            <span className="right">Due: {todo.get('dueDate')}</span>
+            {todo.get('isEditing') ? <input type="text" onChange={this.handleTitleChange} value={this.state.currentTitle}/> : <span>{todo.get('title')}</span>}
+
+
+            {todo.get('isEditing') ? <input type="text" onChange={this.handleDateChange} value={this.state.currentDate}/> : <span className="right">Due: {todo.get('dueDate')}</span>}
+
+
+
 
             {todo.get('isComplete') ? <span>
               <i className="material-icons">check_circle</i>
@@ -250,7 +292,19 @@ class ClientTodoList extends React.Component {
 
           </div>
           <div className="collapsible-body">
-            <div className="todo-notes">Notes: {todo.get('notes')}</div>
+
+            {todo.get('isEditing') ? <input type="text" onChange={this.handleNoteChange} value={this.state.currentNotes}/> : <div className="todo-notes">Notes: {todo.get('notes')}</div>}
+
+            {todo.get('isEditing') ?
+              <button className="btn waves-effect waves-light" name="action"
+                onClick={(e) => {
+                  e.preventDefault();
+                  this.editTodo(todo);
+              }}>Save
+                <i className="material-icons right">send</i>
+              </button>
+            : null}
+
 
             <span className="right"><a className="btn-floating btn-small waves-effect waves-light red todo-delete" onClick={(e) => {
                 e.preventDefault();
@@ -261,7 +315,8 @@ class ClientTodoList extends React.Component {
 
             <span className="right"><a className="btn-floating btn-small waves-effect waves-light orange todo-delete" onClick={(e) => {
                 e.preventDefault();
-            this.props.editTodo(todo);}}>
+                this.toggleEdit(todo);
+            }}>
             <i className="material-icons">build</i>
             </a>
             </span>
@@ -320,6 +375,8 @@ class ClientTodoList extends React.Component {
     )
   }
 }
+
+  // this.editTodo(todo);
 
 // <span className="right">
 // <a onClick={this.toggleForm} className="btn-floating btn-small waves-effect waves-light todo-add-button todo-delete"></a>
