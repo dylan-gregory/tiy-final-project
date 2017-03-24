@@ -48,15 +48,24 @@ a{
     width: 100%;
     height: 45px;
     margin: 0;
-    padding: 0 45px 0 15px;
     border: 0;
   }
 
 }
 
+////
+// Navbar styles
+////
+
+// #790C10 original maroonish color
+// #AC3931 possible rusty red
+// #6D213C possible purple
+
 .nav-wrapper{
-  background-color: #790C10;
+  background-color: #AC3931;
 }
+
+
 
 footer.page-footer{
   background-color: #790C10;
@@ -156,4 +165,32 @@ footer.page-footer{
 .preview-img{
   max-height: 250px;
   max-width: 250px;
+}
+
+////
+// Styling for client home page
+////
+
+.counter-head{
+  background-color: #88D18A;
+}
+
+.refresh-button{
+  margin-left: 60px;
+}
+
+.logged-in-avatar{
+  max-height: 40px;
+  max-width: 40px;
+}
+
+.logged-in-as{
+  font-size: 20px;
+}
+
+// .your-stars{
+//   font-size: 24px;
+// }
+.home-header{
+  font-size: 24px;
 }

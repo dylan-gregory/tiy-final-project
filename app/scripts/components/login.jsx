@@ -85,13 +85,13 @@ class UserLoginForm extends React.Component {
     return (
       <form onSubmit={this.handleSubmit}>
         <div className="form-group">
-          <label htmlFor="email-login">Username/Email address</label>
-          <input onChange={this.handleEmailChange} className="form-control" name="email" id="email-login" type="email" placeholder="Name/email" />
+          <label htmlFor="email-login">Email address</label>
+          <input onChange={this.handleEmailChange} className="form-control" name="email" id="email-login" type="email" placeholder="email" />
         </div>
 
         <div className="form-group">
           <label htmlFor="password-login">Password</label>
-          <input onChange={this.handlePasswordChange} className="form-control" name="password" id="password-login" type="password" placeholder="Password Please" />
+          <input onChange={this.handlePasswordChange} className="form-control" name="password" id="password-login" type="password" placeholder="password" />
         </div>
 
         <input className="btn btn-primary" type="submit" value={this.props.submitBtn} />
@@ -162,7 +162,7 @@ class UserSignupForm extends React.Component {
           {this.state.showBox ?
             <div>
               <label htmlFor="your-coach-id">ID# of Your Coach</label>
-              <input onChange={this.handleCoachChange} className="form-control" name="coach-id" id="your-coach-id" type="text" placeholder="ID#" />
+              <input onChange={this.handleCoachChange} className="form-control" name="coach-id" id="your-coach-id" type="text" placeholder="id#" />
           </div>
           : null
          }
@@ -170,13 +170,13 @@ class UserSignupForm extends React.Component {
         </div>
 
         <div className="form-group">
-          <label htmlFor="email-login">Username/Email address</label>
-          <input onChange={this.handleEmailChange} className="form-control" name="email" id="email-login" type="email" placeholder="Name/email" />
+          <label htmlFor="email-login">Email address</label>
+          <input onChange={this.handleEmailChange} className="form-control validate" name="email" id="email-login" type="email" placeholder="email" />
         </div>
 
         <div className="form-group">
           <label htmlFor="password-login">Password</label>
-          <input onChange={this.handlePasswordChange} className="form-control" name="password" id="password-login" type="password" placeholder="Password Please" />
+          <input onChange={this.handlePasswordChange} className="form-control" name="password" id="password-login" type="password" placeholder="password" />
         </div>
 
         <input className="btn btn-primary" type="submit" value={this.props.submitBtn} />

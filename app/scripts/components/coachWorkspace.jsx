@@ -354,11 +354,11 @@ class ClientStarChart extends React.Component {
             borderWidth: 1
         }]
     }
-    return <Polar data={chartData} style={{width: 200 + 'px', height: 250 + 'px'}}redraw/>
+    return <Polar data={chartData} redraw />
   }
 }
 
-
+// style={{width: 200 + 'px', height: 250 + 'px'}}
 
 module.exports = {
   CoachWorkspaceContainer

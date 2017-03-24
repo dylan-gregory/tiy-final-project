@@ -58,12 +58,13 @@ class ClientHomeContainer extends React.Component {
 
       if(currentDetail !== undefined){
         var pic = currentDetail.get('pic');
+        this.setState({pic: pic.url});
+        console.log('pic', pic);
       }
 
       this.setState({
         currentDetail: currentDetail,
-        detailCollection,
-        pic
+        detailCollection
       });
     });
 
@@ -172,18 +173,25 @@ class ClientHomeContainer extends React.Component {
         <div className="container">
           <div className="row">
             <div>
-              <h3> Logged in as: {this.state.currentDetail ? this.state.currentDetail.get('name') : this.state.currentClient.get('username')}
+              <div className="logged-in-as">Logged in as:</div>
+              <div className="home-header">
+                <span className="col m9 valign-wrapper">
+                  <img className="circle logged-in-avatar" src={this.state.currentDetail !== undefined ? this.state.pic : "images/ic_account_circle_black_24px.svg"} />
 
-              </h3>
+                  {this.state.currentDetail ? this.state.currentDetail.get('name') : this.state.currentClient.get('username')}
+                </span>
 
-              Your stars: {this.state.currentDetail ? this.state.currentDetail.get('stars') : 0}
-              <a className="btn-floating btn-small waves-effect waves-light amber tooltipped" data-position="bottom" data-delay="50" data-tooltip="Cash in your stars!"
-                onClick={(e) => {
-                    e.preventDefault();
-                this.cashStars();}}>
-                <i className="material-icons star">star</i>
+                <span className="col m3 your-stars valign-wrapper">
+                  Your stars: {this.state.currentDetail ? this.state.currentDetail.get('stars') : 0}
+                  <a className="btn-floating btn-small waves-effect waves-light amber tooltipped" data-position="bottom" data-delay="50" data-tooltip="Cash in your stars!"
+                    onClick={(e) => {
+                        e.preventDefault();
+                    this.cashStars();}}>
+                    <i className="material-icons star">star</i>
+                    </a>
+                  </span>
 
-                </a>
+              </div>
 
             </div>
 
@@ -193,9 +201,6 @@ class ClientHomeContainer extends React.Component {
             />
 
           <div className="col m5">
-
-
-              <h4>Daily Intake:</h4>
 
 
                 <DailyIntakeList
@@ -490,37 +495,42 @@ class DailyIntakeList extends React.Component {
     });
 
     return (
-      <table className="striped responsive-table">
-        <thead>
-          <tr>
-            <th>Calories</th>
-            <th>Sugar</th>
-            <th>Sodium</th>
-            <th>Carbs</th>
-            <th>Cholesterol</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr >
-            <td>{totalCal ? parseFloat(totalCal).toFixed(2) : 0}</td>
-            <td>{totalSugar ? parseFloat(totalSugar).toFixed(1) : 0}(g)</td>
-            <td>{totalSodium ? parseFloat(totalSodium).toFixed(1) : 0}(g)</td>
-            <td>{totalSodium ? parseFloat(totalSodium).toFixed(1) : 0}(g)</td>
-            <td>{totalCholest ? parseFloat(totalCholest).toFixed(1) : 0}(g)</td>
-            <td>
-              <span className="right"><a className="btn-floating btn-small waves-effect waves-light blue tooltipped" data-position="bottom" data-delay="50" data-tooltip="Restart counter" onClick={(e) => {
-                  e.preventDefault();
-                  this.props.resetIntake(this.state.dailyValues);}}>
-              <i className="material-icons">refresh</i>
-              </a>
-              </span>
-            </td>
-          </tr>
+
+        <div>
+          <h4>Daily Intake:
+            <span className="refresh-button"><a className="btn-floating btn-small waves-effect waves-light blue tooltipped intake-refresh" data-position="bottom" data-delay="50" data-tooltip="Restart counter" onClick={(e) => {
+                e.preventDefault();
+                this.props.resetIntake(this.state.dailyValues);}}>
+            <i className="material-icons">refresh</i>
+            </a>
+            </span>
+          </h4>
+
+          <table className="striped responsive-table">
+            <thead>
+              <tr className="counter-head">
+                <th>Calories</th>
+                <th>Sugar</th>
+                <th>Sodium</th>
+                <th>Carbs</th>
+                <th>Cholesterol</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr >
+                <td>{totalCal ? parseFloat(totalCal).toFixed(2) : 0}</td>
+                <td>{totalSugar ? parseFloat(totalSugar).toFixed(1) : 0}(g)</td>
+                <td>{totalSodium ? parseFloat(totalSodium).toFixed(1) : 0}(g)</td>
+                <td>{totalSodium ? parseFloat(totalSodium).toFixed(1) : 0}(g)</td>
+                <td>{totalCholest ? parseFloat(totalCholest).toFixed(1) : 0}(g)</td>
+
+              </tr>
 
 
 
-        </tbody>
-      </table>
+            </tbody>
+          </table>
+        </div>
     )
   }
 }
