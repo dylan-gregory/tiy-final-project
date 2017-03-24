@@ -95,15 +95,6 @@ class AccountSettingsContainer extends React.Component {
   }
   submitNewDetail(newDetail){
 
-    // this.state.user.set({
-    //   name: newDetail.name,
-    //       email: newDetail.email,
-    //       phone: newDetail.phone,
-    //       pic: newDetail.pic
-    // });
-    //
-    // this.state.user.save();
-
     if (this.state.currentDetail !== undefined) {
       var detail = this.state.currentDetail;
 
@@ -155,7 +146,6 @@ class AccountSettingsContainer extends React.Component {
   componentWillReceiveProps(newProps){
     this.setState({currentDetail: newProps.currentDetail});
 
-
   }
   componentDidMount(){
     $('.tooltipped').tooltip({delay: 50});
@@ -169,13 +159,15 @@ class AccountSettingsContainer extends React.Component {
           <div className="col m12">
             <div className="row">
 
-                <ul className="collection">
-                  <li className="collection-item avatar">
-                  <img className="circle green" src={this.state.pic.url} />
-                  <h4>{this.state.currentDetail !== undefined ? this.state.currentDetail.get('name') : this.state.user.get('username')}</h4>
+              <h4 className="valign-wrapper">
+                <img className="circle logged-in-avatar"
+                  src={this.state.pic !== undefined ? this.state.pic.url : "images/ic_account_circle_black_24px.svg"} />
+
+                  {this.state.currentDetail !== undefined ? this.state.currentDetail.get('name') : this.state.user.get('username')}
+              </h4>
+
                   <span>{this.state.user.get('isCoach') == true ? "Your coach ID: " + this.state.user.get('objectId') : null }</span>
-                  </li>
-                </ul>
+
 
                 <div className="card large">
 

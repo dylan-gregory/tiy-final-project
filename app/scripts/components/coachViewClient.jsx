@@ -274,8 +274,8 @@ class ClientTodoList extends React.Component {
     var todoList = this.state.currentTodos.map(todo =>{
       return (
 
-        <li key={todo.cid}>
-          <div className="collapsible-header"><input type="checkbox"/>
+        <li key={todo.cid} >
+          <div className={todo.get('isEditing') ? "collapsible-header teal accent-2" : "collapsible-header"}><input type="checkbox"/>
 
             {todo.get('isEditing') ? <input type="text" onChange={this.handleTitleChange} value={this.state.currentTitle}/> : <span>{todo.get('title')}</span>}
 
@@ -291,7 +291,9 @@ class ClientTodoList extends React.Component {
             : null }
 
           </div>
-          <div className="collapsible-body">
+
+
+          <div className={todo.get('isEditing') ? "collapsible-body teal accent-2" : "collapsible-body"}>
 
             {todo.get('isEditing') ? <input type="text" onChange={this.handleNoteChange} value={this.state.currentNotes}/> : <div className="todo-notes">Notes: {todo.get('notes')}</div>}
 
@@ -299,6 +301,7 @@ class ClientTodoList extends React.Component {
               <button className="btn waves-effect waves-light" name="action"
                 onClick={(e) => {
                   e.preventDefault();
+                  Materialize.toast('Successfully saved!', 4000, 'rounded');
                   this.editTodo(todo);
               }}>Save
                 <i className="material-icons right">send</i>
