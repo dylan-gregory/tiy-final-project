@@ -498,7 +498,7 @@ class DailyIntakeList extends React.Component {
 
         <div>
           <h4>Daily Intake:
-            <span className="refresh-button"><a className="btn-floating btn-small waves-effect waves-light blue tooltipped intake-refresh" data-position="bottom" data-delay="50" data-tooltip="Restart counter" onClick={(e) => {
+            <span className="refresh-button"><a className="btn-floating btn-small waves-effect waves-light tooltipped intake-refresh" data-position="bottom" data-delay="50" data-tooltip="Restart counter" onClick={(e) => {
                 e.preventDefault();
                 this.props.resetIntake(this.state.dailyValues);}}>
             <i className="material-icons">refresh</i>

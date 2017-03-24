@@ -275,7 +275,7 @@ class ClientTodoList extends React.Component {
       return (
 
         <li key={todo.cid} >
-          <div className={todo.get('isEditing') ? "collapsible-header teal accent-2" : "collapsible-header"}><input type="checkbox"/>
+          <div className={todo.get('isEditing') ? "collapsible-header blue-grey" : "collapsible-header"}><input type="checkbox"/>
 
             {todo.get('isEditing') ? <input type="text" onChange={this.handleTitleChange} value={this.state.currentTitle}/> : <span>{todo.get('title')}</span>}
 
@@ -293,7 +293,7 @@ class ClientTodoList extends React.Component {
           </div>
 
 
-          <div className={todo.get('isEditing') ? "collapsible-body teal accent-2" : "collapsible-body"}>
+          <div className={todo.get('isEditing') ? "collapsible-body blue-grey" : "collapsible-body"}>
 
             {todo.get('isEditing') ? <input type="text" onChange={this.handleNoteChange} value={this.state.currentNotes}/> : <div className="todo-notes">Notes: {todo.get('notes')}</div>}
 

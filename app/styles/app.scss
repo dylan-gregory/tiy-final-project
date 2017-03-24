@@ -60,6 +60,8 @@ a{
 // #790C10 original maroonish color
 // #AC3931 possible rusty red
 // #6D213C possible purple
+// #6A5B6E purple grey
+// #BAAB68 yellowish
 
 .nav-wrapper{
   background-color: #AC3931;
@@ -72,11 +74,11 @@ footer.page-footer{
 }
 
 .btn{
-  background-color: #A35242;
+  background-color: #BAAB68;
 }
 
 .btn:hover{
-  background-color: #AD3C1C;
+  background-color: #6A5B6E;
 }
 
 .collection .collection-item.avatar{
@@ -186,6 +188,8 @@ footer.page-footer{
 
 .logged-in-as{
   font-size: 20px;
+  margin-top: 15px;
+  margin-bottom: 15px;
 }
 
 // .your-stars{
@@ -193,4 +197,10 @@ footer.page-footer{
 // }
 .home-header{
   font-size: 24px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
+.intake-refresh{
+  background-color: #6A5B6E;
 }
