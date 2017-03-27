@@ -60,7 +60,7 @@ class BaseLayout extends React.Component {
              <a href="#" data-activates="mobile-demo" className="button-collapse"><i className="material-icons">menu</i></a>
 
              <ul className="left">
-               { User.current() ? <li><span className="chip valign-wrapper">
+               { User.current() ? <li><span className="chip valign-wrapper user-logged-in">
                  <img className="circle logged-in-avatar"
                    src={this.state.pic !== undefined ? this.state.pic.url : "images/ic_account_circle_black_24px.svg"} />
 

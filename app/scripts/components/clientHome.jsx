@@ -172,14 +172,8 @@ class ClientHomeContainer extends React.Component {
       <BaseLayout>
         <div className="container">
           <div className="row">
-            <div>
-              <div className="logged-in-as">Logged in as:</div>
-              <div className="home-header">
-                <span className="col m9 valign-wrapper">
-                  <img className="circle logged-in-avatar" src={this.state.currentDetail !== undefined ? this.state.pic : "images/ic_account_circle_black_24px.svg"} />
+            <div className=" col m12">
 
-                  {this.state.currentDetail ? this.state.currentDetail.get('name') : this.state.currentClient.get('username')}
-                </span>
 
                 <span className="col m3 your-stars valign-wrapper">
                   Your stars: {this.state.currentDetail ? this.state.currentDetail.get('stars') : 0}
@@ -190,8 +184,6 @@ class ClientHomeContainer extends React.Component {
                     <i className="material-icons star">star</i>
                     </a>
                   </span>
-
-              </div>
 
             </div>
 
@@ -226,6 +218,15 @@ class ClientHomeContainer extends React.Component {
     )
   }
 }
+
+// <div className="logged-in-as">Logged in as:</div>
+// <div className="home-header">
+//   <span className="col m9 valign-wrapper">
+//     <img className="circle logged-in-avatar" src={this.state.currentDetail !== undefined ? this.state.pic : "images/ic_account_circle_black_24px.svg"} />
+//
+//     {this.state.currentDetail ? this.state.currentDetail.get('name') : this.state.currentClient.get('username')}
+//   </span>
+
 
 // <ul id="slide-out" className="side-nav"></ul>
 // <div className="fixed-action-btn horizontal click-to-toggle">
@@ -311,7 +312,9 @@ class MyTodoList extends React.Component {
     return (
 
         <div className="col m7">
-          <h4>Coming up:</h4>
+          <h4>
+            <span className="client-list-head valign-wrapper">Coming up</span>
+            </h4>
             <form>
               <ul className="collapsible" data-collapsible="accordion">
                 {todoList}
@@ -497,14 +500,20 @@ class DailyIntakeList extends React.Component {
     return (
 
         <div>
-          <h4>Daily Intake:
-            <span className="refresh-button"><a className="btn-floating btn-small waves-effect waves-light tooltipped intake-refresh" data-position="bottom" data-delay="50" data-tooltip="Restart counter" onClick={(e) => {
+
+          <h4>
+            <div className="intake-head valign-wrapper">
+              <a className="btn-floating btn-small waves-effect waves-light tooltipped intake-refresh" data-position="bottom" data-delay="50" data-tooltip="Restart counter" onClick={(e) => {
                 e.preventDefault();
                 this.props.resetIntake(this.state.dailyValues);}}>
             <i className="material-icons">refresh</i>
             </a>
-            </span>
+            Daily Intake
+          </div>
+
           </h4>
+
+
 
           <table className="striped responsive-table">
             <thead>
@@ -534,6 +543,18 @@ class DailyIntakeList extends React.Component {
     )
   }
 }
+
+// <h4>
+//   <span className="client-list-head valign-wrapper">
+//     <span className="refresh-button"><a className="btn-floating btn-small waves-effect waves-light tooltipped intake-refresh" data-position="bottom" data-delay="50" data-tooltip="Restart counter" onClick={(e) => {
+//         e.preventDefault();
+//         this.props.resetIntake(this.state.dailyValues);}}>
+//     <i className="material-icons">refresh</i>
+//     </a>
+//     </span>
+//     Daily Intake
+//   </span>
+// </h4>
 
 
 module.exports = {

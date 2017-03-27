@@ -141,15 +141,7 @@ class CoachWorkspaceContainer extends React.Component{
           <div className="container">
             <header>
 
-                <h4>
-                  <span className="chip valign-wrapper">
-                    <img className="circle logged-in-avatar" src={this.state.pic !== undefined ? this.state.pic.url : "images/ic_account_circle_black_24px.svg"} />
-                    <span>
-                      {this.state.currentDetail !== undefined ? this.state.currentDetail.get('name') : this.state.currentCoach.get('username')}
-                    </span>
-                  </span>
 
-                </h4>
             </header>
 
             <div className="row">
@@ -170,7 +162,9 @@ class CoachWorkspaceContainer extends React.Component{
                 <h4>
                   <div className="starboard-head valign-wrapper"><a className="btn-floating btn-small waves-effect waves-light amber todo-delete">
                   <i className="material-icons">star</i>
-                  </a>Starboard</div>
+                  </a>
+                  Starboard
+                </div>
 
                 </h4>
 
@@ -207,6 +201,17 @@ class CoachWorkspaceContainer extends React.Component{
     )
   }
 }
+
+// <h4>
+//   <span className="chip valign-wrapper">
+//     <img className="circle logged-in-avatar" src={this.state.pic !== undefined ? this.state.pic.url : "images/ic_account_circle_black_24px.svg"} />
+//     <span>
+//       {this.state.currentDetail !== undefined ? this.state.currentDetail.get('name') : this.state.currentCoach.get('username')}
+//     </span>
+//   </span>
+//
+// </h4>
+
 
 // <span>Current number of clients: {this.state.clientCollection.length}</span>
 

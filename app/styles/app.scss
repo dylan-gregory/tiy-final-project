@@ -82,7 +82,10 @@ footer.page-footer{
 .chip{
   background-color: #15809B;
   color: white;
+  margin-left: 15px;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
 }
+
 
 .btn{
   background-color: #FFBA49;
@@ -202,10 +205,6 @@ footer.page-footer{
   background-color: #88D18A;
 }
 
-.refresh-button{
-  margin-left: 60px;
-}
-
 .logged-in-avatar{
   max-height: 50px;
   max-width: 50px;
@@ -224,10 +223,6 @@ footer.page-footer{
   font-size: 24px;
   margin-top: 15px;
   margin-bottom: 15px;
-}
-
-.intake-refresh{
-  background-color: #6A5B6E;
 }
 
 .edit-box{
@@ -249,6 +244,21 @@ input{
 
 input[type=text]{
   margin: 15px;
+}
+
+.intake-refresh{
+  background-color: #100A42;
+  margin-right: 10px;
+}
+
+.intake-head{
+  background-color: #15809B;
+  color: white;
+  border-radius: 40px;
+  border: 3px solid #12697F;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 10px;
 }
 
 

@@ -48,13 +48,30 @@ class CoachViewClient extends React.Component {
     clientTodos.fetch().then(() => {
       currentTodos = clientTodos.where({clientId: this.props.id});
 
+      console.log('curr', currentTodos);
+
+      var done = [];
+
+      currentTodos.map(todo =>{
+        if (todo.get('isComplete') == true) {
+          done.push(todo);
+        }
+
+        console.log('done', done);
+
+      });
+
+      var percent = (done.length / currentTodos.length) * 100;
+      console.log('%', percent);
+
       // var done = currentTodos.where({isComplete: true});
       // //
       // // var percent = (this.state.currentTodos.length / done) * 100;
       // console.log('%', _.filter(currentTodos, {isComplete: true}));
 
         this.setState({
-          currentTodos: currentTodos
+          currentTodos: currentTodos,
+          percentDone: percent
         });
 
     });
@@ -159,7 +176,7 @@ class CoachViewClient extends React.Component {
             {this.state.currentDetail ?  this.state.currentDetail.get('name') : this.state.currentClient.get('username')}</h2>
 
             <div className="progress">
-              <div className="determinate" style={{width: 100 + '%'}}></div>
+              <div className="determinate" style={{width: this.state.percentDone + '%'}}></div>
             </div>
 
           <div className="row">
@@ -210,8 +227,6 @@ class ClientTodoList extends React.Component {
 
     var currentTodos = this.props.currentTodos;
 
-    console.log('todos in list', this.props.currentTodos);
-
     this.toggleForm = this.toggleForm.bind(this);
     this.editTodo = this.editTodo.bind(this);
     this.toggleEdit = this.toggleEdit.bind(this);
@@ -259,7 +274,7 @@ class ClientTodoList extends React.Component {
     // this.props.editTodo(todo);
   }
   toggleEdit(todo){
-    console.log('click');
+
     todo.set({isEditing: !todo.get('isEditing')});
     todo.save();
     this.forceUpdate();
@@ -515,7 +530,6 @@ class TodoForm extends React.Component {
   }
   handleDate(e){
 
-    console.log('date', this.state.dueDate);
 
     // this.setState({dueDate: });
   }
