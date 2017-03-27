@@ -1,9 +1,10 @@
-var $ = require('jquery');
+var $ = window.$ = window.jQuery = require('jquery');
 var Backbone = require('backbone');
 
 var parse = require('../setup.js').parse;
 
 var ParseModel = require('./models.js').ParseModel;
+require('materialize-sass-origin/js/bin/materialize.js');
 
 
 var User = ParseModel.extend({
@@ -21,11 +22,11 @@ var User = ParseModel.extend({
 
     parse.initialize();
 
-    $.get(url).then(data => {
-      var newUser = new User(data);
-      User.store(newUser);
-      callback(newUser);
-    });
+    // $.get(url).then(data => {
+    //   var newUser = new User(data);
+    //   User.store(newUser);
+    //   callback(newUser);
+    // });
 
     $.ajax({
     url: 'https://metal-slug.herokuapp.com/login?' + $.param(credentials),
@@ -36,7 +37,8 @@ var User = ParseModel.extend({
       callback(newUser);
     },
     error: function(data) {
-        alert('woops!'); //or whatever
+        // alert('woops!'); //or whatever
+        Materialize.toast('Incorrect username or password - try again!', 4000, 'rounded error');
     }
 });
 

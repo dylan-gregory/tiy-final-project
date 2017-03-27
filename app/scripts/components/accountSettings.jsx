@@ -158,16 +158,20 @@ class AccountSettingsContainer extends React.Component {
         <div className="container">
           <div className="col m12">
             <div className="row">
+              <h4>
 
-              <h4 className="valign-wrapper logged-in-wrap">
+                <span className="valign-wrapper logged-in-wrap">
 
-                  <img className="circle logged-in-avatar"
-                    src={this.state.pic !== undefined ? this.state.pic.url : "images/ic_account_circle_black_24px.svg"} />
+                    <img className="circle logged-in-avatar"
+                      src={this.state.pic !== undefined ? this.state.pic.url : "images/ic_account_circle_black_24px.svg"} />
 
-                    {this.state.currentDetail !== undefined ? this.state.currentDetail.get('name') : this.state.user.get('username')}
+                      {this.state.currentDetail !== undefined ? this.state.currentDetail.get('name') : this.state.user.get('username')}
 
+
+                </span>
 
               </h4>
+
               <div>{this.state.user.get('isCoach') == true ? "Your coach ID: " + this.state.user.get('objectId') : null }</div>
 
                 <div className="card large">

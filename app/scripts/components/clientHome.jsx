@@ -59,7 +59,7 @@ class ClientHomeContainer extends React.Component {
       if(currentDetail !== undefined){
         var pic = currentDetail.get('pic');
         this.setState({pic: pic.url});
-        console.log('pic', pic);
+
       }
 
       this.setState({
@@ -115,7 +115,6 @@ class ClientHomeContainer extends React.Component {
 
     });
 
-    console.log('state', this.state.searchResults);
 
   }
   addFood(food){
@@ -141,7 +140,7 @@ class ClientHomeContainer extends React.Component {
 
           this.state.dailyValueCollection.fetch().then(() => {
             var updatedValues = this.state.dailyValueCollection.where({clientId: this.props.id});
-            console.log('vals', updatedValues);
+
 
               this.setState({
                 dailyValues: updatedValues
@@ -174,17 +173,6 @@ class ClientHomeContainer extends React.Component {
           <div className="row">
             <div className=" col m12">
 
-
-                <span className="col m3 your-stars valign-wrapper">
-                  Your stars: {this.state.currentDetail ? this.state.currentDetail.get('stars') : 0}
-                  <a className="btn-floating btn-small waves-effect waves-light amber tooltipped" data-position="bottom" data-delay="50" data-tooltip="Cash in your stars!"
-                    onClick={(e) => {
-                        e.preventDefault();
-                    this.cashStars();}}>
-                    <i className="material-icons star">star</i>
-                    </a>
-                  </span>
-
             </div>
 
             <MyTodoList
@@ -206,6 +194,59 @@ class ClientHomeContainer extends React.Component {
                   addFood={this.addFood}
                   clientId={this.state.clientId}
                 />
+
+              <div className="card star-card">
+
+
+                  <div className="your-stars">
+                    <div className="valign-wrapper">
+                      Your stars: {this.state.currentDetail ? this.state.currentDetail.get('stars') : 0}
+                      <a className="btn-floating btn-small waves-effect waves-light amber tooltipped" data-position="bottom" data-delay="50" data-tooltip="Cash in your stars!"
+                        onClick={(e) => {
+                            e.preventDefault();
+                        this.cashStars();}}>
+                        <i className="material-icons star">star</i>
+                        </a>
+                      </div>
+
+
+                  </div>
+
+                  <div className="card-content ">
+                    <span className="card-title activator grey-text text-darken-4">Star Rewards<i className="material-icons right">more_vert</i></span>
+
+                  </div>
+                  <div className="card-reveal">
+                    <span className="card-title grey-text text-darken-4">Rewards:<i className="material-icons right">close</i></span>
+
+                      <table className="striped">
+                        <thead>
+                          <tr>
+                            <th># of Stars</th>
+                            <th>Reward</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+
+                          <tr>
+                            <td>10</td>
+                            <td>1 Cheat Meal</td>
+                          </tr>
+                          <tr>
+                            <td>25</td>
+                            <td>Cheat Day</td>
+                          </tr>
+                          <tr>
+                            <td>40</td>
+                            <td>Cheat Weekend</td>
+                          </tr>
+
+                        </tbody>
+                      </table>
+
+
+                  </div>
+                </div>
 
 
 
@@ -387,7 +428,8 @@ class SearchBar extends React.Component {
       sugar: food.fields.nf_sugars,
       carbs: food.fields.nf_total_carbohydrate,
       sodium: food.fields.nf_sodium,
-      cholesterol: food.fields.nf_cholesterol
+      cholesterol: food.fields.nf_cholesterol,
+      searchTerm: ''
     }, () => {
 
 
@@ -402,14 +444,16 @@ class SearchBar extends React.Component {
     var searchResults = this.state.results.map(result => {
       return (
         <li className="collection-item" key={result._id}>
-          <div>{result.fields.item_name} - {result.fields.item_description}</div>
+          <div className="food-header">{result.fields.item_name} - {result.fields.item_description}</div>
 
-            <div>Serving Size: {result.fields.nf_serving_size_qty} {result.fields.nf_serving_size_unit}
+          <hr />
+
+            <div><span>Serving Size:</span> {result.fields.nf_serving_size_qty} {result.fields.nf_serving_size_unit}
             </div>
 
-          <div>Cal: {result.fields.nf_calories} Sugars: {result.fields.nf_sugars}</div>
+          <div><span>Cal:</span> {result.fields.nf_calories} <span>Sugars:</span> {result.fields.nf_sugars}</div>
           <div>
-             Sodium: {result.fields.nf_sodium} Cholest: {result.fields.nf_cholesterol} Carbs: {result.fields.nf_total_carbohydrate}</div>
+             <span>Sodium:</span> {result.fields.nf_sodium} <span>Cholest:</span> {result.fields.nf_cholesterol} <span>Carbs:</span> {result.fields.nf_total_carbohydrate}</div>
 
             <span className="right"><a className="btn-floating btn-small waves-effect waves-light red" onClick={(e) => {
                 e.preventDefault();
