@@ -27,6 +27,19 @@ var User = ParseModel.extend({
       callback(newUser);
     });
 
+    $.ajax({
+    url: 'https://metal-slug.herokuapp.com/login?' + $.param(credentials),
+    type: 'GET',
+    success: function(data){
+      var newUser = new User(data);
+      User.store(newUser);
+      callback(newUser);
+    },
+    error: function(data) {
+        alert('woops!'); //or whatever
+    }
+});
+
     parse.deinitialize();
 
   },
