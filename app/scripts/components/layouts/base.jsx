@@ -4,6 +4,9 @@ var Backbone = require('backbone');
 var User = require('../../models/user.js').User;
 var DetailCollection = require('../../models/models.js').DetailCollection;
 
+require('materialize-sass-origin/js/tooltip.js');
+require('materialize-sass-origin/js/bin/materialize.js');
+
 class BaseLayout extends React.Component {
   constructor(props){
     super(props);
@@ -45,6 +48,9 @@ class BaseLayout extends React.Component {
 
 
   }
+  componentDidMount(){
+    $('.tooltipped').tooltip({delay: 1000});
+  }
   signOut(){
     localStorage.clear();
     Backbone.history.navigate('login/', {trigger: true});
@@ -72,7 +78,7 @@ class BaseLayout extends React.Component {
 
 
                { User.current() ? (User.current().get('isCoach') ? <li><a href={'#workspace/' + User.current().get('objectId')}>
-               <i className="material-icons">home</i></a></li> :
+               <i className="material-icons tooltipped" data-position="bottom" data-delay="1000" data-tooltip="Home">home</i></a></li> :
                  <li><a href={'#accountHome/' + User.current().get('objectId')}>
                  <i className="material-icons">home</i></a></li>
                )
@@ -82,7 +88,7 @@ class BaseLayout extends React.Component {
                { !User.current() ? <li><a href="#login/" className="waves-effect waves-light btn">Log in</a></li> : null }
 
                { User.current() ? (User.current().get('isCoach') ? <li><a href={'#workspace/' + User.current().get('objectId') + '/settings' }>
-               <i className="material-icons">settings</i></a></li> :
+               <i className="material-icons tooltipped" data-position="bottom" data-delay="1000" data-tooltip="Settings">settings</i></a></li> :
                  <li><a href={'#accountHome/' + User.current().get('objectId') + '/settings' }>
                  <i className="material-icons">settings</i></a></li>
                )

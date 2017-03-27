@@ -159,9 +159,9 @@ class CoachViewClient extends React.Component {
 
   }
   deleteClient(client){
-    client.destroy();
-    var user = User.current();
-    Backbone.navigate('workspace/' + user.get('objectId'), {trigger: true});
+    // client.destroy();
+    // var user = User.current();
+    // Backbone.navigate('workspace/' + user.get('objectId'), {trigger: true});
   }
   toggleForm(){
     this.setState({showForm: !this.state.showForm});
@@ -172,8 +172,7 @@ class CoachViewClient extends React.Component {
     return (
       <BaseLayout>
         <div className="container">
-          <h2>Client:
-            {this.state.currentDetail ?  this.state.currentDetail.get('name') : this.state.currentClient.get('username')}</h2>
+
 
             <div className="progress">
               <div className="determinate" style={{width: this.state.percentDone + '%'}}></div>
@@ -209,6 +208,9 @@ class CoachViewClient extends React.Component {
     )
   }
 }
+
+// <h2>Client:
+//   {this.state.currentDetail ?  this.state.currentDetail.get('name') : this.state.currentClient.get('username')}</h2>
 
 // { this.state.showForm ? <TodoForm currentTodos={this.state.currentTodos}
 //             addTodo={this.addTodo}

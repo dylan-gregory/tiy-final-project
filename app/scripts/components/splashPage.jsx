@@ -20,35 +20,67 @@ class SplashPageContainer extends React.Component {
     return(
 
       <BaseLayout>
-        <div className="header">
+        <div className="header col m12 valign-wrapper">
 
           <img src="images/yoga.jpeg" />
 
+          <div className="big-moxy">Moxy</div>
+          <span className="big-under">accountability assistant</span>
 
         </div>
-        <div className="container">
+
           <div className="row">
             <div className="col m4">
-              We help you meet your goals by giving you a straightforward, easy to user interface to keep up with your goals and your eating habits.
+
+              <div className="card splash-card">
+                <div className="card-image">
+                  <img src="images/health_food.jpg" />
+
+                </div>
+                <div className="card-content">
+                  We help you meet your goals by giving you a straightforward, easy to user interface to keep up with your goals and your eating habits.
+                </div>
+              </div>
+
             </div>
             <div className="col m4">
-              We help you make healthy and wise life choices through professional accountabiliy and personalized, attainable steps toward your goals.
+
+              <div className="card splash-card">
+                <div className="card-image">
+                  <img src="images/oranges.jpg" />
+
+                </div>
+                <div className="card-content">
+                  We help you make healthy and wise life choices through professional accountabiliy and personalized, attainable steps toward your goals.
+                </div>
+              </div>
+
             </div>
 
             <div className="col m4">
-              We bring the coach to you.
-              Your life is busy - we know. We make it possible to work with any type of schedule, allowing everyone the opportunity to work towards a healthier life.
+
+              <div className="card splash-card">
+                <div className="card-image">
+                  <img src="images/coach_to_you.jpeg" />
+
+                </div>
+                <div className="card-content">
+                  We bring the coach to you.
+                  Your life is busy - we know. We make it possible to work with any type of schedule, allowing everyone the opportunity to work towards a healthier life.
+                </div>
+              </div>
+
             </div>
 
 
           </div>
-        </div>
+
 
         <footer className="page-footer">
           <div className="container">
             <div className="row">
               <div className="col l6 s12">
-                <h5 className="white-text">Footer Content</h5>
+                <h5 className="white-text">Contact Us</h5>
                 <p className="grey-text text-lighten-4">You can use rows and columns here to organize your footer content.</p>
               </div>
               <div className="col l4 offset-l2 s12">
@@ -73,6 +105,19 @@ class SplashPageContainer extends React.Component {
     )
   }
 }
+
+
+          // <div className="card">
+          //   <div className="card-image">
+          //     <img src="images/yoga.jpeg" />
+          //       <div className="card-title">
+          //         <div className="big-moxy">Moxy</div>
+          //         <span className="big-under">accountability assistant</span>
+          //       </div>
+          //
+          //   </div>
+          // </div>
+
 
 // <div className="carousel carousel-slider center" data-indicators="true">
 //   <div className="carousel-fixed-item center">

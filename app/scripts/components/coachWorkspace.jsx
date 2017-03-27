@@ -311,6 +311,7 @@ class ClientLeaderBoard extends React.Component {
   }
   render(){
 
+
     var clientPoints = this.state.clientCollection.map(client =>{
       return (
 

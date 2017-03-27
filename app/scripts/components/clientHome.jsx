@@ -455,7 +455,7 @@ class SearchBar extends React.Component {
           <div>
              <span>Sodium:</span> {result.fields.nf_sodium} <span>Cholest:</span> {result.fields.nf_cholesterol} <span>Carbs:</span> {result.fields.nf_total_carbohydrate}</div>
 
-            <span className="right"><a className="btn-floating btn-small waves-effect waves-light red" onClick={(e) => {
+            <span className="right"><a className="btn-floating btn-small waves-effect waves-light red valign-wrapper" onClick={(e) => {
                 e.preventDefault();
                 this.addFood(result);}}>
             <i className="material-icons">add</i>
@@ -472,7 +472,7 @@ class SearchBar extends React.Component {
       <div className="search-wrapper card">
         <form>
           <input id="search" onChange={this.handleSearchTerm} value={this.state.searchTerm} />
-          <i className="material-icons">search</i>
+          <i className="material-icons search-i">search</i>
         </form>
 
         <ul className="collection">
