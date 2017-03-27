@@ -164,10 +164,9 @@ class AccountSettingsContainer extends React.Component {
                   src={this.state.pic !== undefined ? this.state.pic.url : "images/ic_account_circle_black_24px.svg"} />
 
                   {this.state.currentDetail !== undefined ? this.state.currentDetail.get('name') : this.state.user.get('username')}
+
               </h4>
-
-                  <span>{this.state.user.get('isCoach') == true ? "Your coach ID: " + this.state.user.get('objectId') : null }</span>
-
+              <div>{this.state.user.get('isCoach') == true ? "Your coach ID: " + this.state.user.get('objectId') : null }</div>
 
                 <div className="card large">
 
@@ -187,6 +186,7 @@ class AccountSettingsContainer extends React.Component {
                       <i className="material-icons prefix">phone</i>
                         {this.state.currentDetail !== undefined ? " : " + this.state.currentDetail.get('phone') : null}
                     </div>
+
 
                   </div>
                   <div className="card-reveal">

@@ -141,8 +141,8 @@ class CoachWorkspaceContainer extends React.Component{
           <div className="container">
             <header>
 
-                <h4 className="valign-wrapper">
-                  <span className="valign">
+                <h4>
+                  <span className="chip valign-wrapper">
                     <img className="circle logged-in-avatar" src={this.state.pic !== undefined ? this.state.pic.url : "images/ic_account_circle_black_24px.svg"} />
                     <span>
                       {this.state.currentDetail !== undefined ? this.state.currentDetail.get('name') : this.state.currentCoach.get('username')}
@@ -159,22 +159,38 @@ class CoachWorkspaceContainer extends React.Component{
                    <CoachClientList clientCollection={this.state.clientCollection}
                    currentCoach={this.state.currentCoach}
                    detailCollection={this.state.detailCollection}
+                   clientTodos={this.state.clientTodos}
                   />
 
               </div>
               <div className="col s5">
-                <h2>Leaderboard</h2>
+                <h2>Starboard:</h2>
 
-                  <ClientStarChart
-                    clientCollection={this.state.clientCollection}
-                    detailCollection={this.state.detailCollection}
-                  />
+                  <div className="card starboard">
+                    <div className="card-content">
 
-                  <ClientLeaderBoard
-                    clientCollection={this.state.clientCollection}
-                    detailCollection={this.state.detailCollection}
+                      <ClientStarChart
+                        clientCollection={this.state.clientCollection}
+                        detailCollection={this.state.detailCollection}
+                      />
 
-                  />
+                    <hr className="stat-rule"/>
+
+                      <ClientLeaderBoard
+                        clientCollection={this.state.clientCollection}
+                        detailCollection={this.state.detailCollection}
+
+                      />
+
+
+
+                    </div>
+
+                  </div>
+
+
+
+
 
               </div>
             </div>
@@ -186,6 +202,17 @@ class CoachWorkspaceContainer extends React.Component{
 
 // <span>Current number of clients: {this.state.clientCollection.length}</span>
 
+// <div className="card-reveal">
+//   <span className="card-title grey-text text-darken-4">Card Title<i className="material-icons right">close</i></span>
+//
+//     <ClientLeaderBoard
+//       clientCollection={this.state.clientCollection}
+//       detailCollection={this.state.detailCollection}
+//
+//     />
+//
+// </div>
+// <div className="starboard-bottom card-title activator grey-text text-darken-4"><i className="material-icons right">more_vert</i></div>
 
 class CoachClientList extends React.Component {
   constructor(props){
@@ -208,10 +235,12 @@ class CoachClientList extends React.Component {
     };
   }
   componentWillReceiveProps(newProps){
-    this.setState({clientCollection: newProps.clientCollection, currentCoach: newProps.currentCoach, detailCollection: newProps.detailCollection});
+    this.setState({clientCollection: newProps.clientCollection, currentCoach: newProps.currentCoach, detailCollection: newProps.detailCollection, clientTodos: newProps.clientTodos});
 
   }
   render(){
+
+    console.log('todos' , this.state.clientTodos);
 
     var clientList = this.state.clientCollection.map(client =>{
       return (
@@ -227,7 +256,7 @@ class CoachClientList extends React.Component {
               </a>
 
               <div className="progress">
-                <div className="determinate" style={{width: 70 + '%'}}></div>
+                <div className="determinate blue-grey" style={{width: 100 + '%'}}></div>
               </div>
 
             </div>

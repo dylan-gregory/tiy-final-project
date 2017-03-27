@@ -62,23 +62,29 @@ a{
 // #6D213C possible purple
 // #6A5B6E purple grey
 // #BAAB68 yellowish
+// #FFBA49 brighter yellow
+// #100A42 navy
+// #EE0140 magenta
+// #15809B turquoise
 
 .nav-wrapper{
-  background-color: #AC3931;
+  background-color: #EE0140;
 }
 
-
+.brand-logo{
+  font-family: 'Warnes', cursive;
+}
 
 footer.page-footer{
-  background-color: #790C10;
+  background-color: #15809B;
 }
 
 .btn{
-  background-color: #BAAB68;
+  background-color: #FFBA49;
 }
 
 .btn:hover{
-  background-color: #6A5B6E;
+  background-color: #BAAB68;
 }
 
 .collection .collection-item.avatar{
@@ -94,7 +100,7 @@ footer.page-footer{
 
 .collection .collection-item:hover{
   transition: .3s;
-  background-color: grey;
+  background-color: #88D18A;
   color: white;
 }
 
@@ -158,6 +164,7 @@ footer.page-footer{
 .client-avatar{
   max-width: 100%;
   max-height: 225px;
+  margin-top: 10px;
 }
 
 .client-card-name{
@@ -167,6 +174,19 @@ footer.page-footer{
 .preview-img{
   max-height: 250px;
   max-width: 250px;
+}
+
+.starboard-bottom{
+  height: 50px;
+}
+
+// .starboard{
+//   height: 300px;
+// }
+
+.stat-rule{
+  margin-top: 40px;
+  margin-bottom: 30px;
 }
 
 ////
@@ -203,4 +223,25 @@ footer.page-footer{
 
 .intake-refresh{
   background-color: #6A5B6E;
+}
+
+.edit-box{
+  border: 2px solid red;
+}
+
+input{
+  margin: 10px;
+}
+
+// textarea.materialize-textarea{
+//   // margin-left: 15px;
+//   padding-left: 30px;
+// }
+
+.input-field{
+  margin: 20px;
+}
+
+input[type=text]{
+  margin: 15px;
 }

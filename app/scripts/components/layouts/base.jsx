@@ -19,7 +19,7 @@ class BaseLayout extends React.Component {
           <nav>
            <div className="nav-wrapper">
 
-             <a href="" className="brand-logo">MOMENTUM</a>
+             <a href="" className="brand-logo">Moxy</a>
              <a href="#" data-activates="mobile-demo" className="button-collapse"><i className="material-icons">menu</i></a>
              <ul id="nav-mobile" className="right hide-on-med-and-down">
 

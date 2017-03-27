@@ -1,6 +1,7 @@
 var React = require('react');
 var Backbone = require('backbone');
 var $ = window.$ = window.jQuery = require('jquery');
+var _ = require('underscore');
 
 var BaseLayout = require('./layouts/base.jsx').BaseLayout;
 
@@ -45,10 +46,15 @@ class CoachViewClient extends React.Component {
     // parseWhere didn't seem to get the job done, but this defnitely does
 
     clientTodos.fetch().then(() => {
-      clientTodos = clientTodos.where({clientId: this.props.id});
+      currentTodos = clientTodos.where({clientId: this.props.id});
+
+      // var done = currentTodos.where({isComplete: true});
+      // //
+      // // var percent = (this.state.currentTodos.length / done) * 100;
+      // console.log('%', _.filter(currentTodos, {isComplete: true}));
 
         this.setState({
-          currentTodos: clientTodos
+          currentTodos: currentTodos
         });
 
     });
@@ -145,11 +151,16 @@ class CoachViewClient extends React.Component {
 
   }
   render(){
+
     return (
       <BaseLayout>
         <div className="container">
           <h2>Client:
             {this.state.currentDetail ?  this.state.currentDetail.get('name') : this.state.currentClient.get('username')}</h2>
+
+            <div className="progress">
+              <div className="determinate" style={{width: 100 + '%'}}></div>
+            </div>
 
           <div className="row">
             <h3>Coming up:</h3>
@@ -187,6 +198,9 @@ class CoachViewClient extends React.Component {
 //             clientId={this.state.clientId}
 // />
 // : null}
+
+
+    // console.log('%', this.state.currentTodos.where({isComplete: true}));
 
 
 
@@ -275,7 +289,7 @@ class ClientTodoList extends React.Component {
       return (
 
         <li key={todo.cid} >
-          <div className={todo.get('isEditing') ? "collapsible-header blue-grey" : "collapsible-header"}><input type="checkbox"/>
+          <div className={todo.get('isEditing') ? "collapsible-header edit-box" : "collapsible-header"}><input type="checkbox"/>
 
             {todo.get('isEditing') ? <input type="text" onChange={this.handleTitleChange} value={this.state.currentTitle}/> : <span>{todo.get('title')}</span>}
 
@@ -293,7 +307,7 @@ class ClientTodoList extends React.Component {
           </div>
 
 
-          <div className={todo.get('isEditing') ? "collapsible-body blue-grey" : "collapsible-body"}>
+          <div className={todo.get('isEditing') ? "collapsible-body edit-box" : "collapsible-body"}>
 
             {todo.get('isEditing') ? <input type="text" onChange={this.handleNoteChange} value={this.state.currentNotes}/> : <div className="todo-notes">Notes: {todo.get('notes')}</div>}
 
