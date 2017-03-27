@@ -154,7 +154,10 @@ class CoachWorkspaceContainer extends React.Component{
 
             <div className="row">
               <div className="col m7">
-                <h2>Client List</h2>
+                <h4>
+                  <div className="client-list-head">Client List</div>
+
+                </h4>
 
                    <CoachClientList clientCollection={this.state.clientCollection}
                    currentCoach={this.state.currentCoach}
@@ -164,7 +167,12 @@ class CoachWorkspaceContainer extends React.Component{
 
               </div>
               <div className="col s5">
-                <h2>Starboard:</h2>
+                <h4>
+                  <div className="starboard-head valign-wrapper"><a className="btn-floating btn-small waves-effect waves-light amber todo-delete">
+                  <i className="material-icons">star</i>
+                  </a>Starboard</div>
+
+                </h4>
 
                   <div className="card starboard">
                     <div className="card-content">

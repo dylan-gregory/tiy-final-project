@@ -79,6 +79,11 @@ footer.page-footer{
   background-color: #15809B;
 }
 
+.chip{
+  background-color: #15809B;
+  color: white;
+}
+
 .btn{
   background-color: #FFBA49;
 }
@@ -202,8 +207,8 @@ footer.page-footer{
 }
 
 .logged-in-avatar{
-  max-height: 40px;
-  max-width: 40px;
+  max-height: 50px;
+  max-width: 50px;
 }
 
 .logged-in-as{
@@ -244,4 +249,40 @@ input{
 
 input[type=text]{
   margin: 15px;
+}
+
+
+
+/////
+// Coach workspace styles
+/////
+.client-list-head{
+ background-color: #15809B;
+ color: white;
+ border-radius: 40px;
+ padding-left: 20px;
+ padding-right: 20px;
+ padding-top: 10px;
+ padding-bottom: 10px;
+ border: 3px solid #12697F;
+}
+
+.starboard-head{
+  background-color: #15809B;
+  color: white;
+  border-radius: 40px;
+  border: 3px solid #12697F;
+}
+
+
+/////
+// Account Settings page styles
+/////
+
+.logged-in-wrap{
+  background-color: #15809B;
+  width: 295px;
+  border: 3px solid #12697F;
+  border-radius: 30px;
+  color: white;
 }

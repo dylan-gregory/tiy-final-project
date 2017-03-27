@@ -163,7 +163,7 @@ class CoachViewClient extends React.Component {
             </div>
 
           <div className="row">
-            <h3>Coming up:</h3>
+
             <ClientTodoList currentClient={this.state.currentClient}
                             currentTodos={this.state.currentTodos}
                             deleteTodo={this.deleteTodo}
@@ -360,6 +360,10 @@ class ClientTodoList extends React.Component {
 
 
         <div className="col m8">
+          <h4>
+            <div className="client-list-head">Coming up</div>
+
+          </h4>
             <ul className="collapsible" data-collapsible="accordion">
               {todoList}
 

@@ -2,10 +2,47 @@ var React = require('react');
 var Backbone = require('backbone');
 
 var User = require('../../models/user.js').User;
+var DetailCollection = require('../../models/models.js').DetailCollection;
 
 class BaseLayout extends React.Component {
   constructor(props){
     super(props);
+    var detailCollection = new DetailCollection();
+    var currentDetail;
+    var pic;
+
+    if (User.current()) {
+
+
+    var user = User.current();
+
+    var userId = User.current().get('objectId');
+
+    detailCollection.fetch().then(() => {
+      currentDetail = detailCollection.findWhere({ownerId: userId});
+
+      if (currentDetail !== undefined) {
+        var pic = currentDetail.get('pic');
+        this.setState({pic: pic});
+      }
+
+      this.setState({
+        currentDetail: currentDetail,
+        detailCollection,
+         pic
+      });
+
+    });
+  }
+
+    this.state = {
+      detailCollection,
+      user,
+      userId,
+      pic
+    }
+
+
 
   }
   signOut(){
@@ -19,9 +56,20 @@ class BaseLayout extends React.Component {
           <nav>
            <div className="nav-wrapper">
 
-             <a href="" className="brand-logo">Moxy</a>
+             <a href="" className="brand-logo center">Moxy</a>
              <a href="#" data-activates="mobile-demo" className="button-collapse"><i className="material-icons">menu</i></a>
+
+             <ul className="left">
+               { User.current() ? <li><span className="chip valign-wrapper">
+                 <img className="circle logged-in-avatar"
+                   src={this.state.pic !== undefined ? this.state.pic.url : "images/ic_account_circle_black_24px.svg"} />
+
+                 {this.state.currentDetail !== undefined ? this.state.currentDetail.get('name') : null}
+               </span></li> : null }
+             </ul>
+
              <ul id="nav-mobile" className="right hide-on-med-and-down">
+
 
                { User.current() ? (User.current().get('isCoach') ? <li><a href={'#workspace/' + User.current().get('objectId')}>
                <i className="material-icons">home</i></a></li> :
@@ -40,6 +88,8 @@ class BaseLayout extends React.Component {
                )
                  : null }
 
+
+
                { User.current() ? <li><a onClick={this.signOut} className="waves-effect waves-light btn">Log out</a></li> : null }
 
              </ul>
@@ -53,6 +103,9 @@ class BaseLayout extends React.Component {
     )
   }
 }
+
+
+
 
 // <img className="myLogo" src="images/Logo-Red-font.svg"></img>
 // <li><a href="#coachPortal/">Coach Portal</a></li>
