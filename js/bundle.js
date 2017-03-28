@@ -174,7 +174,6 @@ class AccountSettingsContainer extends React.Component {
 
               ), 
 
-              React.createElement("div", null, this.state.user.get('isCoach') == true ? "Your coach ID: " + this.state.user.get('objectId') : null), 
 
                 React.createElement("div", {className: "card large"}, 
 
@@ -185,12 +184,20 @@ class AccountSettingsContainer extends React.Component {
                   React.createElement("div", {className: "card-content"}, 
 
                     React.createElement("span", {className: "card-title activator grey-text text-darken-4"}, 
-                      React.createElement("i", {className: "material-icons prefix"}, "email"), 
-                      this.state.currentDetail !== undefined ?" : " + this.state.currentDetail.get('email') : "Why don't you tell us a little about yourself?", 
-                      React.createElement("i", {"data-position": "bottom", "data-delay": "50", "data-tooltip": "Edit your profile", className: "material-icons right tooltipped"}, "rate_review")
+                      React.createElement("i", {"data-position": "bottom", "data-delay": "50", "data-tooltip": "Edit your profile", className: "material-icons right tooltipped"}, "rate_review"), 
+
+                      React.createElement("div", null, this.state.user.get('isCoach') == true ? React.createElement("span", null, React.createElement("span", {className: "coach-id"}, "Your coach ID:"), " ", this.state.user.get('objectId'), " ") : null)
+
+
                     ), 
 
-                    React.createElement("div", null, 
+                    React.createElement("div", {className: "bio-item valign-wrapper"}, 
+                      React.createElement("i", {className: "material-icons prefix"}, "email"), 
+                      this.state.currentDetail !== undefined ?" : " + this.state.currentDetail.get('email') : "Why don't you tell us a little about yourself?"
+
+                    ), 
+
+                    React.createElement("div", {className: "bio-item valign-wrapper"}, 
                       React.createElement("i", {className: "material-icons prefix"}, "phone"), 
                         this.state.currentDetail !== undefined ? " : " + this.state.currentDetail.get('phone') : null
                     )
@@ -567,7 +574,7 @@ class ClientHomeContainer extends React.Component {
               checkOffTodo: this.checkOffTodo}
             ), 
 
-          React.createElement("div", {className: "col m5"}, 
+          React.createElement("div", {className: "col l5 m6 s12"}, 
 
 
                 React.createElement(DailyIntakeList, {
@@ -719,14 +726,16 @@ class MyTodoList extends React.Component {
                   React.createElement("label", {htmlFor: todo.cid, className: "check-label"})
                 ), 
 
-              React.createElement("span", null, todo.get('title')), 
-              React.createElement("span", {className: "right"}, "Due: ", todo.get('dueDate'))
+              React.createElement("span", null, todo.get('title'))
+
 
             ), 
 
           React.createElement("div", {className: "collapsible-body"}, 
+            React.createElement("div", null, "Due: ", todo.get('dueDate')), 
             React.createElement("div", {className: "client-notes"}, 
               "Notes: ", todo.get('notes')
+
             )
 
 
@@ -739,7 +748,7 @@ class MyTodoList extends React.Component {
 
     return (
 
-        React.createElement("div", {className: "col m7"}, 
+        React.createElement("div", {className: "col l7 m6 s12"}, 
           React.createElement("h4", null, 
             React.createElement("span", {className: "client-list-head valign-wrapper"}, "Coming up")
             ), 
@@ -858,7 +867,7 @@ class SearchBar extends React.Component {
 
       React.createElement("div", {className: "search-wrapper card"}, 
         React.createElement("form", null, 
-          React.createElement("input", {id: "search", onChange: this.handleSearchTerm, value: this.state.searchTerm}), 
+          React.createElement("input", {id: "search", onChange: this.handleSearchTerm, value: this.state.searchTerm, placeholder: "carrots, pizza, Taco Bell..."}), 
           React.createElement("i", {className: "material-icons search-i"}, "search")
         ), 
 
@@ -946,7 +955,7 @@ class DailyIntakeList extends React.Component {
 
 
 
-          React.createElement("table", {className: "striped responsive-table"}, 
+          React.createElement("table", {className: "striped"}, 
             React.createElement("thead", null, 
               React.createElement("tr", {className: "counter-head"}, 
                 React.createElement("th", null, "Calories"), 
@@ -1332,11 +1341,26 @@ class CoachViewClient extends React.Component {
         React.createElement("div", {className: "container"}, 
 
 
-            React.createElement("div", {className: "progress"}, 
-              React.createElement("div", {className: "determinate", style: {width: this.state.percentDone + '%'}})
-            ), 
+
 
           React.createElement("div", {className: "row"}, 
+            React.createElement("h4", null, 
+              React.createElement("div", {className: "client-list-head"}, "Client Report"
+
+              )
+
+            ), 
+
+            React.createElement("div", {className: "progress-bar valign-wrapper"}, 
+
+                React.createElement("div", {className: "prog-label col m2"}, "Progress:"), 
+                React.createElement("div", {className: "progress col m10 valign-wrapper client-prog"}, 
+                  React.createElement("div", {className: "determinate valign", style: {width: this.state.percentDone + '%'}})
+                ), 
+
+              React.createElement("div", {className: "clearfix"})
+            ), 
+
 
             React.createElement(ClientTodoList, {currentClient: this.state.currentClient, 
                             currentTodos: this.state.currentTodos, 
@@ -1469,33 +1493,55 @@ class ClientTodoList extends React.Component {
             todo.get('isEditing') ? React.createElement("input", {type: "text", onChange: this.handleTitleChange, value: this.state.currentTitle}) : React.createElement("span", null, todo.get('title')), 
 
 
-            todo.get('isEditing') ? React.createElement("input", {type: "text", onChange: this.handleDateChange, value: this.state.currentDate}) : React.createElement("span", {className: "right"}, "Due: ", todo.get('dueDate')), 
+            todo.get('isEditing') ? React.createElement("input", {type: "text", onChange: this.handleDateChange, value: this.state.currentDate}) : null, 
 
+
+
+              todo.get('isEditing') ? React.createElement("input", {type: "text", onChange: this.handleNoteChange, value: this.state.currentNotes}) : null, 
+
+
+            todo.get('isEditing') ?
+              React.createElement("button", {className: "btn waves-effect waves-light", name: "action", 
+                onClick: (e) => {
+                  e.preventDefault();
+                  Materialize.toast('Successfully saved!', 4000, 'rounded green accent-2');
+                  this.editTodo(todo);
+              }}, "Save"
+
+              )
+            : null, 
+
+          todo.get('isEditing') ?
+            React.createElement("span", {className: "right"}, React.createElement("a", {className: "btn-floating btn-small waves-effect waves-light orange ", onClick: (e) => {
+                e.preventDefault();
+                this.toggleEdit(todo);
+            }}, 
+            React.createElement("i", {className: "material-icons edit-save"}, "build")
+            )
+            )
+            : null, 
 
 
 
             todo.get('isComplete') ? React.createElement("span", null, 
-              React.createElement("i", {className: "material-icons"}, "check_circle")
+              React.createElement("i", {className: "material-icons check"}, "check_circle")
             )
             : null
 
           ), 
 
 
-          React.createElement("div", {className: todo.get('isEditing') ? "collapsible-body edit-box" : "collapsible-body"}, 
+          React.createElement("div", {className: "collapsible-body"}, 
 
-            todo.get('isEditing') ? React.createElement("input", {type: "text", onChange: this.handleNoteChange, value: this.state.currentNotes}) : React.createElement("div", {className: "todo-notes"}, "Notes: ", todo.get('notes')), 
+            todo.get('isEditing') == false ? React.createElement("div", null, "Due: ", todo.get('dueDate')): null, 
 
-            todo.get('isEditing') ?
-              React.createElement("button", {className: "btn waves-effect waves-light", name: "action", 
-                onClick: (e) => {
-                  e.preventDefault();
-                  Materialize.toast('Successfully saved!', 4000, 'rounded');
-                  this.editTodo(todo);
-              }}, "Save", 
-                React.createElement("i", {className: "material-icons right"}, "send")
-              )
-            : null, 
+            todo.get('isEditing') == false ? React.createElement("div", {className: "todo-notes"}, "Notes: ", todo.get('notes')): null, 
+
+
+
+
+
+
 
 
             React.createElement("span", {className: "right"}, React.createElement("a", {className: "btn-floating btn-small waves-effect waves-light red todo-delete", onClick: (e) => {
@@ -1505,18 +1551,23 @@ class ClientTodoList extends React.Component {
             )
             ), 
 
+
+          todo.get('isEditing') == false ?
             React.createElement("span", {className: "right"}, React.createElement("a", {className: "btn-floating btn-small waves-effect waves-light orange todo-delete", onClick: (e) => {
                 e.preventDefault();
                 this.toggleEdit(todo);
             }}, 
             React.createElement("i", {className: "material-icons"}, "build")
             )
-            ), 
+            )
+
+            : null, 
+
 
             todo.get('isComplete') ?
                 React.createElement("span", {className: "right"}, React.createElement("a", {className: "btn-floating btn-small tooltipped waves-effect waves-light amber todo-delete", "data-position": "left", "data-delay": "50", "data-tooltip": "Reward", onClick: (e) => {
                     e.preventDefault();
-                    Materialize.toast('You awarded a star!', 4000, 'rounded');
+                    Materialize.toast('You awarded a star!', 4000, 'rounded amber');
                 this.props.awardStar(todo);}}, 
                 React.createElement("i", {className: "material-icons"}, "star")
                 )
@@ -1534,11 +1585,8 @@ class ClientTodoList extends React.Component {
     return (
 
 
-        React.createElement("div", {className: "col m8"}, 
-          React.createElement("h4", null, 
-            React.createElement("div", {className: "client-list-head"}, "Coming up")
+        React.createElement("div", {className: "col l8 m7 s12"}, 
 
-          ), 
             React.createElement("ul", {className: "collapsible", "data-collapsible": "accordion"}, 
               todoList, 
 
@@ -1609,7 +1657,7 @@ class ClientInfo extends React.Component {
 
     return(
 
-      React.createElement("div", {className: "col m4"}, 
+      React.createElement("div", {className: "col l4 m5 s12"}, 
         React.createElement("div", {className: "card"}, 
           React.createElement("div", {className: "card-image waves-effect waves-block waves-light valign-wrapper"}, 
             React.createElement("img", {className: "activator client-avatar", src: this.state.clientPic !== undefined ? this.state.clientPic : "images/ic_account_circle_black_24px.svg"})
@@ -1626,14 +1674,10 @@ class ClientInfo extends React.Component {
               ), 
             React.createElement("div", null, "Email: ", this.state.currentDetail ?  this.state.currentDetail.get('email') : null), 
             React.createElement("div", null, "Phone: ", this.state.currentDetail ?  this.state.currentDetail.get('phone') : null), 
-            React.createElement("div", null, "Stars: ", this.state.currentDetail ?  this.state.currentDetail.get('stars') : 0), 
+            React.createElement("div", null, "Stars: ", this.state.currentDetail ?  this.state.currentDetail.get('stars') : 0)
 
-              React.createElement("span", {className: "right"}, React.createElement("a", {className: "btn btn-small waves-effect waves-light red todo-delete tooltipped", "data-position": "left", "data-delay": "50", "data-tooltip": "Remove client?", onClick: (e) => {
-                  e.preventDefault();
-              this.props.deleteClient(this.state.currentClient);}}, 
-              React.createElement("i", {className: "material-icons"}, "delete_forever")
-              )
-              )
+
+
           )
         )
       )
@@ -1642,6 +1686,15 @@ class ClientInfo extends React.Component {
 
   }
 }
+
+// For a possible remove/delete client, or to reassign a coach
+
+// <span className="right"><a className="btn btn-small waves-effect waves-light red todo-delete tooltipped" data-position="left" data-delay="50" data-tooltip="Remove client?"onClick={(e) => {
+//     e.preventDefault();
+// this.props.deleteClient(this.state.currentClient);}}>
+// <i className="material-icons">delete_forever</i>
+// </a>
+// </span>
 
 
 
@@ -1792,8 +1845,11 @@ class CoachWorkspaceContainer extends React.Component{
     });
 
     detailCollection.fetch().then(() => {
+      // detailCollection.sort();
       currentDetail = detailCollection.findWhere({ownerId: this.props.id});
       console.log('here', currentDetail);
+
+
 
       if (currentDetail !== undefined) {
         var pic = currentDetail.get('pic');
@@ -1883,7 +1939,7 @@ class CoachWorkspaceContainer extends React.Component{
             ), 
 
             React.createElement("div", {className: "row"}, 
-              React.createElement("div", {className: "col m7"}, 
+              React.createElement("div", {className: "col l7 m6 s12"}, 
                 React.createElement("h4", null, 
                   React.createElement("div", {className: "client-list-head"}, "Client List")
 
@@ -1896,7 +1952,7 @@ class CoachWorkspaceContainer extends React.Component{
                   )
 
               ), 
-              React.createElement("div", {className: "col s5"}, 
+              React.createElement("div", {className: "col l5 m6 s12"}, 
                 React.createElement("h4", null, 
                   React.createElement("div", {className: "starboard-head valign-wrapper"}, React.createElement("a", {className: "btn-floating btn-small waves-effect waves-light amber todo-delete"}, 
                   React.createElement("i", {className: "material-icons"}, "star")
@@ -1914,7 +1970,7 @@ class CoachWorkspaceContainer extends React.Component{
                         detailCollection: this.state.detailCollection}
                       ), 
 
-                    React.createElement("hr", {className: "stat-rule"}), 
+                    React.createElement("hr", {className: "stat-rule hide-on-med-and-down"}), 
 
                       React.createElement(ClientLeaderBoard, {
                         clientCollection: this.state.clientCollection, 
@@ -2049,7 +2105,6 @@ class ClientLeaderBoard extends React.Component {
   }
   render(){
 
-
     var clientPoints = this.state.clientCollection.map(client =>{
       return (
 
@@ -2064,7 +2119,7 @@ class ClientLeaderBoard extends React.Component {
     return (
       React.createElement("div", null, 
 
-          React.createElement("table", {className: "striped"}, 
+          React.createElement("table", {className: "striped m5 s12 star-table"}, 
             React.createElement("thead", null, 
               React.createElement("tr", null, 
                 React.createElement("th", null, "Name"), 
@@ -2136,7 +2191,12 @@ class ClientStarChart extends React.Component {
             borderWidth: 1
         }]
     }
-    return React.createElement(Polar, {data: chartData, redraw: true})
+    return (
+      React.createElement("div", {className: "hide-on-med-and-down"}, 
+        React.createElement(Polar, {data: chartData, redraw: true})
+      )
+    )
+
   }
 }
 
@@ -2195,11 +2255,17 @@ class BaseLayout extends React.Component {
       pic
     }
 
+    // setInterval(clearTooltip, 2000);
+    //   function clearTooltip() {
+    //       $('.material-tooltip').hide();
+    //     }
+
 
 
   }
   componentDidMount(){
-    $('.tooltipped').tooltip({delay: 1000});
+    // I un tagged the tooltipped links due to strange glitches
+    // $('.tooltipped').tooltip({delay: 2000});
   }
   signOut(){
     localStorage.clear();
@@ -2213,7 +2279,7 @@ class BaseLayout extends React.Component {
            React.createElement("div", {className: "nav-wrapper"}, 
 
              React.createElement("a", {href: "", className: "brand-logo center"}, "Moxy"), 
-             React.createElement("a", {href: "#", "data-activates": "mobile-demo", className: "button-collapse"}, React.createElement("i", {className: "material-icons"}, "menu")), 
+             React.createElement("a", {href: "#", "data-activates": "mobile-demo", className: "button-collapse right"}, React.createElement("i", {className: "material-icons"}, "menu")), 
 
              React.createElement("ul", {className: "left"}, 
                 User.current() ? React.createElement("li", null, React.createElement("span", {className: "chip valign-wrapper user-logged-in"}, 
@@ -2228,7 +2294,7 @@ class BaseLayout extends React.Component {
 
 
                 User.current() ? (User.current().get('isCoach') ? React.createElement("li", null, React.createElement("a", {href: '#workspace/' + User.current().get('objectId')}, 
-               React.createElement("i", {className: "material-icons tooltipped", "data-position": "bottom", "data-delay": "1000", "data-tooltip": "Home"}, "home"))) :
+               React.createElement("i", {className: "material-icons"}, "home"))) :
                  React.createElement("li", null, React.createElement("a", {href: '#accountHome/' + User.current().get('objectId')}, 
                  React.createElement("i", {className: "material-icons"}, "home")))
                )
@@ -2238,12 +2304,11 @@ class BaseLayout extends React.Component {
                 !User.current() ? React.createElement("li", null, React.createElement("a", {href: "#login/", className: "waves-effect waves-light btn"}, "Log in")) : null, 
 
                 User.current() ? (User.current().get('isCoach') ? React.createElement("li", null, React.createElement("a", {href: '#workspace/' + User.current().get('objectId') + '/settings'}, 
-               React.createElement("i", {className: "material-icons tooltipped", "data-position": "bottom", "data-delay": "1000", "data-tooltip": "Settings"}, "settings"))) :
+               React.createElement("i", {className: "material-icons"}, "settings"))) :
                  React.createElement("li", null, React.createElement("a", {href: '#accountHome/' + User.current().get('objectId') + '/settings'}, 
                  React.createElement("i", {className: "material-icons"}, "settings")))
                )
                  : null, 
-
 
 
                 User.current() ? React.createElement("li", null, React.createElement("a", {onClick: this.signOut, className: "waves-effect waves-light btn"}, "Log out")) : null
@@ -2474,6 +2539,7 @@ var $ = window.$ = window.jQuery = require('jquery');
 
 require('materialize-sass-origin/js/bin/materialize.js');
 require('materialize-sass-origin/js/carousel.js');
+require('materialize-sass-origin/js/cards.js');
 
 var BaseLayout = require('./layouts/base.jsx').BaseLayout;
 
@@ -2492,12 +2558,17 @@ class SplashPageContainer extends React.Component {
 
       React.createElement(BaseLayout, null, 
         React.createElement("div", {className: "header col m12 valign-wrapper"}, 
+          React.createElement("div", {className: "row splash-pic"}, 
+          React.createElement("img", {src: "images/yoga-with-logo.jpeg"})
 
-          React.createElement("img", {src: "images/yoga.jpeg"}), 
 
-          React.createElement("div", {className: "big-moxy"}, "Moxy"), 
-          React.createElement("span", {className: "big-under"}, "accountability assistant")
 
+          )
+        ), 
+        React.createElement("div", {className: "row change-text"}, 
+          React.createElement("div", null, 
+            "Looking for a change of pace?"
+          )
         ), 
 
           React.createElement("div", {className: "row"}, 
@@ -2509,7 +2580,7 @@ class SplashPageContainer extends React.Component {
 
                 ), 
                 React.createElement("div", {className: "card-content"}, 
-                  "We help you meet your goals by giving you a straightforward, easy to user interface to keep up with your goals and your eating habits."
+                  "We help you meet your goals by giving you a straightforward, easy to use interface to keep up with your objectives and eating habits."
                 )
               )
 
@@ -2546,6 +2617,22 @@ class SplashPageContainer extends React.Component {
 
           ), 
 
+          React.createElement("div", {className: "row splash-row"}, 
+            React.createElement("div", {className: "col m4"}, 
+              React.createElement("img", {className: "strawbs", src: "images/strawbs.jpeg"})
+            ), 
+
+            React.createElement("div", {className: "col m8"}, 
+              React.createElement("div", {className: "card"}, 
+                React.createElement("div", {className: "card-content"}, 
+                  "Or maybe you're a coach. We would love to connect you to your clients."
+                )
+
+              )
+            )
+
+          ), 
+
 
         React.createElement("footer", {className: "page-footer"}, 
           React.createElement("div", {className: "container"}, 
@@ -2557,10 +2644,10 @@ class SplashPageContainer extends React.Component {
               React.createElement("div", {className: "col l4 offset-l2 s12"}, 
                 React.createElement("h5", {className: "white-text"}, "Links"), 
                 React.createElement("ul", null, 
-                  React.createElement("li", null, React.createElement("a", {className: "grey-text text-lighten-3", href: "#!"}, "Link 1")), 
-                  React.createElement("li", null, React.createElement("a", {className: "grey-text text-lighten-3", href: "#!"}, "Link 2")), 
-                  React.createElement("li", null, React.createElement("a", {className: "grey-text text-lighten-3", href: "#!"}, "Link 3")), 
-                  React.createElement("li", null, React.createElement("a", {className: "grey-text text-lighten-3", href: "#!"}, "Link 4"))
+                  React.createElement("li", null, React.createElement("a", {className: "grey-text text-lighten-3", href: "#!"}, React.createElement("i", {className: "fa fa-facebook-square", "aria-hidden": "true"}))), 
+                  React.createElement("li", null, React.createElement("a", {className: "grey-text text-lighten-3", href: "#!"}, React.createElement("i", {className: "fa fa-twitter-square", "aria-hidden": "true"}))), 
+                  React.createElement("li", null, React.createElement("a", {className: "grey-text text-lighten-3", href: "#!"}, React.createElement("i", {className: "fa fa-instagram", "aria-hidden": "true"}))), 
+                  React.createElement("li", null, React.createElement("a", {className: "grey-text text-lighten-3", href: "#!"}, React.createElement("i", {className: "fa fa-google-plus-square", "aria-hidden": "true"})))
                 )
               )
             )
@@ -2576,18 +2663,6 @@ class SplashPageContainer extends React.Component {
     )
   }
 }
-
-
-          // <div className="card">
-          //   <div className="card-image">
-          //     <img src="images/yoga.jpeg" />
-          //       <div className="card-title">
-          //         <div className="big-moxy">Moxy</div>
-          //         <span className="big-under">accountability assistant</span>
-          //       </div>
-          //
-          //   </div>
-          // </div>
 
 
 // <div className="carousel carousel-slider center" data-indicators="true">
@@ -2620,7 +2695,7 @@ module.exports = {
   SplashPageContainer
 };
 
-},{"./layouts/base.jsx":6,"jquery":88,"materialize-sass-origin/js/bin/materialize.js":90,"materialize-sass-origin/js/carousel.js":92,"react":256}],9:[function(require,module,exports){
+},{"./layouts/base.jsx":6,"jquery":88,"materialize-sass-origin/js/bin/materialize.js":90,"materialize-sass-origin/js/cards.js":91,"materialize-sass-origin/js/carousel.js":92,"react":256}],9:[function(require,module,exports){
 "use strict";
 var $ = require('jquery');
 var Backbone = require('backbone');
@@ -2784,7 +2859,8 @@ var Todo = ParseModel.extend({
       title: '',
       dueDate: '',
       notes: '',
-      isComplete: false
+      isComplete: false,
+      isEditing: false
     }
   }
 });
@@ -2802,7 +2878,9 @@ var Detail = ParseModel.extend({
 
 var DetailCollection = ParseCollection.extend({
   model: Detail,
+  comparator: -'stars',
   url: 'https://metal-slug.herokuapp.com/classes/clientDetails'
+
 });
 
 var DailyValue = ParseModel.extend({
