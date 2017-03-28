@@ -49,7 +49,7 @@ class BaseLayout extends React.Component {
 
   }
   componentDidMount(){
-    $('.tooltipped').tooltip({delay: 1000});
+    // $('.tooltipped').tooltip({delay: 2000});
   }
   signOut(){
     localStorage.clear();
@@ -78,7 +78,7 @@ class BaseLayout extends React.Component {
 
 
                { User.current() ? (User.current().get('isCoach') ? <li><a href={'#workspace/' + User.current().get('objectId')}>
-               <i className="material-icons tooltipped" data-position="bottom" data-delay="1000" data-tooltip="Home">home</i></a></li> :
+               <i className="material-icons tooltipped" data-position="bottom" data-tooltip="Home">home</i></a></li> :
                  <li><a href={'#accountHome/' + User.current().get('objectId')}>
                  <i className="material-icons">home</i></a></li>
                )
@@ -88,7 +88,7 @@ class BaseLayout extends React.Component {
                { !User.current() ? <li><a href="#login/" className="waves-effect waves-light btn">Log in</a></li> : null }
 
                { User.current() ? (User.current().get('isCoach') ? <li><a href={'#workspace/' + User.current().get('objectId') + '/settings' }>
-               <i className="material-icons tooltipped" data-position="bottom" data-delay="1000" data-tooltip="Settings">settings</i></a></li> :
+               <i className="material-icons tooltipped" data-position="bottom" data-tooltip="Settings">settings</i></a></li> :
                  <li><a href={'#accountHome/' + User.current().get('objectId') + '/settings' }>
                  <i className="material-icons">settings</i></a></li>
                )

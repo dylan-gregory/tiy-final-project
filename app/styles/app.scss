@@ -86,143 +86,111 @@ footer.page-footer{
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
 }
 
-// .header::after{
-//   content: 'Moxy';
-//   display: block;
+// .header::before{
+//   content: url('../images/moxy_logo 2.png');
 //   position: absolute;
-//   font-family: 'Warnes', cursive;
-//   color: white;
-//   font-size: 1000%;
-//   // max-width: 100%;
-//   // text-align: center;
-//   top: 0;
-//   bottom: 0;
-//   left: 20%;
-//   right: 0;
-//   // background-color: rgba(106,177,147, 0.7);
-//   z-index: 1;
-//
-// }
-
-// div .header{
-//   background-image: url('../images/yoga.jpeg');
-//   // position: fixed;
-//   top: 0;
+//   top: 25%;
 //   left: 0;
-//
-//   /* Preserve aspet ratio */
-//   min-width: 100%;
-//   min-height: 100%;
-//   // -webkit-background-size: cover;
-//   // -moz-background-size: cover;
-//   // // // -o-background-size: cover;
-//   // background-size: 100%;
-//   // height: 850px;
-//   // max-height: 850px;
+//   width: 100%;
+//   height: 100%;
+//   // z-index: 10;
+//   z-index: 5;
+//   transform: skewX(-12deg) skewY(-6deg);
 // }
 
-
-
-// @media min-width: 900px {
-//
+// .big-moxy{
+//   color: white;
+//   font-family: 'Warnes', cursive;
+//   position: absolute;
+//   text-align: center;
+//   top: 25%;
+//   left: 30%;
+//   font-size: 150px;
+//   // transform: skewX(-12deg) skewY(-6deg);
 //
 //
 // }
-
-.big-moxy{
-  color: white;
-  font-family: 'Warnes', cursive;
-  position: absolute;
-  text-align: center;
-  top: 25%;
-  left: 30%;
-  font-size: 150px;
-
-}
-
-@media (max-width:900px) {
-
-  .big-moxy{
-    color: white;
-    font-family: 'Warnes', cursive;
-    position: absolute;
-    text-align: center;
-    top: 25%;
-    left: 30%;
-    font-size: 100px;
-
-  }
-}
-
-@media (max-width:675px) {
-
-  .big-moxy{
-    color: white;
-    font-family: 'Warnes', cursive;
-    position: absolute;
-    text-align: center;
-    top: 25%;
-    left: 30%;
-    font-size: 80px;
-
-  }
-}
-
-@media (max-width: 600px) {
-
-  .big-moxy{
-    color: white;
-    font-family: 'Warnes', cursive;
-    position: absolute;
-    text-align: center;
-    top: 20%;
-    left: 25%;
-    font-size: 80px;
-
-  }
-}
-
-@media (max-width:530px) {
-
-  .big-moxy{
-    color: white;
-    font-family: 'Warnes', cursive;
-    position: absolute;
-    text-align: center;
-    top: 15%;
-    left: 20%;
-    font-size: 80px;
-
-  }
-}
-
-@media (max-width:500px) {
-
-  .big-moxy{
-    color: white;
-    font-family: 'Warnes', cursive;
-    position: absolute;
-    text-align: center;
-    top: 15%;
-    left: 18%;
-    font-size: 80px;
-
-  }
-}
-
-@media (max-width:430px) {
-
-  .big-moxy{
-    color: white;
-    font-family: 'Warnes', cursive;
-    position: absolute;
-    text-align: center;
-    top: 15%;
-    left: 15%;
-    font-size: 80px;
-
-  }
-}
+//
+// .big-under{
+//   color: white;
+//   font-family: 'Warnes', cursive;
+//   position: absolute;
+//   text-align: center;
+//   top: 51%;
+//   left: 33%;
+//   font-size: 40px;
+//   // transform: skewX(-12deg) skewY(-6deg);
+//
+// }
+//
+// @media (max-width:900px) {
+//
+//   .big-moxy{
+//     top: 25%;
+//     left: 30%;
+//     font-size: 100px;
+//
+//   }
+//
+//   .big-under{
+//     top: 40%;
+//     left: 33%;
+//     font-size: 30px;
+//
+//   }
+// }
+//
+// @media (max-width:675px) {
+//
+//   .big-moxy{
+//
+//     top: 25%;
+//     left: 30%;
+//     font-size: 80px;
+//
+//   }
+// }
+//
+// @media (max-width: 600px) {
+//
+//   .big-moxy{
+//
+//     top: 20%;
+//     left: 25%;
+//     font-size: 80px;
+//
+//   }
+// }
+//
+// @media (max-width:530px) {
+//
+//   .big-moxy{
+//     top: 15%;
+//     left: 20%;
+//     font-size: 80px;
+//
+//   }
+// }
+//
+// @media (max-width:500px) {
+//
+//   .big-moxy{
+//     top: 15%;
+//     left: 18%;
+//     font-size: 80px;
+//
+//   }
+// }
+//
+// @media (max-width:430px) {
+//
+//   .big-moxy{
+//     top: 15%;
+//     left: 15%;
+//     font-size: 80px;
+//
+//   }
+// }
 
 .btn{
   background-color: #FFBA49;
@@ -251,6 +219,9 @@ footer.page-footer{
 
 .collapsible-header{
   font-size: 19px;
+  padding: 10px;
+  padding-left: 15px;
+  padding-right: 15px;
 }
 
 .collapsible-body{
@@ -372,9 +343,13 @@ footer.page-footer{
   margin-bottom: 15px;
 }
 
+
+
 .edit-box{
-  border: 2px solid red;
+  box-shadow: inset 0 2px 10px 0 rgba(227,84,91,1), 0 2px 10px 0 rgba(227,84,91,1);
 }
+
+
 
 input{
   margin: 10px;
@@ -467,3 +442,43 @@ input[type=text]{
   font-size: 20px;
   height: 460px;
 }
+
+.prog-label{
+  font-size: 2rem;
+  margin-right: 10px;
+}
+
+.progress-bar{
+  color: white;
+  background-color: #EE0140;
+  padding-left: 20px;
+  padding-right: 30px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border: 3px solid #12697F;
+  border-radius: 40px;
+  margin-bottom: 15px;
+
+}
+
+.client-prog{
+  margin: 0;
+  margin-top: 3px;
+  margin-left: 10px;
+  height: 20px;
+
+  border-radius: 10px;
+}
+
+.collapsible-header .edit-save{
+  line-height: 2.5rem;
+  margin-right: 0px;
+  width: 2.5rem;
+}
+//
+// .collapsible-header i{
+//   line-height: 1em;
+//   width: auto;
+//   font-size: 1;
+//   margin-right: 0;
+// }

@@ -174,11 +174,26 @@ class CoachViewClient extends React.Component {
         <div className="container">
 
 
-            <div className="progress">
-              <div className="determinate" style={{width: this.state.percentDone + '%'}}></div>
-            </div>
+
 
           <div className="row">
+            <h4>
+              <div className="client-list-head">Client Report
+
+              </div>
+
+            </h4>
+
+            <div className="progress-bar valign-wrapper">
+
+                <div className="prog-label col m2">Progress:</div>
+                <div className="progress col m10 valign-wrapper client-prog">
+                  <div className="determinate valign" style={{width: this.state.percentDone + '%'}}></div>
+                </div>
+
+              <div className="clearfix"></div>
+            </div>
+
 
             <ClientTodoList currentClient={this.state.currentClient}
                             currentTodos={this.state.currentTodos}
@@ -315,18 +330,8 @@ class ClientTodoList extends React.Component {
 
 
 
+              {todo.get('isEditing') ? <input type="text" onChange={this.handleNoteChange} value={this.state.currentNotes}/> : null}
 
-            {todo.get('isComplete') ? <span>
-              <i className="material-icons">check_circle</i>
-            </span>
-            : null }
-
-          </div>
-
-
-          <div className={todo.get('isEditing') ? "collapsible-body edit-box" : "collapsible-body"}>
-
-            {todo.get('isEditing') ? <input type="text" onChange={this.handleNoteChange} value={this.state.currentNotes}/> : <div className="todo-notes">Notes: {todo.get('notes')}</div>}
 
             {todo.get('isEditing') ?
               <button className="btn waves-effect waves-light" name="action"
@@ -335,10 +340,36 @@ class ClientTodoList extends React.Component {
                   Materialize.toast('Successfully saved!', 4000, 'rounded');
                   this.editTodo(todo);
               }}>Save
-                <i className="material-icons right">send</i>
+                
               </button>
             : null}
 
+          {todo.get('isEditing') ?
+            <span className="right"><a className="btn-floating btn-small waves-effect waves-light orange " onClick={(e) => {
+                e.preventDefault();
+                this.toggleEdit(todo);
+            }}>
+            <i className="material-icons edit-save">build</i>
+            </a>
+            </span>
+            : null }
+
+
+
+            {todo.get('isComplete') ? <span>
+              <i className="material-icons check">check_circle</i>
+            </span>
+            : null }
+
+          </div>
+
+
+          <div className="collapsible-body">
+
+            {todo.get('isEditing') == false ? <div className="todo-notes">Notes: {todo.get('notes')}</div>: null }
+
+
+          {todo.get('isEditing') == false ?
 
             <span className="right"><a className="btn-floating btn-small waves-effect waves-light red todo-delete" onClick={(e) => {
                 e.preventDefault();
@@ -346,7 +377,9 @@ class ClientTodoList extends React.Component {
             <i className="material-icons">close</i>
             </a>
             </span>
+            : null }
 
+          {todo.get('isEditing') == false ?
             <span className="right"><a className="btn-floating btn-small waves-effect waves-light orange todo-delete" onClick={(e) => {
                 e.preventDefault();
                 this.toggleEdit(todo);
@@ -354,6 +387,9 @@ class ClientTodoList extends React.Component {
             <i className="material-icons">build</i>
             </a>
             </span>
+
+            : null}
+
 
             {todo.get('isComplete') ?
                 <span className="right"><a className="btn-floating btn-small tooltipped waves-effect waves-light amber todo-delete" data-position="left" data-delay="50" data-tooltip="Reward" onClick={(e) => {
@@ -377,10 +413,7 @@ class ClientTodoList extends React.Component {
 
 
         <div className="col m8">
-          <h4>
-            <div className="client-list-head">Coming up</div>
 
-          </h4>
             <ul className="collapsible" data-collapsible="accordion">
               {todoList}
 

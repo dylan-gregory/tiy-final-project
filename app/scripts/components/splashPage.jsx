@@ -22,9 +22,10 @@ class SplashPageContainer extends React.Component {
       <BaseLayout>
         <div className="header col m12 valign-wrapper">
           <div className="row">
-          <img src="images/yoga.jpeg" />
+          <img src="images/yoga-with-logo.jpeg" />
 
-          <div className="big-moxy col m6 offset-m3">Moxy</div>
+
+
           </div>
         </div>
 
