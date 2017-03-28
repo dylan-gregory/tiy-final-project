@@ -182,15 +182,20 @@ class AccountSettingsContainer extends React.Component {
                   <div className="card-content">
 
                     <span className="card-title activator grey-text text-darken-4">
-                      <div>{this.state.user.get('isCoach') == true ? "Your coach ID: " + this.state.user.get('objectId') : null }</div>
+                      <i data-position="bottom" data-delay="50" data-tooltip="Edit your profile" className="material-icons right tooltipped">rate_review</i>
+
+                      <div>{this.state.user.get('isCoach') == true ? <span><span className="coach-id">Your coach ID:</span> {this.state.user.get('objectId')} </span> : null }</div>
+
 
                     </span>
 
-                    <div>
+                    <div className="bio-item valign-wrapper">
                       <i className="material-icons prefix">email</i>
                       {this.state.currentDetail !== undefined ?" : " + this.state.currentDetail.get('email') : "Why don't you tell us a little about yourself?"}
-                      <i data-position="bottom" data-delay="50" data-tooltip="Edit your profile" className="material-icons right tooltipped">rate_review</i>
 
+                    </div>
+
+                    <div className="bio-item valign-wrapper">
                       <i className="material-icons prefix">phone</i>
                         {this.state.currentDetail !== undefined ? " : " + this.state.currentDetail.get('phone') : null}
                     </div>

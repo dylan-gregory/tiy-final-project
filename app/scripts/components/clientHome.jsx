@@ -180,7 +180,7 @@ class ClientHomeContainer extends React.Component {
               checkOffTodo={this.checkOffTodo}
             />
 
-          <div className="col m5">
+          <div className="col l5 m6 s12">
 
 
                 <DailyIntakeList
@@ -333,13 +333,15 @@ class MyTodoList extends React.Component {
                 </span>
 
               <span>{todo.get('title')}</span>
-              <span className="right">Due: {todo.get('dueDate')}</span>
+
 
             </div>
 
           <div className="collapsible-body">
+            <div>Due: {todo.get('dueDate')}</div>
             <div className="client-notes">
               Notes: {todo.get('notes')}
+
             </div>
 
 
@@ -352,7 +354,7 @@ class MyTodoList extends React.Component {
 
     return (
 
-        <div className="col m7">
+        <div className="col l7 m6 s12">
           <h4>
             <span className="client-list-head valign-wrapper">Coming up</span>
             </h4>
@@ -471,7 +473,7 @@ class SearchBar extends React.Component {
 
       <div className="search-wrapper card">
         <form>
-          <input id="search" onChange={this.handleSearchTerm} value={this.state.searchTerm} />
+          <input id="search" onChange={this.handleSearchTerm} value={this.state.searchTerm} placeholder="carrots, pizza, Taco Bell..."/>
           <i className="material-icons search-i">search</i>
         </form>
 
@@ -559,7 +561,7 @@ class DailyIntakeList extends React.Component {
 
 
 
-          <table className="striped responsive-table">
+          <table className="striped">
             <thead>
               <tr className="counter-head">
                 <th>Calories</th>

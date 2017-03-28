@@ -3,6 +3,7 @@ var $ = window.$ = window.jQuery = require('jquery');
 
 require('materialize-sass-origin/js/bin/materialize.js');
 require('materialize-sass-origin/js/carousel.js');
+require('materialize-sass-origin/js/cards.js');
 
 var BaseLayout = require('./layouts/base.jsx').BaseLayout;
 
@@ -21,11 +22,16 @@ class SplashPageContainer extends React.Component {
 
       <BaseLayout>
         <div className="header col m12 valign-wrapper">
-          <div className="row">
+          <div className="row splash-pic">
           <img src="images/yoga-with-logo.jpeg" />
 
 
 
+          </div>
+        </div>
+        <div className="row change-text">
+          <div>
+            Looking for a change of pace?
           </div>
         </div>
 
@@ -75,6 +81,22 @@ class SplashPageContainer extends React.Component {
 
           </div>
 
+          <div className="row splash-row">
+            <div className="col m4">
+              <img className="strawbs" src="images/strawbs.jpeg" />
+            </div>
+
+            <div className="col m8">
+              <div className="card">
+                <div className="card-content">
+                  Or maybe you're a coach. We would love to connect you to your clients.
+                </div>
+
+              </div>
+            </div>
+
+          </div>
+
 
         <footer className="page-footer">
           <div className="container">
@@ -86,10 +108,10 @@ class SplashPageContainer extends React.Component {
               <div className="col l4 offset-l2 s12">
                 <h5 className="white-text">Links</h5>
                 <ul>
-                  <li><a className="grey-text text-lighten-3" href="#!">Link 1</a></li>
-                  <li><a className="grey-text text-lighten-3" href="#!">Link 2</a></li>
-                  <li><a className="grey-text text-lighten-3" href="#!">Link 3</a></li>
-                  <li><a className="grey-text text-lighten-3" href="#!">Link 4</a></li>
+                  <li><a className="grey-text text-lighten-3" href="#!"><i className="fa fa-facebook-square" aria-hidden="true"></i></a></li>
+                  <li><a className="grey-text text-lighten-3" href="#!"><i className="fa fa-twitter-square" aria-hidden="true"></i></a></li>
+                  <li><a className="grey-text text-lighten-3" href="#!"><i className="fa fa-instagram" aria-hidden="true"></i></a></li>
+                  <li><a className="grey-text text-lighten-3" href="#!"><i className="fa fa-google-plus-square" aria-hidden="true"></i></a></li>
                 </ul>
               </div>
             </div>
@@ -105,18 +127,6 @@ class SplashPageContainer extends React.Component {
     )
   }
 }
-
-
-          // <div className="card">
-          //   <div className="card-image">
-          //     <img src="images/yoga.jpeg" />
-          //       <div className="card-title">
-          //         <div className="big-moxy">Moxy</div>
-          //         <span className="big-under">accountability assistant</span>
-          //       </div>
-          //
-          //   </div>
-          // </div>
 
 
 // <div className="carousel carousel-slider center" data-indicators="true">

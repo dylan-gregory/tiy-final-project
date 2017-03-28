@@ -54,8 +54,11 @@ class CoachWorkspaceContainer extends React.Component{
     });
 
     detailCollection.fetch().then(() => {
+      // detailCollection.sort();
       currentDetail = detailCollection.findWhere({ownerId: this.props.id});
       console.log('here', currentDetail);
+
+
 
       if (currentDetail !== undefined) {
         var pic = currentDetail.get('pic');
@@ -145,7 +148,7 @@ class CoachWorkspaceContainer extends React.Component{
             </header>
 
             <div className="row">
-              <div className="col m7">
+              <div className="col l7 m6 s12">
                 <h4>
                   <div className="client-list-head">Client List</div>
 
@@ -158,7 +161,7 @@ class CoachWorkspaceContainer extends React.Component{
                   />
 
               </div>
-              <div className="col s5">
+              <div className="col l5 m6 s12">
                 <h4>
                   <div className="starboard-head valign-wrapper"><a className="btn-floating btn-small waves-effect waves-light amber todo-delete">
                   <i className="material-icons">star</i>
@@ -176,7 +179,7 @@ class CoachWorkspaceContainer extends React.Component{
                         detailCollection={this.state.detailCollection}
                       />
 
-                    <hr className="stat-rule"/>
+                    <hr className="stat-rule hide-on-med-and-down"/>
 
                       <ClientLeaderBoard
                         clientCollection={this.state.clientCollection}
@@ -311,7 +314,6 @@ class ClientLeaderBoard extends React.Component {
   }
   render(){
 
-
     var clientPoints = this.state.clientCollection.map(client =>{
       return (
 
@@ -326,7 +328,7 @@ class ClientLeaderBoard extends React.Component {
     return (
       <div>
 
-          <table className="striped">
+          <table className="striped m5 s12 star-table">
             <thead>
               <tr>
                 <th>Name</th>
@@ -398,7 +400,12 @@ class ClientStarChart extends React.Component {
             borderWidth: 1
         }]
     }
-    return <Polar data={chartData} redraw />
+    return (
+      <div className="hide-on-med-and-down">
+        <Polar data={chartData} redraw />
+      </div>
+    )
+
   }
 }
 

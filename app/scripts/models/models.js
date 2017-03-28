@@ -149,7 +149,8 @@ var Todo = ParseModel.extend({
       title: '',
       dueDate: '',
       notes: '',
-      isComplete: false
+      isComplete: false,
+      isEditing: false
     }
   }
 });
@@ -167,7 +168,9 @@ var Detail = ParseModel.extend({
 
 var DetailCollection = ParseCollection.extend({
   model: Detail,
+  comparator: -'stars',
   url: 'https://metal-slug.herokuapp.com/classes/clientDetails'
+
 });
 
 var DailyValue = ParseModel.extend({

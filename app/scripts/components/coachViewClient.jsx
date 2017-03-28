@@ -326,7 +326,7 @@ class ClientTodoList extends React.Component {
             {todo.get('isEditing') ? <input type="text" onChange={this.handleTitleChange} value={this.state.currentTitle}/> : <span>{todo.get('title')}</span>}
 
 
-            {todo.get('isEditing') ? <input type="text" onChange={this.handleDateChange} value={this.state.currentDate}/> : <span className="right">Due: {todo.get('dueDate')}</span>}
+            {todo.get('isEditing') ? <input type="text" onChange={this.handleDateChange} value={this.state.currentDate}/> : null}
 
 
 
@@ -337,10 +337,10 @@ class ClientTodoList extends React.Component {
               <button className="btn waves-effect waves-light" name="action"
                 onClick={(e) => {
                   e.preventDefault();
-                  Materialize.toast('Successfully saved!', 4000, 'rounded');
+                  Materialize.toast('Successfully saved!', 4000, 'rounded green accent-2');
                   this.editTodo(todo);
               }}>Save
-                
+
               </button>
             : null}
 
@@ -366,10 +366,16 @@ class ClientTodoList extends React.Component {
 
           <div className="collapsible-body">
 
+            {todo.get('isEditing') == false ? <div>Due: {todo.get('dueDate')}</div>: null }
+
             {todo.get('isEditing') == false ? <div className="todo-notes">Notes: {todo.get('notes')}</div>: null }
 
 
-          {todo.get('isEditing') == false ?
+
+
+
+
+
 
             <span className="right"><a className="btn-floating btn-small waves-effect waves-light red todo-delete" onClick={(e) => {
                 e.preventDefault();
@@ -377,7 +383,7 @@ class ClientTodoList extends React.Component {
             <i className="material-icons">close</i>
             </a>
             </span>
-            : null }
+
 
           {todo.get('isEditing') == false ?
             <span className="right"><a className="btn-floating btn-small waves-effect waves-light orange todo-delete" onClick={(e) => {
@@ -394,7 +400,7 @@ class ClientTodoList extends React.Component {
             {todo.get('isComplete') ?
                 <span className="right"><a className="btn-floating btn-small tooltipped waves-effect waves-light amber todo-delete" data-position="left" data-delay="50" data-tooltip="Reward" onClick={(e) => {
                     e.preventDefault();
-                    Materialize.toast('You awarded a star!', 4000, 'rounded');
+                    Materialize.toast('You awarded a star!', 4000, 'rounded amber');
                 this.props.awardStar(todo);}}>
                 <i className="material-icons">star</i>
                 </a>
@@ -412,7 +418,7 @@ class ClientTodoList extends React.Component {
     return (
 
 
-        <div className="col m8">
+        <div className="col l8 m7 s12">
 
             <ul className="collapsible" data-collapsible="accordion">
               {todoList}
@@ -484,7 +490,7 @@ class ClientInfo extends React.Component {
 
     return(
 
-      <div className="col m4">
+      <div className="col l4 m5 s12">
         <div className="card">
           <div className="card-image waves-effect waves-block waves-light valign-wrapper">
             <img className="activator client-avatar" src={this.state.clientPic !== undefined ? this.state.clientPic : "images/ic_account_circle_black_24px.svg"} />
@@ -503,12 +509,8 @@ class ClientInfo extends React.Component {
             <div>Phone: {this.state.currentDetail ?  this.state.currentDetail.get('phone') : null}</div>
             <div>Stars: {this.state.currentDetail ?  this.state.currentDetail.get('stars') : 0}</div>
 
-              <span className="right"><a className="btn btn-small waves-effect waves-light red todo-delete tooltipped" data-position="left" data-delay="50" data-tooltip="Remove client?"onClick={(e) => {
-                  e.preventDefault();
-              this.props.deleteClient(this.state.currentClient);}}>
-              <i className="material-icons">delete_forever</i>
-              </a>
-              </span>
+
+
           </div>
         </div>
       </div>
@@ -517,6 +519,15 @@ class ClientInfo extends React.Component {
 
   }
 }
+
+// For a possible remove/delete client, or to reassign a coach
+
+// <span className="right"><a className="btn btn-small waves-effect waves-light red todo-delete tooltipped" data-position="left" data-delay="50" data-tooltip="Remove client?"onClick={(e) => {
+//     e.preventDefault();
+// this.props.deleteClient(this.state.currentClient);}}>
+// <i className="material-icons">delete_forever</i>
+// </a>
+// </span>
 
 
 

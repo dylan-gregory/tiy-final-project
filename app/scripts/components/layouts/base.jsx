@@ -45,10 +45,16 @@ class BaseLayout extends React.Component {
       pic
     }
 
+    // setInterval(clearTooltip, 2000);
+    //   function clearTooltip() {
+    //       $('.material-tooltip').hide();
+    //     }
+
 
 
   }
   componentDidMount(){
+    // I un tagged the tooltipped links due to strange glitches
     // $('.tooltipped').tooltip({delay: 2000});
   }
   signOut(){
@@ -63,7 +69,7 @@ class BaseLayout extends React.Component {
            <div className="nav-wrapper">
 
              <a href="" className="brand-logo center">Moxy</a>
-             <a href="#" data-activates="mobile-demo" className="button-collapse"><i className="material-icons">menu</i></a>
+             <a href="#" data-activates="mobile-demo" className="button-collapse right"><i className="material-icons">menu</i></a>
 
              <ul className="left">
                { User.current() ? <li><span className="chip valign-wrapper user-logged-in">
@@ -78,7 +84,7 @@ class BaseLayout extends React.Component {
 
 
                { User.current() ? (User.current().get('isCoach') ? <li><a href={'#workspace/' + User.current().get('objectId')}>
-               <i className="material-icons tooltipped" data-position="bottom" data-tooltip="Home">home</i></a></li> :
+               <i className="material-icons">home</i></a></li> :
                  <li><a href={'#accountHome/' + User.current().get('objectId')}>
                  <i className="material-icons">home</i></a></li>
                )
@@ -88,12 +94,11 @@ class BaseLayout extends React.Component {
                { !User.current() ? <li><a href="#login/" className="waves-effect waves-light btn">Log in</a></li> : null }
 
                { User.current() ? (User.current().get('isCoach') ? <li><a href={'#workspace/' + User.current().get('objectId') + '/settings' }>
-               <i className="material-icons tooltipped" data-position="bottom" data-tooltip="Settings">settings</i></a></li> :
+               <i className="material-icons">settings</i></a></li> :
                  <li><a href={'#accountHome/' + User.current().get('objectId') + '/settings' }>
                  <i className="material-icons">settings</i></a></li>
                )
                  : null }
-
 
 
                { User.current() ? <li><a onClick={this.signOut} className="waves-effect waves-light btn">Log out</a></li> : null }
