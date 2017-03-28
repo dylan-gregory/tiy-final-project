@@ -21,12 +21,11 @@ class SplashPageContainer extends React.Component {
 
       <BaseLayout>
         <div className="header col m12 valign-wrapper">
-
+          <div className="row">
           <img src="images/yoga.jpeg" />
 
-          <div className="big-moxy">Moxy</div>
-          <span className="big-under">accountability assistant</span>
-
+          <div className="big-moxy col m6 offset-m3">Moxy</div>
+          </div>
         </div>
 
           <div className="row">
@@ -38,7 +37,7 @@ class SplashPageContainer extends React.Component {
 
                 </div>
                 <div className="card-content">
-                  We help you meet your goals by giving you a straightforward, easy to user interface to keep up with your goals and your eating habits.
+                  We help you meet your goals by giving you a straightforward, easy to use interface to keep up with your objectives and eating habits.
                 </div>
               </div>
 
