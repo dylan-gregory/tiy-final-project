@@ -8619,14 +8619,6 @@ footer.page-footer {
   font-family: 'Warnes', cursive;
   color: #15809B; }
 
-div > .card-row {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: stretch;
-      -ms-flex-align: stretch;
-          align-items: stretch; }
-
 .splash-row {
   background-color: #EE0140;
   margin-bottom: 0;
@@ -8815,12 +8807,6 @@ input[type=text] {
 
 .error {
   background-color: red; }
-
-div > .splash-card {
-  font-size: 20px;
-  -ms-flex-item-align: stretch;
-      -ms-grid-row-align: stretch;
-      align-self: stretch; }
 
 .prog-label {
   font-size: 2rem;

@@ -2268,8 +2268,12 @@ class BaseLayout extends React.Component {
   componentDidMount(){
     // I un tagged the tooltipped links due to strange glitches
     // $('.tooltipped').tooltip({delay: 2000});
+    $(".dropdown-button").dropdown();
 
   }
+  // componentWillUpdate(){
+  //   $(".dropdown-button").dropdown();
+  // }
   signOut(){
     localStorage.clear();
     Backbone.history.navigate('login/', {trigger: true});
@@ -2286,6 +2290,7 @@ class BaseLayout extends React.Component {
 
 
                React.createElement("ul", {id: "dropdown1", className: "dropdown-content"}, 
+
                   User.current() ? (User.current().get('isCoach') ? React.createElement("li", null, React.createElement("a", {href: '#workspace/' + User.current().get('objectId')}, 
                  React.createElement("i", {className: "material-icons"}, "home"))) :
                    React.createElement("li", null, React.createElement("a", {href: '#accountHome/' + User.current().get('objectId')}, 
@@ -2302,16 +2307,25 @@ class BaseLayout extends React.Component {
                    )
                      : null, 
 
+
+
                 React.createElement("li", {className: "divider"}), 
-                 !User.current() ? React.createElement("li", null, React.createElement("a", {href: "#login/", className: "waves-effect waves-light"}, "Log in")) : null, 
-                 User.current() ? React.createElement("li", null, React.createElement("a", {onClick: this.signOut, className: "waves-effect waves-light"}, "Log out")) : null
+
+
+                 User.current() ? React.createElement("li", null, React.createElement("a", {onClick: this.signOut, className: "waves-effect waves-light"}, "Log out")) : React.createElement("li", null, React.createElement("a", {href: "#login/", className: "waves-effect waves-light"}, "Log in")), 
+
+                console.log('user', User.current())
+
               ), 
 
 
 
 
 
-             React.createElement("a", {href: "#", "data-activates": "dropdown1", className: "button-collapse dropdown-button right"}, React.createElement("i", {className: "material-icons", onClick: $(".dropdown-button").dropdown()}, "menu")), 
+
+
+                 React.createElement("a", {href: "#", "data-activates": "dropdown1", className: "button-collapse dropdown-button right"}, React.createElement("i", {className: "material-icons", onClick: $(".dropdown-button").dropdown()}, "menu")), 
+
 
              React.createElement("ul", {className: "left"}, 
                 User.current() ? React.createElement("li", null, React.createElement("span", {className: "chip valign-wrapper user-logged-in"}, 
