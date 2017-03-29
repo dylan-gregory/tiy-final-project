@@ -1543,38 +1543,38 @@ class ClientTodoList extends React.Component {
 
 
 
-
-            React.createElement("span", {className: "right"}, React.createElement("a", {className: "btn-floating btn-small waves-effect waves-light red todo-delete", onClick: (e) => {
-                e.preventDefault();
-            this.props.deleteTodo(todo);}}, 
-            React.createElement("i", {className: "material-icons"}, "close")
-            )
-            ), 
-
-
-          todo.get('isEditing') == false ?
-            React.createElement("span", {className: "right"}, React.createElement("a", {className: "btn-floating btn-small waves-effect waves-light orange todo-delete", onClick: (e) => {
-                e.preventDefault();
-                this.toggleEdit(todo);
-            }}, 
-            React.createElement("i", {className: "material-icons"}, "build")
-            )
-            )
-
-            : null, 
+            React.createElement("div", null, 
+              React.createElement("span", {className: "right"}, React.createElement("a", {className: "btn-floating btn-small waves-effect waves-light red todo-delete", onClick: (e) => {
+                  e.preventDefault();
+              this.props.deleteTodo(todo);}}, 
+              React.createElement("i", {className: "material-icons"}, "close")
+              )
+              ), 
 
 
-            todo.get('isComplete') ?
-                React.createElement("span", {className: "right"}, React.createElement("a", {className: "btn-floating btn-small tooltipped waves-effect waves-light amber todo-delete", "data-position": "left", "data-delay": "50", "data-tooltip": "Reward", onClick: (e) => {
-                    e.preventDefault();
-                    Materialize.toast('You awarded a star!', 4000, 'rounded amber');
-                this.props.awardStar(todo);}}, 
-                React.createElement("i", {className: "material-icons"}, "star")
-                )
-                )
-                : null, 
+            todo.get('isEditing') == false ?
+              React.createElement("span", {className: "right"}, React.createElement("a", {className: "btn-floating btn-small waves-effect waves-light orange todo-delete", onClick: (e) => {
+                  e.preventDefault();
+                  this.toggleEdit(todo);
+              }}, 
+              React.createElement("i", {className: "material-icons"}, "build")
+              )
+              )
+
+              : null, 
+
+
+              todo.get('isComplete') ?
+                  React.createElement("span", {className: "right"}, React.createElement("a", {className: "btn-floating btn-small tooltipped waves-effect waves-light amber todo-delete", "data-position": "left", "data-delay": "50", "data-tooltip": "Reward", onClick: (e) => {
+                      e.preventDefault();
+                      Materialize.toast('You awarded a star!', 4000, 'rounded amber');
+                  this.props.awardStar(todo);}}, 
+                  React.createElement("i", {className: "material-icons"}, "star")
+                  )
+                  )
+                  : null, 
             React.createElement("div", {className: "clearfix"})
-
+            )
 
           )
         )
@@ -2613,14 +2613,36 @@ class SplashPageContainer extends React.Component {
 
           )
         ), 
-        React.createElement("div", {className: "row change-text"}, 
-          React.createElement("div", null, 
-            "Looking for a change of pace?"
-          )
-        ), 
+        React.createElement("div", {className: "row splash-row"}, 
+
+          React.createElement("div", {className: "col l4 m6 s12 valign-wrapper"}, 
+
+
+                React.createElement("img", {className: "guide-pic", src: "images/guide.jpeg"})
+
+
+          ), 
+          React.createElement("div", {className: "col m12 l8 valign"}, 
+            React.createElement("div", {className: "card"}, 
+
+              React.createElement("div", {className: "card-content client-coach-script"}, 
+                React.createElement("div", null, 
+                  React.createElement("h3", {className: "bold-header"}, 
+                    "Looking for a change of pace?"
+                  )
+                ), 
+
+                React.createElement("p", {className: "splash-p"}, "Changing the way you live is hard. Climbing those proverbial mountains and breaking down the obstacles in your mind requires a lot of willpower - strength - MOXY. And it's so much easier when you've got someone else on your team to lead the way or just nudge you in the right direction.")
+
+              )
+            )
+
+            )
+
+          ), 
 
           React.createElement("div", {className: "row card-row"}, 
-            React.createElement("div", {className: "col m4 splash-col"}, 
+            React.createElement("div", {className: "col m4 s12 splash-col"}, 
 
               React.createElement("div", {className: "card splash-card"}, 
                 React.createElement("div", {className: "card-image"}, 
@@ -2633,7 +2655,7 @@ class SplashPageContainer extends React.Component {
               )
 
             ), 
-            React.createElement("div", {className: "col m4 splash-col"}, 
+            React.createElement("div", {className: "col m4 s12 splash-col"}, 
 
               React.createElement("div", {className: "card splash-card"}, 
                 React.createElement("div", {className: "card-image"}, 
@@ -2647,7 +2669,7 @@ class SplashPageContainer extends React.Component {
 
             ), 
 
-            React.createElement("div", {className: "col m4 splash-col"}, 
+            React.createElement("div", {className: "col m4 s12 splash-col"}, 
 
               React.createElement("div", {className: "card splash-card"}, 
                 React.createElement("div", {className: "card-image"}, 
@@ -2666,17 +2688,27 @@ class SplashPageContainer extends React.Component {
           ), 
 
           React.createElement("div", {className: "row splash-row"}, 
-            React.createElement("div", {className: "col m4"}, 
-              React.createElement("img", {className: "strawbs", src: "images/strawbs.jpeg"})
-            ), 
 
-            React.createElement("div", {className: "col m8"}, 
+            React.createElement("div", {className: "col l8 m6 s12"}, 
               React.createElement("div", {className: "card"}, 
-                React.createElement("div", {className: "card-content"}, 
-                  "Or maybe you're a coach. We would love to connect you to your clients."
+                React.createElement("div", {className: "card-content client-coach-script"}, 
+                  React.createElement("div", null, 
+                    React.createElement("h3", {className: "bold-header"}, 
+                      "Or maybe you're a coach?"
+                    )
+                  ), 
+                    React.createElement("div", null, 
+                      React.createElement("p", {className: "splash-p"}, 
+                        "It's difficult to balance your kids soccer games, doctors appointments, and client progress all at the same time. We would love to connect you to your clients and help keep your priorties in order."
+                      )
+                    )
                 )
 
               )
+            ), 
+
+            React.createElement("div", {className: "col l4 m6 s12 valign-wrapper"}, 
+              React.createElement("img", {className: "strawbs", src: "images/strawbs.jpeg"})
             )
 
           ), 

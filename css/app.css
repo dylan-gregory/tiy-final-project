@@ -8600,6 +8600,10 @@ a {
 .brand-logo {
   font-family: 'Warnes', cursive; }
 
+.splash-pic {
+  background-color: #EE0140;
+  margin: 0; }
+
 footer.page-footer {
   background-color: #15809B;
   margin-top: 0; }
@@ -8613,11 +8617,11 @@ footer.page-footer {
 @media (max-width: 450px) {
   .chip {
     margin-left: 5px; } }
-.change-text {
-  text-align: center;
-  font-size: 60px;
-  font-family: 'Warnes', cursive;
-  color: #15809B; }
+div > .card-row {
+  background-color: #15809B;
+  margin-bottom: 0;
+  padding-bottom: 30px;
+  padding-top: 30px; }
 
 .splash-row {
   background-color: #EE0140;
@@ -8739,6 +8743,7 @@ footer.page-footer {
   margin-bottom: 15px; }
 
 .edit-box {
+  padding: 25px;
   box-shadow: inset 0 2px 10px 0 #e3545b, 0 2px 10px 0 #e3545b; }
 
 input {
@@ -8835,9 +8840,29 @@ input[type=text] {
   margin-right: 0px;
   width: 2.5rem; }
 
-.splash-col {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex; }
+.splash-card {
+  height: 445px;
+  overflow: scroll;
+  font-family: 'Josefin Sans', sans-serif;
+  font-size: 20px; }
+
+.guide-pic {
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12); }
+
+.bold-header {
+  text-align: center;
+  font-family: 'Lobster', cursive;
+  font-size: 65px;
+  font-weight: bold;
+  font-style: italic;
+  margin-top: 0px;
+  margin-bottom: 20px; }
+
+.splash-p {
+  font-size: 27px;
+  font-family: 'Josefin Sans', sans-serif; }
+
+.card > .client-coach-script {
+  padding: 20px 30px 30px 30px; }
 
 /*# sourceMappingURL=app.css.map */
