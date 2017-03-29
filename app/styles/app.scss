@@ -107,10 +107,12 @@ footer.page-footer{
   color: #15809B;
 }
 
-div > .card-row{
-  display: flex;
-  align-items: stretch;
-}
+
+// This makes the columns match each other, but effs them up at small level
+// div > .card-row{
+//   display: flex;
+//   align-items: stretch;
+// }
 
 .splash-row{
   background-color: #EE0140;
@@ -504,10 +506,7 @@ input[type=text]{
 //   align-items: stretch;
 // }
 
-div > .splash-card{
-  font-size: 20px;
-  align-self: stretch;
-}
+
 
 .prog-label{
   font-size: 2rem;

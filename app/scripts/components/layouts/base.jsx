@@ -58,8 +58,12 @@ class BaseLayout extends React.Component {
   componentDidMount(){
     // I un tagged the tooltipped links due to strange glitches
     // $('.tooltipped').tooltip({delay: 2000});
+    $(".dropdown-button").dropdown();
 
   }
+  // componentWillUpdate(){
+  //   $(".dropdown-button").dropdown();
+  // }
   signOut(){
     localStorage.clear();
     Backbone.history.navigate('login/', {trigger: true});
@@ -76,6 +80,7 @@ class BaseLayout extends React.Component {
 
 
                <ul id="dropdown1" className="dropdown-content">
+
                  { User.current() ? (User.current().get('isCoach') ? <li><a href={'#workspace/' + User.current().get('objectId')}>
                  <i className="material-icons">home</i></a></li> :
                    <li><a href={'#accountHome/' + User.current().get('objectId')}>
@@ -90,18 +95,27 @@ class BaseLayout extends React.Component {
                      <li><a href={'#accountHome/' + User.current().get('objectId') + '/settings' }>
                      <i className="material-icons">settings</i></a></li>
                    )
-                     : null }
+                     : null  }
+
+
 
                 <li className="divider"></li>
-                { !User.current() ? <li><a href="#login/" className="waves-effect waves-light">Log in</a></li> : null }
-                { User.current() ? <li><a onClick={this.signOut} className="waves-effect waves-light">Log out</a></li> : null }
+
+
+                { User.current() ? <li><a onClick={this.signOut} className="waves-effect waves-light">Log out</a></li> : <li><a href="#login/" className="waves-effect waves-light">Log in</a></li> }
+
+                {console.log('user', User.current())}
+
               </ul>
 
 
 
 
 
-             <a href="#" data-activates="dropdown1" className="button-collapse dropdown-button right"><i className="material-icons" onClick={$(".dropdown-button").dropdown()}>menu</i></a>
+
+
+                 <a href="#" data-activates="dropdown1" className="button-collapse dropdown-button right"><i className="material-icons" onClick={$(".dropdown-button").dropdown()}>menu</i></a>
+
 
              <ul className="left">
                { User.current() ? <li><span className="chip valign-wrapper user-logged-in">
