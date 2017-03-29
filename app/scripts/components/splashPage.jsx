@@ -29,14 +29,36 @@ class SplashPageContainer extends React.Component {
 
           </div>
         </div>
-        <div className="row change-text">
-          <div>
-            Looking for a change of pace?
+        <div className="row splash-row">
+
+          <div className="col l4 m6 s12 valign-wrapper">
+
+
+                <img className="guide-pic" src="images/guide.jpeg"/>
+
+
           </div>
-        </div>
+          <div className="col m12 l8 valign">
+            <div className="card">
+
+              <div className="card-content client-coach-script">
+                <div>
+                  <h3 className="bold-header">
+                    Looking for a change of pace?
+                  </h3>
+                </div>
+
+                <p className="splash-p">Changing the way you live is hard. Climbing those proverbial mountains and breaking down the obstacles in your mind requires a lot of willpower - strength - MOXY. And it's so much easier when you've got someone else on your team to lead the way or just nudge you in the right direction.</p>
+
+              </div>
+            </div>
+
+            </div>
+
+          </div>
 
           <div className="row card-row">
-            <div className="col m4 splash-col">
+            <div className="col m4 s12 splash-col">
 
               <div className="card splash-card">
                 <div className="card-image">
@@ -49,7 +71,7 @@ class SplashPageContainer extends React.Component {
               </div>
 
             </div>
-            <div className="col m4 splash-col">
+            <div className="col m4 s12 splash-col">
 
               <div className="card splash-card">
                 <div className="card-image">
@@ -63,7 +85,7 @@ class SplashPageContainer extends React.Component {
 
             </div>
 
-            <div className="col m4 splash-col">
+            <div className="col m4 s12 splash-col">
 
               <div className="card splash-card">
                 <div className="card-image">
@@ -82,17 +104,27 @@ class SplashPageContainer extends React.Component {
           </div>
 
           <div className="row splash-row">
-            <div className="col m4">
-              <img className="strawbs" src="images/strawbs.jpeg" />
-            </div>
 
-            <div className="col m8">
+            <div className="col l8 m6 s12">
               <div className="card">
-                <div className="card-content">
-                  Or maybe you're a coach. We would love to connect you to your clients.
+                <div className="card-content client-coach-script">
+                  <div>
+                    <h3 className="bold-header">
+                      Or maybe you're a coach?
+                    </h3>
+                  </div>
+                    <div>
+                      <p className="splash-p">
+                        It's difficult to balance your kids soccer games, doctors appointments, and client progress all at the same time. We would love to connect you to your clients and help keep your priorties in order.
+                      </p>
+                    </div>
                 </div>
 
               </div>
+            </div>
+
+            <div className="col l4 m6 s12 valign-wrapper">
+              <img className="strawbs" src="images/strawbs.jpeg" />
             </div>
 
           </div>

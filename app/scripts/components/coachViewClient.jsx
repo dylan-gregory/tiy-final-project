@@ -376,38 +376,38 @@ class ClientTodoList extends React.Component {
 
 
 
-
-            <span className="right"><a className="btn-floating btn-small waves-effect waves-light red todo-delete" onClick={(e) => {
-                e.preventDefault();
-            this.props.deleteTodo(todo);}}>
-            <i className="material-icons">close</i>
-            </a>
-            </span>
-
-
-          {todo.get('isEditing') == false ?
-            <span className="right"><a className="btn-floating btn-small waves-effect waves-light orange todo-delete" onClick={(e) => {
-                e.preventDefault();
-                this.toggleEdit(todo);
-            }}>
-            <i className="material-icons">build</i>
-            </a>
-            </span>
-
-            : null}
+            <div>
+              <span className="right"><a className="btn-floating btn-small waves-effect waves-light red todo-delete" onClick={(e) => {
+                  e.preventDefault();
+              this.props.deleteTodo(todo);}}>
+              <i className="material-icons">close</i>
+              </a>
+              </span>
 
 
-            {todo.get('isComplete') ?
-                <span className="right"><a className="btn-floating btn-small tooltipped waves-effect waves-light amber todo-delete" data-position="left" data-delay="50" data-tooltip="Reward" onClick={(e) => {
-                    e.preventDefault();
-                    Materialize.toast('You awarded a star!', 4000, 'rounded amber');
-                this.props.awardStar(todo);}}>
-                <i className="material-icons">star</i>
-                </a>
-                </span>
-                : null }
+            {todo.get('isEditing') == false ?
+              <span className="right"><a className="btn-floating btn-small waves-effect waves-light orange todo-delete" onClick={(e) => {
+                  e.preventDefault();
+                  this.toggleEdit(todo);
+              }}>
+              <i className="material-icons">build</i>
+              </a>
+              </span>
+
+              : null}
+
+
+              {todo.get('isComplete') ?
+                  <span className="right"><a className="btn-floating btn-small tooltipped waves-effect waves-light amber todo-delete" data-position="left" data-delay="50" data-tooltip="Reward" onClick={(e) => {
+                      e.preventDefault();
+                      Materialize.toast('You awarded a star!', 4000, 'rounded amber');
+                  this.props.awardStar(todo);}}>
+                  <i className="material-icons">star</i>
+                  </a>
+                  </span>
+                  : null }
             <div className="clearfix"></div>
-
+            </div>
 
           </div>
         </li>
