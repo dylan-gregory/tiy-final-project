@@ -8601,7 +8601,8 @@ a {
   font-family: 'Warnes', cursive; }
 
 footer.page-footer {
-  background-color: #15809B; }
+  background-color: #15809B;
+  margin-top: 0; }
 
 .chip {
   background-color: #15809B;
@@ -8618,11 +8619,19 @@ footer.page-footer {
   font-family: 'Warnes', cursive;
   color: #15809B; }
 
-.splash-row {
-  background-color: #EE0140; }
+div > .card-row {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: stretch;
+      -ms-flex-align: stretch;
+          align-items: stretch; }
 
-.strawbs {
-  margin-top: 10px; }
+.splash-row {
+  background-color: #EE0140;
+  margin-bottom: 0;
+  padding-top: 30px;
+  padding-bottom: 30px; }
 
 .btn, .btn-large {
   background-color: #FFBA49; }
@@ -8807,9 +8816,11 @@ input[type=text] {
 .error {
   background-color: red; }
 
-.splash-card {
+div > .splash-card {
   font-size: 20px;
-  height: 460px; }
+  -ms-flex-item-align: stretch;
+      -ms-grid-row-align: stretch;
+      align-self: stretch; }
 
 .prog-label {
   font-size: 2rem;
@@ -8837,5 +8848,10 @@ input[type=text] {
   line-height: 2.5rem;
   margin-right: 0px;
   width: 2.5rem; }
+
+.splash-col {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex; }
 
 /*# sourceMappingURL=app.css.map */

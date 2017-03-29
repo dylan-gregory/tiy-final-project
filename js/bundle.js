@@ -2593,7 +2593,7 @@ class SplashPageContainer extends React.Component {
       React.createElement(BaseLayout, null, 
         React.createElement("div", {className: "header col m12 valign-wrapper"}, 
           React.createElement("div", {className: "row splash-pic"}, 
-          React.createElement("img", {src: "images/yoga-with-logo.jpeg"})
+          React.createElement("img", {src: "images/potential_logo_yoga.jpg"})
 
 
 
@@ -2605,8 +2605,8 @@ class SplashPageContainer extends React.Component {
           )
         ), 
 
-          React.createElement("div", {className: "row"}, 
-            React.createElement("div", {className: "col m4"}, 
+          React.createElement("div", {className: "row card-row"}, 
+            React.createElement("div", {className: "col m4 splash-col"}, 
 
               React.createElement("div", {className: "card splash-card"}, 
                 React.createElement("div", {className: "card-image"}, 
@@ -2619,7 +2619,7 @@ class SplashPageContainer extends React.Component {
               )
 
             ), 
-            React.createElement("div", {className: "col m4"}, 
+            React.createElement("div", {className: "col m4 splash-col"}, 
 
               React.createElement("div", {className: "card splash-card"}, 
                 React.createElement("div", {className: "card-image"}, 
@@ -2633,7 +2633,7 @@ class SplashPageContainer extends React.Component {
 
             ), 
 
-            React.createElement("div", {className: "col m4"}, 
+            React.createElement("div", {className: "col m4 splash-col"}, 
 
               React.createElement("div", {className: "card splash-card"}, 
                 React.createElement("div", {className: "card-image"}, 
