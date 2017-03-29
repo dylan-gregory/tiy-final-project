@@ -83,6 +83,7 @@ a{
 
 footer.page-footer{
   background-color: #15809B;
+  margin-top: 0;
 }
 
 .chip{
@@ -106,13 +107,22 @@ footer.page-footer{
   color: #15809B;
 }
 
-.splash-row{
-  background-color: #EE0140;
+div > .card-row{
+  display: flex;
+  align-items: stretch;
 }
 
-.strawbs{
-  margin-top: 10px;
+.splash-row{
+  background-color: #EE0140;
+  margin-bottom: 0;
+  padding-top: 30px;
+  padding-bottom: 30px;
 }
+
+// .strawbs{
+//   margin-top: 20px;
+//   margin-bottom: 20px;
+// }
 // .header::before{
 //   content: url('../images/moxy_logo 2.png');
 //   position: absolute;
@@ -287,10 +297,6 @@ footer.page-footer{
 .client-name{
   margin-top: 10px;
 }
-
-// .checkbox{
-//   vertical-align: middle;
-// }
 
 .check-label{
   display: inline-block;
@@ -493,9 +499,14 @@ input[type=text]{
   background-color: red;
 }
 
-.splash-card{
+// div .row .card-row{
+//   display: flex;
+//   align-items: stretch;
+// }
+
+div > .splash-card{
   font-size: 20px;
-  height: 460px;
+  align-self: stretch;
 }
 
 .prog-label{
@@ -530,10 +541,7 @@ input[type=text]{
   margin-right: 0px;
   width: 2.5rem;
 }
-//
-// .collapsible-header i{
-//   line-height: 1em;
-//   width: auto;
-//   font-size: 1;
-//   margin-right: 0;
-// }
+
+.splash-col{
+  display: flex;
+}

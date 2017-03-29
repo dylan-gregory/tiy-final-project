@@ -23,7 +23,7 @@ class SplashPageContainer extends React.Component {
       <BaseLayout>
         <div className="header col m12 valign-wrapper">
           <div className="row splash-pic">
-          <img src="images/yoga-with-logo.jpeg" />
+          <img src="images/potential_logo_yoga.jpg" />
 
 
 
@@ -35,8 +35,8 @@ class SplashPageContainer extends React.Component {
           </div>
         </div>
 
-          <div className="row">
-            <div className="col m4">
+          <div className="row card-row">
+            <div className="col m4 splash-col">
 
               <div className="card splash-card">
                 <div className="card-image">
@@ -49,7 +49,7 @@ class SplashPageContainer extends React.Component {
               </div>
 
             </div>
-            <div className="col m4">
+            <div className="col m4 splash-col">
 
               <div className="card splash-card">
                 <div className="card-image">
@@ -63,7 +63,7 @@ class SplashPageContainer extends React.Component {
 
             </div>
 
-            <div className="col m4">
+            <div className="col m4 splash-col">
 
               <div className="card splash-card">
                 <div className="card-image">
