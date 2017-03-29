@@ -31,13 +31,6 @@ class SplashPageContainer extends React.Component {
         </div>
         <div className="row splash-row">
 
-          <div className="col l4 m6 s12 valign-wrapper">
-
-
-                <img className="guide-pic" src="images/guide.jpeg"/>
-
-
-          </div>
           <div className="col m12 l8 valign">
             <div className="card">
 
@@ -52,6 +45,12 @@ class SplashPageContainer extends React.Component {
 
               </div>
             </div>
+
+            </div>
+
+            <div className="col l4 m6 s12 valign-wrapper">
+
+              <img className="guide-pic" src="images/guide.jpeg"/>
 
             </div>
 
@@ -151,7 +150,7 @@ class SplashPageContainer extends React.Component {
           <div className="footer-copyright">
             <div className="container">
             © 2017 Copyright Me
-            <a className="grey-text text-lighten-4 right" href="#!">More Links</a>
+            <a className="grey-text text-lighten-4 right" href="https://www.nutritionix.com/business/api">Powered by Nutritionix API</a>
             </div>
           </div>
         </footer>

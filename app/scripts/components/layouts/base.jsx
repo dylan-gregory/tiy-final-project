@@ -4,7 +4,6 @@ var Backbone = require('backbone');
 var User = require('../../models/user.js').User;
 var DetailCollection = require('../../models/models.js').DetailCollection;
 
-
 require('materialize-sass-origin/js/bin/materialize.js');
 require('materialize-sass-origin/js/tooltip.js');
 require('materialize-sass-origin/js/dropdown.js');
@@ -108,14 +107,7 @@ class BaseLayout extends React.Component {
 
               </ul>
 
-
-
-
-
-
-
-                 <a href="#" data-activates="dropdown1" className="button-collapse dropdown-button right"><i className="material-icons" onClick={$(".dropdown-button").dropdown()}>menu</i></a>
-
+            <a href="#" data-activates="dropdown1" className="button-collapse dropdown-button right"><i className="material-icons" onClick={$(".dropdown-button").dropdown()} >menu</i></a>
 
              <ul className="left">
                { User.current() ? <li><span className="chip valign-wrapper user-logged-in">
