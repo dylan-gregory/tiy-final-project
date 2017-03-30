@@ -474,6 +474,7 @@ class ClientHomeContainer extends React.Component {
     this.search = _.debounce(this.search, 800).bind(this);
     this.addFood = this.addFood.bind(this);
     this.resetIntake = this.resetIntake.bind(this);
+    this.componentWillReceiveProps = this.componentWillReceiveProps.bind(this);
 
     this.state = {
       clientId: this.props.id,
@@ -491,6 +492,9 @@ class ClientHomeContainer extends React.Component {
   componentDidMount(){
     $('.button-collapse').sideNav('show');
     $('.tooltipped').tooltip({delay: 50});
+  }
+  componentWillReceiveProps(newProps){
+    this.setState({currentDetail: newProps.currentDetail});
   }
   checkOffTodo(todo){
     if (todo.get('isComplete')) {
@@ -540,6 +544,8 @@ class ClientHomeContainer extends React.Component {
                 dailyValues: updatedValues
               });
 
+
+
           });
 
         }});
@@ -547,18 +553,31 @@ class ClientHomeContainer extends React.Component {
 
   }
   cashStars(){
-    this.state.currentDetail.set('stars', 0);
 
-    this.state.currentDetail.save({success: () => {
+    console.log('detail', this.state.currentDetail);
+    var newStars = this.state.currentDetail;
+    newStars.set('stars', 0);
+    newStars.save();
 
-      this.state.detailCollection.fetch().then(() => {
-        var currentDetail = this.state.detailCollection.findWhere({ownerId: this.props.id});
+    this.forceUpdate();
 
-        this.setState({
-          currentDetail: currentDetail
-        });
-      });
-    }});
+    // this.state.currentDetail.save({success: () => {
+    //
+    //
+    //
+    //   this.state.detailCollection.fetch().then(() => {
+    //     var newDetail = this.state.detailCollection.findWhere({ownerId: this.props.id});
+    //
+    //
+    //
+    //     this.setState({
+    //       currentDetail: newDetail,
+    //       detailCollection
+    //     });
+    //
+    //
+    //   });
+    // }});
   }
   render(){
     return (
@@ -596,8 +615,8 @@ class ClientHomeContainer extends React.Component {
                     React.createElement("div", {className: "valign-wrapper"}, 
                       "Your stars: ", this.state.currentDetail ? this.state.currentDetail.get('stars') : 0, 
                       React.createElement("a", {className: "btn-floating btn-small waves-effect waves-light amber tooltipped", "data-position": "bottom", "data-delay": "50", "data-tooltip": "Cash in your stars!", 
-                        onClick: (e) => {
-                            e.preventDefault();
+                        onClick: () => {
+
                         this.cashStars();}}, 
                         React.createElement("i", {className: "material-icons star"}, "star")
                         )
@@ -654,36 +673,6 @@ class ClientHomeContainer extends React.Component {
   }
 }
 
-// <div className="logged-in-as">Logged in as:</div>
-// <div className="home-header">
-//   <span className="col m9 valign-wrapper">
-//     <img className="circle logged-in-avatar" src={this.state.currentDetail !== undefined ? this.state.pic : "images/ic_account_circle_black_24px.svg"} />
-//
-//     {this.state.currentDetail ? this.state.currentDetail.get('name') : this.state.currentClient.get('username')}
-//   </span>
-
-
-// <ul id="slide-out" className="side-nav"></ul>
-// <div className="fixed-action-btn horizontal click-to-toggle">
-//   <a className="btn-floating btn-small waves-effect waves-light amber"><i className="material-icons star">star</i></a>
-//   <ul>
-//     <li><a className="btn-floating green"><i className="material-icons">publish</i></a></li>
-//   </ul>
-// </div>
-// <ul id="slide-out" className="side-nav">
-//   <DailyIntakeList
-//     dailyValues={this.state.dailyValues}
-//     resetIntake={this.resetIntake}
-//   />
-//
-//   <SearchBar
-//     search={this.search}
-//     results={this.state.searchResults}
-//     addFood={this.addFood}
-//     clientId={this.state.clientId}
-//   />
-// <a href="#" data-activates="slide-out" className="button-collapse"><i className="material-icons">menu</i></a>
-// </ul>
 
 
 class MyTodoList extends React.Component {
@@ -734,7 +723,7 @@ class MyTodoList extends React.Component {
           React.createElement("div", {className: "collapsible-body"}, 
             React.createElement("div", null, "Due: ", todo.get('dueDate')), 
             React.createElement("div", {className: "client-notes"}, 
-              "Notes: ", todo.get('notes')
+              React.createElement("i", {className: "material-icons"}, "comment"), " ", todo.get('notes')
 
             )
 
@@ -867,7 +856,7 @@ class SearchBar extends React.Component {
 
       React.createElement("div", {className: "search-wrapper card"}, 
         React.createElement("form", null, 
-          React.createElement("input", {id: "search", onChange: this.handleSearchTerm, value: this.state.searchTerm, placeholder: "carrots, pizza, Taco Bell..."}), 
+          React.createElement("input", {id: "search", onChange: this.handleSearchTerm, value: this.state.searchTerm, placeholder: "  Search for lasagna, broccoli, Taco Bell..."}), 
           React.createElement("i", {className: "material-icons search-i"}, "search")
         ), 
 
@@ -1215,7 +1204,6 @@ class CoachViewClient extends React.Component {
     clientTodos.fetch().then(() => {
       currentTodos = clientTodos.where({clientId: this.props.id});
 
-      console.log('curr', currentTodos);
 
       var done = [];
 
@@ -1224,12 +1212,11 @@ class CoachViewClient extends React.Component {
           done.push(todo);
         }
 
-        console.log('done', done);
 
       });
 
       var percent = (done.length / currentTodos.length) * 100;
-      console.log('%', percent);
+
 
       // var done = currentTodos.where({isComplete: true});
       // //
@@ -1295,7 +1282,7 @@ class CoachViewClient extends React.Component {
 
   }
   editTodo(todo){
-    console.log('into edit');
+
     this.toggleForm();
     // this.setState({
     //   currentDate: todo.get('dueDate'),
@@ -1305,7 +1292,7 @@ class CoachViewClient extends React.Component {
 
   }
   deleteTodo(todo){
-    console.log('clicked!');
+
     todo.destroy({success: () =>{
 
       this.state.clientTodos.fetch().then(() => {
@@ -1354,7 +1341,7 @@ class CoachViewClient extends React.Component {
             React.createElement("div", {className: "progress-bar valign-wrapper"}, 
 
                 React.createElement("div", {className: "prog-label col m2"}, "Progress:"), 
-                React.createElement("div", {className: "progress col m10 valign-wrapper client-prog"}, 
+                React.createElement("div", {className: "progress col m10 valign-wrapper client-prog tooltipped", "data-position": "bottom", "data-delay": "50", "data-tooltip": Math.trunc(this.state.percentDone) + '% done!'}, 
                   React.createElement("div", {className: "determinate valign", style: {width: this.state.percentDone + '%'}})
                 ), 
 
@@ -1535,7 +1522,7 @@ class ClientTodoList extends React.Component {
 
             todo.get('isEditing') == false ? React.createElement("div", null, "Due: ", todo.get('dueDate')): null, 
 
-            todo.get('isEditing') == false ? React.createElement("div", {className: "todo-notes"}, "Notes: ", todo.get('notes')): null, 
+            todo.get('isEditing') == false ? React.createElement("div", {className: "todo-notes"}, React.createElement("i", {className: "material-icons"}, "comment"), " ", todo.get('notes')): null, 
 
 
 
@@ -2214,10 +2201,10 @@ var Backbone = require('backbone');
 var User = require('../../models/user.js').User;
 var DetailCollection = require('../../models/models.js').DetailCollection;
 
-
 require('materialize-sass-origin/js/bin/materialize.js');
 require('materialize-sass-origin/js/tooltip.js');
 require('materialize-sass-origin/js/dropdown.js');
+
 
 class BaseLayout extends React.Component {
   constructor(props){
@@ -2262,18 +2249,14 @@ class BaseLayout extends React.Component {
     //       $('.material-tooltip').hide();
     //     }
 
-
-
   }
   componentDidMount(){
-    // I un tagged the tooltipped links due to strange glitches
-    // $('.tooltipped').tooltip({delay: 2000});
-    $(".dropdown-button").dropdown();
+
+    $(document).ready(function(){
+      $('.dropdown-button').dropdown();
+    });
 
   }
-  // componentWillUpdate(){
-  //   $(".dropdown-button").dropdown();
-  // }
   signOut(){
     localStorage.clear();
     Backbone.history.navigate('login/', {trigger: true});
@@ -2287,9 +2270,9 @@ class BaseLayout extends React.Component {
 
              React.createElement("a", {href: "", className: "brand-logo center"}, "Moxy"), 
 
+              React.createElement("a", {href: "#", "data-activates": "dropdown1", className: "button-collapse dropdown-button right"}, React.createElement("i", {className: "material-icons"}, "menu")), 
 
-
-               React.createElement("ul", {id: "dropdown1", className: "dropdown-content"}, 
+               React.createElement("ul", {id: "dropdown1", className: "dropdown-content hide-on-med-and-up"}, 
 
                   User.current() ? (User.current().get('isCoach') ? React.createElement("li", null, React.createElement("a", {href: '#workspace/' + User.current().get('objectId')}, 
                  React.createElement("i", {className: "material-icons"}, "home"))) :
@@ -2312,19 +2295,10 @@ class BaseLayout extends React.Component {
                 React.createElement("li", {className: "divider"}), 
 
 
-                 User.current() ? React.createElement("li", null, React.createElement("a", {onClick: this.signOut, className: "waves-effect waves-light"}, "Log out")) : React.createElement("li", null, React.createElement("a", {href: "#login/", className: "waves-effect waves-light"}, "Log in")), 
+                 User.current() ? React.createElement("li", null, React.createElement("a", {onClick: this.signOut, className: "waves-effect waves-light"}, "Log out")) : React.createElement("li", null, React.createElement("a", {href: "#login/", className: "waves-effect waves-light"}, "Log in"))
 
-                console.log('user', User.current())
 
               ), 
-
-
-
-
-
-
-
-                 React.createElement("a", {href: "#", "data-activates": "dropdown1", className: "button-collapse dropdown-button right"}, React.createElement("i", {className: "material-icons", onClick: $(".dropdown-button").dropdown()}, "menu")), 
 
 
              React.createElement("ul", {className: "left"}, 
@@ -2371,7 +2345,7 @@ class BaseLayout extends React.Component {
   }
 }
 
-React.createElement("li", null, React.createElement("a", {class: "dropdown-button", href: "#!", "data-activates": "dropdown1"}, "Dropdown", React.createElement("i", {class: "material-icons right"}, "arrow_drop_down")))
+// <li><a class="dropdown-button" href="#!" data-activates="dropdown1">Dropdown<i class="material-icons right">arrow_drop_down</i></a></li>
 
 
 
@@ -2615,13 +2589,6 @@ class SplashPageContainer extends React.Component {
         ), 
         React.createElement("div", {className: "row splash-row"}, 
 
-          React.createElement("div", {className: "col l4 m6 s12 valign-wrapper"}, 
-
-
-                React.createElement("img", {className: "guide-pic", src: "images/guide.jpeg"})
-
-
-          ), 
           React.createElement("div", {className: "col m12 l8 valign"}, 
             React.createElement("div", {className: "card"}, 
 
@@ -2636,6 +2603,12 @@ class SplashPageContainer extends React.Component {
 
               )
             )
+
+            ), 
+
+            React.createElement("div", {className: "col l4 m6 s12 valign-wrapper"}, 
+
+              React.createElement("img", {className: "guide-pic", src: "images/guide.jpeg"})
 
             )
 
@@ -2719,24 +2692,35 @@ class SplashPageContainer extends React.Component {
             React.createElement("div", {className: "row"}, 
               React.createElement("div", {className: "col l6 s12"}, 
                 React.createElement("h5", {className: "white-text"}, "Contact Us"), 
-                React.createElement("p", {className: "grey-text text-lighten-4"}, "You can use rows and columns here to organize your footer content.")
-              ), 
-              React.createElement("div", {className: "col l4 offset-l2 s12"}, 
-                React.createElement("h5", {className: "white-text"}, "Links"), 
-                React.createElement("ul", null, 
-                  React.createElement("li", null, React.createElement("a", {className: "grey-text text-lighten-3", href: "#!"}, React.createElement("i", {className: "fa fa-facebook-square", "aria-hidden": "true"}))), 
-                  React.createElement("li", null, React.createElement("a", {className: "grey-text text-lighten-3", href: "#!"}, React.createElement("i", {className: "fa fa-twitter-square", "aria-hidden": "true"}))), 
-                  React.createElement("li", null, React.createElement("a", {className: "grey-text text-lighten-3", href: "#!"}, React.createElement("i", {className: "fa fa-instagram", "aria-hidden": "true"}))), 
-                  React.createElement("li", null, React.createElement("a", {className: "grey-text text-lighten-3", href: "#!"}, React.createElement("i", {className: "fa fa-google-plus-square", "aria-hidden": "true"})))
-                )
+
+                  React.createElement("div", {className: "col l3"}, 
+                    React.createElement("a", {className: "grey-text text-lighten-3 social", href: "#!"}, React.createElement("i", {className: "fa fa-envelope social", "aria-hidden": "true"}))
+                  ), 
+
+                  React.createElement("div", {className: "col l3"}, 
+                    React.createElement("a", {className: "grey-text text-lighten-3 social", href: "#!"}, React.createElement("i", {className: "fa fa-facebook-square social", "aria-hidden": "true"}))
+                  ), 
+
+                  React.createElement("div", {className: "col l3"}, 
+                    React.createElement("a", {className: "grey-text text-lighten-3 social", href: "#!"}, React.createElement("i", {className: "fa fa-twitter-square social", "aria-hidden": "true"}))
+                  ), 
+
+                  React.createElement("div", {className: "col l3"}, 
+                    React.createElement("a", {className: "grey-text text-lighten-3 social", href: "#!"}, React.createElement("i", {className: "fa fa-instagram social", "aria-hidden": "true"}))
+                  )
+
               )
+
             )
+
           ), 
           React.createElement("div", {className: "footer-copyright"}, 
             React.createElement("div", {className: "container"}, 
-            "© 2017 Copyright Me", 
-            React.createElement("a", {className: "grey-text text-lighten-4 right", href: "#!"}, "More Links")
+            React.createElement("span", null, "© 2017 Copyright dylangregory.io"), 
+            
+            React.createElement("a", {className: "grey-text text-lighten-4 right", href: "https://www.nutritionix.com/business/api"}, "Powered by Nutritionix API")
             )
+
           )
         )
       )
@@ -2744,31 +2728,6 @@ class SplashPageContainer extends React.Component {
   }
 }
 
-
-// <div className="carousel carousel-slider center" data-indicators="true">
-//   <div className="carousel-fixed-item center">
-//     <a className="btn waves-effect white grey-text darken-text-2">button</a>
-//   </div>
-//   <div className="carousel-item red white-text" href="#one!">
-//     <img src="images/fruit.jpg" />
-//     <h2>First Panel</h2>
-//     <p className="white-text">This is your first panel</p>
-//   </div>
-//   <div className="carousel-item amber white-text" href="#two!">
-//     <img src="images/strawbs.jpeg" />
-//     <h2>Second Panel</h2>
-//     <p className="white-text">This is your second panel</p>
-//   </div>
-//   <div className="carousel-item green white-text" href="#three!">
-//     <img src="images/oranges.jpg" />
-//     <h2>Third Panel</h2>
-//     <p className="white-text">This is your third panel</p>
-//   </div>
-//   <div className="carousel-item blue white-text" href="#four!">
-//     <h2>Fourth Panel</h2>
-//     <p className="white-text">This is your fourth panel</p>
-//   </div>
-// </div>
 
 
 module.exports = {
