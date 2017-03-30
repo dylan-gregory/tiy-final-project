@@ -51,17 +51,12 @@ class BaseLayout extends React.Component {
     //       $('.material-tooltip').hide();
     //     }
 
-
-
   }
-  componentDidMount(){
-    // I un tagged the tooltipped links due to strange glitches
-    // $('.tooltipped').tooltip({delay: 2000});
-    $(".dropdown-button").dropdown();
-
-  }
-  // componentWillUpdate(){
-  //   $(".dropdown-button").dropdown();
+  // componentDidMount(){
+  //   $(document).ready(function(){
+  //     $('.dropdown-button').dropdown();
+  //   });
+  //
   // }
   signOut(){
     localStorage.clear();
@@ -76,7 +71,7 @@ class BaseLayout extends React.Component {
 
              <a href="" className="brand-logo center">Moxy</a>
 
-
+              <a href="#" data-activates="dropdown1" className="button-collapse dropdown-button right"><i className="material-icons" onClick={$('.dropdown-button').dropdown()}>menu</i></a>
 
                <ul id="dropdown1" className="dropdown-content">
 
@@ -107,7 +102,6 @@ class BaseLayout extends React.Component {
 
               </ul>
 
-            <a href="#" data-activates="dropdown1" className="button-collapse dropdown-button right"><i className="material-icons" onClick={$(".dropdown-button").dropdown()} >menu</i></a>
 
              <ul className="left">
                { User.current() ? <li><span className="chip valign-wrapper user-logged-in">
@@ -153,7 +147,7 @@ class BaseLayout extends React.Component {
   }
 }
 
-<li><a class="dropdown-button" href="#!" data-activates="dropdown1">Dropdown<i class="material-icons right">arrow_drop_down</i></a></li>
+// <li><a class="dropdown-button" href="#!" data-activates="dropdown1">Dropdown<i class="material-icons right">arrow_drop_down</i></a></li>
 
 
 

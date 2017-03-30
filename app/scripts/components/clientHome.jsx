@@ -80,6 +80,7 @@ class ClientHomeContainer extends React.Component {
     this.search = _.debounce(this.search, 800).bind(this);
     this.addFood = this.addFood.bind(this);
     this.resetIntake = this.resetIntake.bind(this);
+    this.componentWillReceiveProps = this.componentWillReceiveProps.bind(this);
 
     this.state = {
       clientId: this.props.id,
@@ -97,6 +98,9 @@ class ClientHomeContainer extends React.Component {
   componentDidMount(){
     $('.button-collapse').sideNav('show');
     $('.tooltipped').tooltip({delay: 50});
+  }
+  componentWillReceiveProps(newProps){
+    this.setState({currentDetail: newProps.currentDetail});
   }
   checkOffTodo(todo){
     if (todo.get('isComplete')) {

@@ -187,7 +187,7 @@ class CoachViewClient extends React.Component {
             <div className="progress-bar valign-wrapper">
 
                 <div className="prog-label col m2">Progress:</div>
-                <div className="progress col m10 valign-wrapper client-prog">
+                <div className="progress col m10 valign-wrapper client-prog tooltipped" data-position="bottom" data-delay="50" data-tooltip={this.state.percentDone + '% done!'}>
                   <div className="determinate valign" style={{width: this.state.percentDone + '%'}}></div>
                 </div>
 
@@ -368,7 +368,7 @@ class ClientTodoList extends React.Component {
 
             {todo.get('isEditing') == false ? <div>Due: {todo.get('dueDate')}</div>: null }
 
-            {todo.get('isEditing') == false ? <div className="todo-notes">Notes: {todo.get('notes')}</div>: null }
+            {todo.get('isEditing') == false ? <div className="todo-notes"><i className="material-icons">comment</i> {todo.get('notes')}</div>: null }
 
 
 
