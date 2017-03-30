@@ -11,6 +11,8 @@ My final project for The Iron Yard - built in 3 weeks time. Moxy is a multi-user
 * [Sass](http://sass-lang.com/)
 * [Chart.js](http://www.chartjs.org/)
 
+* [Nutritionix API](https://www.nutritionix.com/business/api) - database of nutrition facts that includes over 500k branded food items
+
 ## Authors
 
 * **Dylan Gregory** - (https://github.com/dylan-gregory) (https://dylangregory.io)
