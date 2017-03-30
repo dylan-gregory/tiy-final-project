@@ -2244,11 +2244,6 @@ class BaseLayout extends React.Component {
       pic
     }
 
-    // setInterval(clearTooltip, 2000);
-    //   function clearTooltip() {
-    //       $('.material-tooltip').hide();
-    //     }
-
   }
   componentDidMount(){
 
@@ -2272,7 +2267,7 @@ class BaseLayout extends React.Component {
 
               React.createElement("a", {href: "#", "data-activates": "dropdown1", className: "button-collapse dropdown-button right"}, React.createElement("i", {className: "material-icons"}, "menu")), 
 
-               React.createElement("ul", {id: "dropdown1", className: "dropdown-content hide-on-med-and-up"}, 
+               React.createElement("ul", {id: "dropdown1", className: "dropdown-content hide-on-large-only"}, 
 
                   User.current() ? (User.current().get('isCoach') ? React.createElement("li", null, React.createElement("a", {href: '#workspace/' + User.current().get('objectId')}, 
                  React.createElement("i", {className: "material-icons"}, "home"))) :
@@ -2309,6 +2304,7 @@ class BaseLayout extends React.Component {
                  this.state.currentDetail !== undefined ? this.state.currentDetail.get('name') : null
                )) : null
              ), 
+
 
              React.createElement("ul", {id: "nav-mobile", className: "right hide-on-med-and-down"}, 
 
