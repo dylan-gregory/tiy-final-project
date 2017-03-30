@@ -158,8 +158,8 @@ class SplashPageContainer extends React.Component {
           </div>
           <div className="footer-copyright">
             <div className="container">
-            <span>© 2017 Copyright dylangregory.io</span>
-            
+            <span>© 2017 Copyright, built and styled by dylangregory.io</span>
+
             <a className="grey-text text-lighten-4 right" href="https://www.nutritionix.com/business/api">Powered by Nutritionix API</a>
             </div>
 
