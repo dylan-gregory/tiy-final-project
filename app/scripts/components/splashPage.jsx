@@ -31,8 +31,8 @@ class SplashPageContainer extends React.Component {
         </div>
         <div className="row splash-row">
 
-          <div className="col m12 l8 valign">
-            <div className="card">
+          <div className="col m12 l8 ">
+            <div className="card top-card">
 
               <div className="card-content client-coach-script">
                 <div>
@@ -105,7 +105,7 @@ class SplashPageContainer extends React.Component {
           <div className="row splash-row">
 
             <div className="col l8 m6 s12">
-              <div className="card">
+              <div className="card bottom-card">
                 <div className="card-content client-coach-script">
                   <div>
                     <h3 className="bold-header">
