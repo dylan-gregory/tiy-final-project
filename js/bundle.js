@@ -614,7 +614,7 @@ class ClientHomeContainer extends React.Component {
                   React.createElement("div", {className: "your-stars"}, 
                     React.createElement("div", {className: "valign-wrapper"}, 
                       "Your stars: ", this.state.currentDetail ? this.state.currentDetail.get('stars') : 0, 
-                      React.createElement("a", {className: "btn-floating btn-small waves-effect waves-light amber tooltipped", "data-position": "bottom", "data-delay": "50", "data-tooltip": "Cash in your stars!", 
+                      React.createElement("a", {className: "btn-floating btn-small waves-effect waves-light amber tooltipped star-btn", "data-position": "bottom", "data-delay": "50", "data-tooltip": "Cash in your stars!", 
                         onClick: () => {
 
                         this.cashStars();}}, 
@@ -2197,6 +2197,7 @@ module.exports = {
 "use strict";
 var React = require('react');
 var Backbone = require('backbone');
+var $ = window.$ = window.jQuery = require('jquery');
 
 var User = require('../../models/user.js').User;
 var DetailCollection = require('../../models/models.js').DetailCollection;
@@ -2356,7 +2357,7 @@ module.exports = {
   BaseLayout
 };
 
-},{"../../models/models.js":10,"../../models/user.js":13,"backbone":16,"materialize-sass-origin/js/bin/materialize.js":90,"materialize-sass-origin/js/dropdown.js":96,"materialize-sass-origin/js/tooltip.js":100,"react":257}],7:[function(require,module,exports){
+},{"../../models/models.js":10,"../../models/user.js":13,"backbone":16,"jquery":88,"materialize-sass-origin/js/bin/materialize.js":90,"materialize-sass-origin/js/dropdown.js":96,"materialize-sass-origin/js/tooltip.js":100,"react":257}],7:[function(require,module,exports){
 "use strict";
 var React = require('react');
 var Backbone = require('backbone');
