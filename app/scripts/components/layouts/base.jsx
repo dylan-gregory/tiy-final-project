@@ -1,5 +1,6 @@
 var React = require('react');
 var Backbone = require('backbone');
+var $ = window.$ = window.jQuery = require('jquery');
 
 var User = require('../../models/user.js').User;
 var DetailCollection = require('../../models/models.js').DetailCollection;

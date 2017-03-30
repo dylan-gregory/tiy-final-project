@@ -220,7 +220,7 @@ class ClientHomeContainer extends React.Component {
                   <div className="your-stars">
                     <div className="valign-wrapper">
                       Your stars: {this.state.currentDetail ? this.state.currentDetail.get('stars') : 0}
-                      <a className="btn-floating btn-small waves-effect waves-light amber tooltipped" data-position="bottom" data-delay="50" data-tooltip="Cash in your stars!"
+                      <a className="btn-floating btn-small waves-effect waves-light amber tooltipped star-btn" data-position="bottom" data-delay="50" data-tooltip="Cash in your stars!"
                         onClick={() => {
 
                         this.cashStars();}}>
