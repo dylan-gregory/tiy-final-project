@@ -48,7 +48,7 @@ class SplashPageContainer extends React.Component {
 
             </div>
 
-            <div className="col l4 m6 s12 valign-wrapper">
+            <div className="col l4 s12 valign-wrapper">
 
               <img className="guide-pic" src="images/guide.jpeg"/>
 
@@ -104,7 +104,7 @@ class SplashPageContainer extends React.Component {
 
           <div className="row splash-row">
 
-            <div className="col l8 m6 s12">
+            <div className="col l8 s12">
               <div className="card bottom-card">
                 <div className="card-content client-coach-script">
                   <div>
@@ -122,7 +122,7 @@ class SplashPageContainer extends React.Component {
               </div>
             </div>
 
-            <div className="col l4 m6 s12 valign-wrapper">
+            <div className="col l4 s12 valign-wrapper">
               <img className="strawbs" src="images/strawbs.jpeg" />
             </div>
 
