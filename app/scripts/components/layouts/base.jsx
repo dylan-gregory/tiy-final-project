@@ -8,6 +8,7 @@ require('materialize-sass-origin/js/bin/materialize.js');
 require('materialize-sass-origin/js/tooltip.js');
 require('materialize-sass-origin/js/dropdown.js');
 
+
 class BaseLayout extends React.Component {
   constructor(props){
     super(props);
@@ -52,12 +53,13 @@ class BaseLayout extends React.Component {
     //     }
 
   }
-  // componentDidMount(){
-  //   $(document).ready(function(){
-  //     $('.dropdown-button').dropdown();
-  //   });
-  //
-  // }
+  componentDidMount(){
+
+    $(document).ready(function(){
+      $('.dropdown-button').dropdown();
+    });
+
+  }
   signOut(){
     localStorage.clear();
     Backbone.history.navigate('login/', {trigger: true});
@@ -71,9 +73,9 @@ class BaseLayout extends React.Component {
 
              <a href="" className="brand-logo center">Moxy</a>
 
-              <a href="#" data-activates="dropdown1" className="button-collapse dropdown-button right"><i className="material-icons" onClick={$('.dropdown-button').dropdown()}>menu</i></a>
+              <a href="#" data-activates="dropdown1" className="button-collapse dropdown-button right"><i className="material-icons" >menu</i></a>
 
-               <ul id="dropdown1" className="dropdown-content">
+               <ul id="dropdown1" className="dropdown-content hide-on-med-and-up">
 
                  { User.current() ? (User.current().get('isCoach') ? <li><a href={'#workspace/' + User.current().get('objectId')}>
                  <i className="material-icons">home</i></a></li> :
@@ -98,7 +100,6 @@ class BaseLayout extends React.Component {
 
                 { User.current() ? <li><a onClick={this.signOut} className="waves-effect waves-light">Log out</a></li> : <li><a href="#login/" className="waves-effect waves-light">Log in</a></li> }
 
-                {console.log('user', User.current())}
 
               </ul>
 

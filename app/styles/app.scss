@@ -49,6 +49,7 @@ a{
     height: 45px;
     margin: 0;
     border: 0;
+
   }
 
 }
@@ -87,6 +88,10 @@ footer.page-footer{
   margin-top: 0;
 }
 
+// footer.page-footer .footer-copyright{
+//   height: 60px;
+// }
+
 .chip{
   background-color: #15809B;
   color: white;
@@ -113,8 +118,8 @@ div > .card-row{
 .splash-row{
   background-color: #EE0140;
   margin-bottom: 0;
-  padding-top: 30px;
-  padding-bottom: 30px;
+  padding-top: 5px;
+  padding-bottom: 15px;
 }
 
 // .strawbs{
@@ -475,10 +480,10 @@ input[type=text]{
 
 .coach-id{
   background-color: #EE0140;
-  border: 2px solid #12697F;
+  // border: 2px solid #12697F;
   border-radius: 30px;
   color: white;
-  padding: 10px;
+  padding: 7px;
 
 }
 
@@ -576,4 +581,15 @@ input[type=text]{
 
 .social{
   font-size: 40px;
+}
+
+.social:hover{
+  color: #F57496;
+  transition-duration: .5s;
+}
+
+.my-logo{
+  height: 60px;
+  width: 100px;
+  z-index: 20;
 }

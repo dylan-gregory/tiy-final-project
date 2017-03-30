@@ -48,7 +48,6 @@ class CoachViewClient extends React.Component {
     clientTodos.fetch().then(() => {
       currentTodos = clientTodos.where({clientId: this.props.id});
 
-      console.log('curr', currentTodos);
 
       var done = [];
 
@@ -57,12 +56,11 @@ class CoachViewClient extends React.Component {
           done.push(todo);
         }
 
-        console.log('done', done);
 
       });
 
       var percent = (done.length / currentTodos.length) * 100;
-      console.log('%', percent);
+
 
       // var done = currentTodos.where({isComplete: true});
       // //
@@ -128,7 +126,7 @@ class CoachViewClient extends React.Component {
 
   }
   editTodo(todo){
-    console.log('into edit');
+
     this.toggleForm();
     // this.setState({
     //   currentDate: todo.get('dueDate'),
@@ -138,7 +136,7 @@ class CoachViewClient extends React.Component {
 
   }
   deleteTodo(todo){
-    console.log('clicked!');
+
     todo.destroy({success: () =>{
 
       this.state.clientTodos.fetch().then(() => {
@@ -187,7 +185,7 @@ class CoachViewClient extends React.Component {
             <div className="progress-bar valign-wrapper">
 
                 <div className="prog-label col m2">Progress:</div>
-                <div className="progress col m10 valign-wrapper client-prog tooltipped" data-position="bottom" data-delay="50" data-tooltip={this.state.percentDone + '% done!'}>
+                <div className="progress col m10 valign-wrapper client-prog tooltipped" data-position="bottom" data-delay="50" data-tooltip={Math.trunc(this.state.percentDone) + '% done!'}>
                   <div className="determinate valign" style={{width: this.state.percentDone + '%'}}></div>
                 </div>
 

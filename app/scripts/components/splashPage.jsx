@@ -135,33 +135,31 @@ class SplashPageContainer extends React.Component {
               <div className="col l6 s12">
                 <h5 className="white-text">Contact Us</h5>
 
-                    <div className="col l3">
-                      <a className="grey-text text-lighten-3 social" href="#!"><i className="fa fa-envelope" aria-hidden="true"></i></a>
-                    </div>
-
                   <div className="col l3">
-                    <a className="grey-text text-lighten-3 social" href="#!"><i className="fa fa-facebook-square" aria-hidden="true"></i></a>
+                    <a className="grey-text text-lighten-3 social" href="#!"><i className="fa fa-envelope social" aria-hidden="true"></i></a>
                   </div>
 
                   <div className="col l3">
-                    <a className="grey-text text-lighten-3 social" href="#!"><i className="fa fa-twitter-square" aria-hidden="true"></i></a>
+                    <a className="grey-text text-lighten-3 social" href="#!"><i className="fa fa-facebook-square social" aria-hidden="true"></i></a>
                   </div>
 
                   <div className="col l3">
-                    <a className="grey-text text-lighten-3 social" href="#!"><i className="fa fa-instagram" aria-hidden="true"></i></a>
+                    <a className="grey-text text-lighten-3 social" href="#!"><i className="fa fa-twitter-square social" aria-hidden="true"></i></a>
                   </div>
 
                   <div className="col l3">
-                    <a className="grey-text text-lighten-3 social" href="#!"><i className="fa fa-google-plus-square" aria-hidden="true"></i></a>
+                    <a className="grey-text text-lighten-3 social" href="#!"><i className="fa fa-instagram social" aria-hidden="true"></i></a>
                   </div>
 
               </div>
 
             </div>
+
           </div>
           <div className="footer-copyright">
             <div className="container">
-            © 2017 Copyright Me
+            <span>© 2017 Copyright dylangregory.io</span>
+            
             <a className="grey-text text-lighten-4 right" href="https://www.nutritionix.com/business/api">Powered by Nutritionix API</a>
             </div>
 
@@ -172,31 +170,6 @@ class SplashPageContainer extends React.Component {
   }
 }
 
-
-// <div className="carousel carousel-slider center" data-indicators="true">
-//   <div className="carousel-fixed-item center">
-//     <a className="btn waves-effect white grey-text darken-text-2">button</a>
-//   </div>
-//   <div className="carousel-item red white-text" href="#one!">
-//     <img src="images/fruit.jpg" />
-//     <h2>First Panel</h2>
-//     <p className="white-text">This is your first panel</p>
-//   </div>
-//   <div className="carousel-item amber white-text" href="#two!">
-//     <img src="images/strawbs.jpeg" />
-//     <h2>Second Panel</h2>
-//     <p className="white-text">This is your second panel</p>
-//   </div>
-//   <div className="carousel-item green white-text" href="#three!">
-//     <img src="images/oranges.jpg" />
-//     <h2>Third Panel</h2>
-//     <p className="white-text">This is your third panel</p>
-//   </div>
-//   <div className="carousel-item blue white-text" href="#four!">
-//     <h2>Fourth Panel</h2>
-//     <p className="white-text">This is your fourth panel</p>
-//   </div>
-// </div>
 
 
 module.exports = {

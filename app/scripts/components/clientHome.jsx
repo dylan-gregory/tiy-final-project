@@ -150,6 +150,8 @@ class ClientHomeContainer extends React.Component {
                 dailyValues: updatedValues
               });
 
+
+
           });
 
         }});
@@ -157,18 +159,31 @@ class ClientHomeContainer extends React.Component {
 
   }
   cashStars(){
-    this.state.currentDetail.set('stars', 0);
 
-    this.state.currentDetail.save({success: () => {
+    console.log('detail', this.state.currentDetail);
+    var newStars = this.state.currentDetail;
+    newStars.set('stars', 0);
+    newStars.save();
 
-      this.state.detailCollection.fetch().then(() => {
-        var currentDetail = this.state.detailCollection.findWhere({ownerId: this.props.id});
+    this.forceUpdate();
 
-        this.setState({
-          currentDetail: currentDetail
-        });
-      });
-    }});
+    // this.state.currentDetail.save({success: () => {
+    //
+    //
+    //
+    //   this.state.detailCollection.fetch().then(() => {
+    //     var newDetail = this.state.detailCollection.findWhere({ownerId: this.props.id});
+    //
+    //
+    //
+    //     this.setState({
+    //       currentDetail: newDetail,
+    //       detailCollection
+    //     });
+    //
+    //
+    //   });
+    // }});
   }
   render(){
     return (
@@ -206,8 +221,8 @@ class ClientHomeContainer extends React.Component {
                     <div className="valign-wrapper">
                       Your stars: {this.state.currentDetail ? this.state.currentDetail.get('stars') : 0}
                       <a className="btn-floating btn-small waves-effect waves-light amber tooltipped" data-position="bottom" data-delay="50" data-tooltip="Cash in your stars!"
-                        onClick={(e) => {
-                            e.preventDefault();
+                        onClick={() => {
+
                         this.cashStars();}}>
                         <i className="material-icons star">star</i>
                         </a>
@@ -264,36 +279,6 @@ class ClientHomeContainer extends React.Component {
   }
 }
 
-// <div className="logged-in-as">Logged in as:</div>
-// <div className="home-header">
-//   <span className="col m9 valign-wrapper">
-//     <img className="circle logged-in-avatar" src={this.state.currentDetail !== undefined ? this.state.pic : "images/ic_account_circle_black_24px.svg"} />
-//
-//     {this.state.currentDetail ? this.state.currentDetail.get('name') : this.state.currentClient.get('username')}
-//   </span>
-
-
-// <ul id="slide-out" className="side-nav"></ul>
-// <div className="fixed-action-btn horizontal click-to-toggle">
-//   <a className="btn-floating btn-small waves-effect waves-light amber"><i className="material-icons star">star</i></a>
-//   <ul>
-//     <li><a className="btn-floating green"><i className="material-icons">publish</i></a></li>
-//   </ul>
-// </div>
-// <ul id="slide-out" className="side-nav">
-//   <DailyIntakeList
-//     dailyValues={this.state.dailyValues}
-//     resetIntake={this.resetIntake}
-//   />
-//
-//   <SearchBar
-//     search={this.search}
-//     results={this.state.searchResults}
-//     addFood={this.addFood}
-//     clientId={this.state.clientId}
-//   />
-// <a href="#" data-activates="slide-out" className="button-collapse"><i className="material-icons">menu</i></a>
-// </ul>
 
 
 class MyTodoList extends React.Component {
@@ -344,7 +329,7 @@ class MyTodoList extends React.Component {
           <div className="collapsible-body">
             <div>Due: {todo.get('dueDate')}</div>
             <div className="client-notes">
-              Notes: {todo.get('notes')}
+              <i className="material-icons">comment</i> {todo.get('notes')}
 
             </div>
 
@@ -477,7 +462,7 @@ class SearchBar extends React.Component {
 
       <div className="search-wrapper card">
         <form>
-          <input id="search" onChange={this.handleSearchTerm} value={this.state.searchTerm} placeholder="carrots, pizza, Taco Bell..."/>
+          <input id="search" onChange={this.handleSearchTerm} value={this.state.searchTerm} placeholder="  Search for lasagna, broccoli, Taco Bell..."/>
           <i className="material-icons search-i">search</i>
         </form>
 
