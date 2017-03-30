@@ -2589,8 +2589,8 @@ class SplashPageContainer extends React.Component {
         ), 
         React.createElement("div", {className: "row splash-row"}, 
 
-          React.createElement("div", {className: "col m12 l8 valign"}, 
-            React.createElement("div", {className: "card"}, 
+          React.createElement("div", {className: "col m12 l8 "}, 
+            React.createElement("div", {className: "card top-card"}, 
 
               React.createElement("div", {className: "card-content client-coach-script"}, 
                 React.createElement("div", null, 
@@ -2606,7 +2606,7 @@ class SplashPageContainer extends React.Component {
 
             ), 
 
-            React.createElement("div", {className: "col l4 m6 s12 valign-wrapper"}, 
+            React.createElement("div", {className: "col l4 s12 valign-wrapper"}, 
 
               React.createElement("img", {className: "guide-pic", src: "images/guide.jpeg"})
 
@@ -2662,8 +2662,8 @@ class SplashPageContainer extends React.Component {
 
           React.createElement("div", {className: "row splash-row"}, 
 
-            React.createElement("div", {className: "col l8 m6 s12"}, 
-              React.createElement("div", {className: "card"}, 
+            React.createElement("div", {className: "col l8 s12"}, 
+              React.createElement("div", {className: "card bottom-card"}, 
                 React.createElement("div", {className: "card-content client-coach-script"}, 
                   React.createElement("div", null, 
                     React.createElement("h3", {className: "bold-header"}, 
@@ -2680,7 +2680,7 @@ class SplashPageContainer extends React.Component {
               )
             ), 
 
-            React.createElement("div", {className: "col l4 m6 s12 valign-wrapper"}, 
+            React.createElement("div", {className: "col l4 s12 valign-wrapper"}, 
               React.createElement("img", {className: "strawbs", src: "images/strawbs.jpeg"})
             )
 
